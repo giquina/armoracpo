@@ -1,0 +1,48 @@
+.armora-card {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-md);
+  border: 1px solid var(--armora-border-light);
+  transition: var(--armora-transition-base);
+}
+
+.armora-card--default {
+  box-shadow: var(--armora-shadow-sm);
+}
+
+.armora-card--elevated {
+  box-shadow: var(--armora-shadow-md);
+}
+
+.armora-card--interactive {
+  cursor: pointer;
+  box-shadow: var(--armora-shadow-md);
+}
+
+.armora-card--navy {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+  border-color: var(--armora-navy-light);
+  box-shadow: var(--armora-shadow-lg);
+}
+
+.armora-card--gold {
+  background-color: var(--armora-gold);
+  color: var(--armora-navy);
+  border-color: var(--armora-gold-dark);
+  box-shadow: var(--armora-shadow-gold);
+}
+
+.armora-card--interactive:hover {
+  transform: translateY(-2px);
+}
+
+.armora-card--interactive:active {
+  transform: translateY(-1px);
+}
+
+/* Keyboard focus */
+.armora-card--interactive:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}

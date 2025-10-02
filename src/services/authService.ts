@@ -116,4 +116,34 @@ export const authService = {
 
     if (error) throw error;
   },
+
+  /**
+   * Update CPO profile
+   */
+  async updateProfile(cpoId: string, updates: Partial<ProtectionOfficer>) {
+    const { data, error } = await supabase
+      .from('protection_officers')
+      .update(updates)
+      .eq('id', cpoId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  /**
+   * Update CPO profile by user ID
+   */
+  async updateProfileByUserId(userId: string, updates: Partial<ProtectionOfficer>) {
+    const { data, error } = await supabase
+      .from('protection_officers')
+      .update(updates)
+      .eq('user_id', userId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
 };

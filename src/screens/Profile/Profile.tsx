@@ -1,11 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { supabase, ProtectionOfficer } from '../../lib/supabase';
-import { format } from 'date-fns';
+import { motion } from 'framer-motion';
+import { authService } from '../../services/authService';
+import { ProtectionOfficer } from '../../lib/supabase';
+
+// Import all profile components
+import { ProfileHeader } from '../../components/profile/ProfileHeader';
+import { AvatarUpload } from '../../components/profile/AvatarUpload';
+import { PersonalInfoSection } from '../../components/profile/PersonalInfoSection';
+import { SIALicenseSection } from '../../components/profile/SIALicenseSection';
+import { ProfessionalDetailsSection } from '../../components/profile/ProfessionalDetailsSection';
+import { AvailabilitySection } from '../../components/profile/AvailabilitySection';
+import { DocumentsSection } from '../../components/profile/DocumentsSection';
+import { StatisticsSection } from '../../components/profile/StatisticsSection';
+import { SecuritySettingsSection } from '../../components/profile/SecuritySettingsSection';
+import { BankDetailsSection } from '../../components/profile/BankDetailsSection';
+
 import '../../styles/global.css';
 
+/**
+ * Profile Screen
+ *
+ * Complete professional profile and account management for CPOs.
+ * Displays all CPO information with inline editing capabilities.
+ */
 const Profile: React.FC = () => {
   const [cpo, setCpo] = useState<ProtectionOfficer | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showAvatarUpload, setShowAvatarUpload] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -13,196 +36,174 @@ const Profile: React.FC = () => {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      setLoading(true);
+      setError(null);
 
-      const { data } = await supabase
-        .from('protection_officers')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
+      const result = await authService.getCurrentUser();
+      if (!result) {
+        setError('Not authenticated');
+        return;
+      }
 
-      if (data) setCpo(data);
-    } catch (err) {
+      setCpo(result.cpo);
+    } catch (err: any) {
       console.error('Error loading profile:', err);
+      setError(err.message || 'Failed to load profile');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await loadProfile();
+  };
+
+  const handleProfileUpdate = async (updates: Partial<ProtectionOfficer>) => {
+    if (!cpo) return;
+
+    try {
+      const updatedCpo = await authService.updateProfile(cpo.id, updates);
+      setCpo(updatedCpo);
+    } catch (err: any) {
+      console.error('Error updating profile:', err);
+      throw err;
+    }
+  };
+
+  const handleAvatarUploadComplete = (url: string) => {
+    if (cpo) {
+      setCpo({ ...cpo, profile_photo_url: url });
+    }
+  };
+
+  // Loading State
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: 'var(--armora-bg-secondary)',
+          gap: 'var(--armora-space-md)',
+        }}
+      >
         <div className="spinner"></div>
+        <p style={{ color: 'var(--armora-text-secondary)' }}>Loading profile...</p>
       </div>
     );
   }
 
-  if (!cpo) return null;
+  // Error State
+  if (error || !cpo) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: 'var(--armora-bg-secondary)',
+          padding: 'var(--armora-space-md)',
+          textAlign: 'center',
+          gap: 'var(--armora-space-md)',
+        }}
+      >
+        <h2 style={{ color: 'var(--armora-danger)' }}>Error Loading Profile</h2>
+        <p style={{ color: 'var(--armora-text-secondary)' }}>
+          {error || 'Unable to load profile data'}
+        </p>
+        <button onClick={loadProfile} className="btn-primary">
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-secondary)', paddingBottom: '80px' }}>
-      {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-lg)', textAlign: 'center' }}>
-        <div style={{
-          width: 100,
-          height: 100,
-          borderRadius: 'var(--radius-full)',
-          backgroundColor: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '48px',
-          margin: '0 auto var(--spacing-md)'
-        }}>
-          {cpo.profile_photo_url ? (
-            <img src={cpo.profile_photo_url} alt={cpo.first_name} style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-full)', objectFit: 'cover' }} />
-          ) : (
-            '👤'
-          )}
+    <div
+      className="safe-top safe-bottom"
+      style={{
+        minHeight: '100vh',
+        backgroundColor: 'var(--armora-bg-secondary)',
+        paddingBottom: '80px',
+      }}
+    >
+      {/* Profile Header */}
+      <ProfileHeader cpo={cpo} onEditAvatar={() => setShowAvatarUpload(true)} />
+
+      {/* Pull to Refresh Indicator */}
+      {refreshing && (
+        <div
+          style={{
+            padding: 'var(--armora-space-md)',
+            textAlign: 'center',
+            backgroundColor: 'var(--armora-bg-primary)',
+            borderBottom: '1px solid var(--armora-border-light)',
+          }}
+        >
+          <div className="spinner" style={{ margin: '0 auto', width: 24, height: 24 }} />
         </div>
-        <h1 style={{ fontSize: 'var(--font-size-2xl)', marginBottom: 'var(--spacing-xs)' }}>
-          {cpo.first_name} {cpo.last_name}
-        </h1>
-        <p style={{ fontSize: 'var(--font-size-sm)', opacity: 0.9 }}>
-          Close Protection Officer
-        </p>
+      )}
+
+      {/* Profile Content Sections */}
+      <div className="container" style={{ paddingTop: 'var(--armora-space-lg)' }}>
+        {/* Statistics Section */}
+        <StatisticsSection cpo={cpo} />
+
+        {/* Personal Information Section */}
+        <PersonalInfoSection cpo={cpo} onUpdate={handleProfileUpdate} />
+
+        {/* SIA License Section */}
+        <SIALicenseSection cpo={cpo} onUpdate={handleProfileUpdate} />
+
+        {/* Professional Details Section */}
+        <ProfessionalDetailsSection cpo={cpo} onUpdate={handleProfileUpdate} />
+
+        {/* Availability Section */}
+        <AvailabilitySection cpo={cpo} onUpdate={handleProfileUpdate} />
+
+        {/* Documents Section */}
+        <DocumentsSection cpo={cpo} onUpdate={handleRefresh} />
+
+        {/* Bank Details Section */}
+        <BankDetailsSection cpo={cpo} onUpdate={handleProfileUpdate} />
+
+        {/* Security Settings Section */}
+        <SecuritySettingsSection userId={cpo.user_id} />
+
+        {/* Account Information Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          style={{
+            textAlign: 'center',
+            padding: 'var(--armora-space-xl) var(--armora-space-md)',
+            color: 'var(--armora-text-secondary)',
+            fontSize: 'var(--armora-text-sm)',
+          }}
+        >
+          <p>Member since {new Date(cpo.created_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}</p>
+          <p style={{ marginTop: 'var(--armora-space-xs)' }}>
+            Profile last updated: {new Date(cpo.updated_at).toLocaleDateString('en-GB')}
+          </p>
+        </motion.div>
       </div>
 
-      <div className="container" style={{ paddingTop: 'var(--spacing-lg)' }}>
-        {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-          <div className="card" style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-xs)' }}>
-              Rating
-            </p>
-            <p style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 700, color: 'var(--color-success)' }}>
-              {cpo.rating ? `${cpo.rating.toFixed(1)} ⭐` : 'N/A'}
-            </p>
-          </div>
-          <div className="card" style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-xs)' }}>
-              Total Assignments
-            </p>
-            <p style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 700, color: 'var(--color-primary)' }}>
-              {cpo.total_assignments || 0}
-            </p>
-          </div>
-        </div>
-
-        {/* Verification Status */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Verification Status</h3>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Account Status</span>
-            <span className={`badge badge-${cpo.verification_status === 'verified' ? 'success' : cpo.verification_status === 'pending' ? 'warning' : 'danger'}`}>
-              {cpo.verification_status.toUpperCase()}
-            </span>
-          </div>
-        </div>
-
-        {/* SIA License Info */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>SIA License Information</h3>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>License Number</p>
-            <p style={{ fontWeight: 600 }}>{cpo.sia_license_number}</p>
-          </div>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>License Type</p>
-            <p style={{ fontWeight: 600, textTransform: 'uppercase' }}>{cpo.sia_license_type}</p>
-          </div>
-          <div>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Expiry Date</p>
-            <p style={{ fontWeight: 600 }}>
-              {format(new Date(cpo.sia_license_expiry), 'PPP')}
-              {new Date(cpo.sia_license_expiry) < new Date() && (
-                <span style={{ color: 'var(--color-danger)', marginLeft: 'var(--spacing-sm)' }}>⚠️ EXPIRED</span>
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* Contact Information */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Contact Information</h3>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Email</p>
-            <p style={{ fontWeight: 600 }}>{cpo.email}</p>
-          </div>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Phone</p>
-            <p style={{ fontWeight: 600 }}>{cpo.phone}</p>
-          </div>
-          <div>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Address</p>
-            <p style={{ fontWeight: 600 }}>
-              {cpo.address_line1}<br />
-              {cpo.address_line2 && <>{cpo.address_line2}<br /></>}
-              {cpo.city}, {cpo.postcode}<br />
-              {cpo.country}
-            </p>
-          </div>
-        </div>
-
-        {/* Emergency Contact */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Emergency Contact</h3>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Name</p>
-            <p style={{ fontWeight: 600 }}>{cpo.emergency_contact_name}</p>
-          </div>
-          <div>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Phone</p>
-            <p style={{ fontWeight: 600 }}>{cpo.emergency_contact_phone}</p>
-          </div>
-        </div>
-
-        {/* Vehicle Information */}
-        {cpo.vehicle_make && (
-          <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-            <h3 style={{ marginBottom: 'var(--spacing-md)' }}>🚗 Vehicle Information</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)' }}>
-              <div>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Make & Model</p>
-                <p style={{ fontWeight: 600 }}>{cpo.vehicle_make} {cpo.vehicle_model}</p>
-              </div>
-              <div>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Color</p>
-                <p style={{ fontWeight: 600 }}>{cpo.vehicle_color}</p>
-              </div>
-            </div>
-            {cpo.vehicle_registration && (
-              <div style={{ marginTop: 'var(--spacing-md)' }}>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Registration</p>
-                <p style={{ fontWeight: 600 }}>{cpo.vehicle_registration}</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Right to Work */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Right to Work</h3>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Status</span>
-            <span className="badge badge-success">{cpo.right_to_work_status.toUpperCase()}</span>
-          </div>
-        </div>
-
-        {/* Account Info */}
-        <div className="card">
-          <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Account Information</h3>
-          <div style={{ marginBottom: 'var(--spacing-md)' }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Member Since</p>
-            <p style={{ fontWeight: 600 }}>{format(new Date(cpo.created_at), 'PPP')}</p>
-          </div>
-          <div>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Last Updated</p>
-            <p style={{ fontWeight: 600 }}>{format(new Date(cpo.updated_at), 'PPP')}</p>
-          </div>
-        </div>
-      </div>
+      {/* Avatar Upload Modal */}
+      {showAvatarUpload && (
+        <AvatarUpload
+          currentAvatarUrl={cpo.profile_photo_url}
+          onClose={() => setShowAvatarUpload(false)}
+          onUploadComplete={handleAvatarUploadComplete}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,102 @@
+.armora-icon-button__wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.armora-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--armora-touch-min);
+  height: var(--armora-touch-min);
+  border-radius: var(--armora-radius-full);
+  border: none;
+  cursor: pointer;
+  transition: var(--armora-transition-base);
+  -webkit-tap-highlight-color: transparent;
+  font-size: 18px;
+}
+
+.armora-icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.armora-icon-button:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
+.armora-icon-button--primary {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
+
+.armora-icon-button--primary:hover:not(:disabled) {
+  background-color: var(--armora-navy-light);
+}
+
+.armora-icon-button--secondary {
+  background-color: var(--armora-bg-secondary);
+  color: var(--armora-text-primary);
+}
+
+.armora-icon-button--secondary:hover:not(:disabled) {
+  background-color: var(--armora-bg-tertiary);
+}
+
+.armora-icon-button--ghost {
+  background-color: transparent;
+  color: var(--armora-text-primary);
+}
+
+.armora-icon-button--ghost:hover:not(:disabled) {
+  background-color: var(--armora-bg-secondary);
+}
+
+.armora-icon-button--danger {
+  background-color: var(--armora-danger);
+  color: var(--armora-text-inverse);
+}
+
+.armora-icon-button--danger:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.armora-icon-button__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  border-radius: var(--armora-radius-sm);
+  font-size: var(--armora-text-xs);
+  white-space: nowrap;
+  z-index: var(--armora-z-dropdown);
+  box-shadow: var(--armora-shadow-md);
+  pointer-events: none;
+  animation: armora-icon-tooltip-fade-in 0.2s ease-in-out;
+}
+
+.armora-icon-button__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--armora-navy);
+}
+
+@keyframes armora-icon-tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

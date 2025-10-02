@@ -1,0 +1,26 @@
+/* MonthlyEarningsChart.css */
+
+.monthly-earnings-chart {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  border: 1px solid var(--armora-border-light);
+}
+
+.monthly-earnings-chart__title {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0 0 var(--armora-space-lg) 0;
+  color: var(--armora-text-primary);
+}
+
+.monthly-earnings-chart__container {
+  height: 300px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .monthly-earnings-chart__container {
+    height: 250px;
+  }
+}

@@ -1,0 +1,137 @@
+/* PaymentHistoryTable.css */
+
+.payment-history-table {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  border: 1px solid var(--armora-border-light);
+  overflow: hidden;
+}
+
+.payment-history-table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--armora-space-lg);
+  border-bottom: 1px solid var(--armora-border-light);
+}
+
+.payment-history-table__header h3 {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0;
+}
+
+.payment-history-table__export {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+  border: none;
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--armora-transition-fast);
+}
+
+.payment-history-table__export:hover {
+  background-color: var(--armora-navy-light);
+}
+
+.payment-history-table__container {
+  overflow-x: auto;
+}
+
+.payment-history-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payment-history-table__table thead {
+  background-color: var(--armora-bg-secondary);
+}
+
+.payment-history-table__table th {
+  padding: var(--armora-space-md);
+  text-align: left;
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payment-history-table__table td {
+  padding: var(--armora-space-md);
+  border-top: 1px solid var(--armora-border-light);
+  font-size: var(--armora-text-sm);
+}
+
+.payment-history-table__amount {
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+}
+
+.payment-history-table__method {
+  text-transform: capitalize;
+  color: var(--armora-text-secondary);
+}
+
+.payment-history-table__empty {
+  padding: var(--armora-space-xl);
+  text-align: center;
+  color: var(--armora-text-secondary);
+}
+
+.payment-history-table__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-md);
+  border-top: 1px solid var(--armora-border-light);
+}
+
+.payment-history-table__page-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--armora-bg-secondary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+}
+
+.payment-history-table__page-btn:hover:not(:disabled) {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+  border-color: var(--armora-navy);
+}
+
+.payment-history-table__page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.payment-history-table__page-info {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+}
+
+@media (max-width: 640px) {
+  .payment-history-table__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--armora-space-sm);
+  }
+
+  .payment-history-table__export {
+    width: 100%;
+    justify-content: center;
+  }
+}

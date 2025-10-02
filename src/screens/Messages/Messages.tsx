@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiSearch, FiRefreshCw } from 'react-icons/fi';
 import { supabase, ProtectionAssignment, AssignmentMessage } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
+import { ChatListItem } from '../../components/messages';
+import { Tabs, EmptyState, LoadingSpinner } from '../../components/ui';
 import '../../styles/global.css';
+import './Messages.css';
 
 interface Conversation {
   assignment: ProtectionAssignment;
@@ -13,10 +17,16 @@ interface Conversation {
 const Messages: React.FC = () => {
   const navigate = useNavigate();
   const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [filteredConversations, setFilteredConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'active' | 'archived'>('active');
 
-  const loadConversations = useCallback(async () => {
+  const loadConversations = useCallback(async (isRefresh = false) => {
     try {
+      if (isRefresh) setRefreshing(true);
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
@@ -27,7 +37,6 @@ const Messages: React.FC = () => {
         .single();
 
       if (cpoData) {
-        // Get all assignments for this CPO
         const { data: assignments } = await supabase
           .from('protection_assignments')
           .select('*')
@@ -35,7 +44,6 @@ const Messages: React.FC = () => {
           .order('scheduled_start_time', { ascending: false });
 
         if (assignments) {
-          // Build conversations with message data
           const convos = await Promise.all(
             assignments.map(async (assignment) => {
               const lastMessage = await messageService.getLatestMessage(assignment.id);
@@ -49,7 +57,6 @@ const Messages: React.FC = () => {
             })
           );
 
-          // Sort by last message time
           convos.sort((a, b) => {
             const timeA = a.lastMessage?.created_at || a.assignment.scheduled_start_time;
             const timeB = b.lastMessage?.created_at || b.assignment.scheduled_start_time;
@@ -57,200 +64,153 @@ const Messages: React.FC = () => {
           });
 
           setConversations(convos);
+          setFilteredConversations(convos);
         }
       }
     } catch (error) {
       console.error('Error loading conversations:', error);
     } finally {
       setLoading(false);
+      if (isRefresh) setRefreshing(false);
     }
   }, []);
 
   useEffect(() => {
     loadConversations();
 
-    // Refresh conversations every 30 seconds
-    const interval = setInterval(loadConversations, 30000);
+    const interval = setInterval(() => loadConversations(), 30000);
     return () => clearInterval(interval);
   }, [loadConversations]);
 
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredConversations(conversations);
+      return;
+    }
 
-    if (diffMins < 1) return 'Just now';
-    if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffHours < 24) return `${diffHours}h ago`;
-    if (diffDays < 7) return `${diffDays}d ago`;
-    return date.toLocaleDateString();
-  };
+    const query = searchQuery.toLowerCase();
+    const filtered = conversations.filter((conv) => {
+      const principalName = conv.assignment.principal_name.toLowerCase();
+      const location = conv.assignment.pickup_location.toLowerCase();
+      const lastMessageText = conv.lastMessage?.message.toLowerCase() || '';
 
-  const getAssignmentTypeLabel = (type: string) => {
-    const labels: { [key: string]: string } = {
-      close_protection: 'Close Protection',
-      event_security: 'Event Security',
-      residential_security: 'Residential',
-      executive_protection: 'Executive',
-      transport_security: 'Transport',
-    };
-    return labels[type] || type;
+      return principalName.includes(query) ||
+             location.includes(query) ||
+             lastMessageText.includes(query);
+    });
+
+    setFilteredConversations(filtered);
+  }, [searchQuery, conversations]);
+
+  const activeConversations = filteredConversations.filter(
+    (conv) => conv.assignment.status === 'active' || conv.assignment.status === 'assigned' || conv.assignment.status === 'en_route'
+  );
+
+  const archivedConversations = filteredConversations.filter(
+    (conv) => conv.assignment.status === 'completed' || conv.assignment.status === 'cancelled'
+  );
+
+  const displayedConversations = activeTab === 'active' ? activeConversations : archivedConversations;
+
+  const totalUnread = conversations.reduce((sum, conv) => sum + conv.unreadCount, 0);
+
+  const handleRefresh = () => {
+    loadConversations(true);
   };
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+      <div className="messages-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-secondary)', paddingBottom: '80px' }}>
+    <div className="messages-screen safe-top safe-bottom">
       {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-lg)' }}>
-        <h1 style={{ fontSize: 'var(--font-size-2xl)', marginBottom: 'var(--spacing-xs)' }}>Messages</h1>
-        <p style={{ fontSize: 'var(--font-size-sm)', opacity: 0.9 }}>
-          Communications with Principals
+      <div className="messages-header">
+        <div className="messages-header__top">
+          <h1 className="messages-header__title">Messages</h1>
+          <button
+            className="messages-header__refresh"
+            onClick={handleRefresh}
+            disabled={refreshing}
+            aria-label="Refresh messages"
+          >
+            <FiRefreshCw size={20} className={refreshing ? 'spinning' : ''} />
+          </button>
+        </div>
+        <p className="messages-header__subtitle">
+          Communications with Principals {totalUnread > 0 && `• ${totalUnread} unread`}
         </p>
       </div>
 
-      <div className="container" style={{ paddingTop: 'var(--spacing-md)' }}>
-        {conversations.length === 0 ? (
-          // Empty State
-          <div className="card" style={{ textAlign: 'center', padding: 'var(--spacing-xl)', marginTop: 'var(--spacing-xl)' }}>
-            <div style={{ fontSize: '64px', marginBottom: 'var(--spacing-md)' }}>💬</div>
-            <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>No Messages Yet</h3>
-            <p style={{ color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-md)' }}>
-              Once you accept an assignment, you'll be able to communicate with your principal here.
-            </p>
+      {/* Search Bar */}
+      <div className="messages-search">
+        <div className="messages-search__input-wrapper">
+          <FiSearch className="messages-search__icon" size={18} />
+          <input
+            type="text"
+            className="messages-search__input"
+            placeholder="Search conversations..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
             <button
-              className="btn btn-primary"
-              onClick={() => navigate('/jobs')}
+              className="messages-search__clear"
+              onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
             >
-              Browse Available Assignments
+              ×
             </button>
-          </div>
+          )}
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <Tabs
+        tabs={[
+          { id: 'active', label: `Active (${activeConversations.length})` },
+          { id: 'archived', label: `Archived (${archivedConversations.length})` }
+        ]}
+        activeTab={activeTab}
+        onChange={(id) => setActiveTab(id as 'active' | 'archived')}
+      />
+
+      {/* Conversations List */}
+      <div className="messages-list">
+        {displayedConversations.length === 0 ? (
+          <EmptyState
+            icon="💬"
+            title={searchQuery ? 'No matches found' : `No ${activeTab} conversations`}
+            description={
+              searchQuery
+                ? 'Try adjusting your search terms'
+                : activeTab === 'active'
+                ? 'Once you accept an assignment, you can communicate with your principal here.'
+                : 'Completed and cancelled assignments will appear here.'
+            }
+            action={
+              !searchQuery && activeTab === 'active'
+                ? {
+                    label: 'Browse Available Assignments',
+                    onClick: () => navigate('/jobs')
+                  }
+                : undefined
+            }
+          />
         ) : (
-          // Conversation List
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-            {conversations.map((conversation) => (
-              <div
-                key={conversation.assignment.id}
-                onClick={() => navigate(`/messages/${conversation.assignment.id}`)}
-                className="card"
-                style={{
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  borderLeft: conversation.unreadCount > 0 ? '4px solid var(--color-accent)' : '4px solid transparent',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '';
-                }}
-              >
-                <div style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
-                  {/* Principal Photo */}
-                  <div
-                    style={{
-                      width: '56px',
-                      height: '56px',
-                      borderRadius: 'var(--radius-full)',
-                      backgroundColor: 'var(--color-bg-secondary)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 'var(--font-size-xl)',
-                      flexShrink: 0,
-                      backgroundImage: conversation.assignment.principal_photo_url ? `url(${conversation.assignment.principal_photo_url})` : 'none',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  >
-                    {!conversation.assignment.principal_photo_url && '👤'}
-                  </div>
-
-                  {/* Conversation Details */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--spacing-xs)' }}>
-                      <h3 style={{ fontSize: 'var(--font-size-md)', marginBottom: '2px' }}>
-                        {conversation.assignment.principal_name}
-                      </h3>
-                      {conversation.lastMessage && (
-                        <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)' }}>
-                          {formatTime(conversation.lastMessage.created_at)}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Assignment Info */}
-                    <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-xs)', flexWrap: 'wrap' }}>
-                      <span className={`badge badge-${conversation.assignment.status === 'active' ? 'success' : 'warning'}`}>
-                        {conversation.assignment.status.toUpperCase()}
-                      </span>
-                      <span className="badge" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)' }}>
-                        {getAssignmentTypeLabel(conversation.assignment.assignment_type)}
-                      </span>
-                      <span className={`badge badge-threat-${conversation.assignment.threat_level}`}>
-                        {conversation.assignment.threat_level.toUpperCase()}
-                      </span>
-                    </div>
-
-                    {/* Last Message */}
-                    {conversation.lastMessage && (
-                      <p
-                        style={{
-                          fontSize: 'var(--font-size-sm)',
-                          color: 'var(--color-text-secondary)',
-                          marginBottom: 'var(--spacing-xs)',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          fontWeight: conversation.unreadCount > 0 ? 600 : 400,
-                        }}
-                      >
-                        {conversation.lastMessage.message}
-                      </p>
-                    )}
-
-                    {/* Location */}
-                    <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)' }}>
-                      📍 {conversation.assignment.pickup_location}
-                    </p>
-                  </div>
-
-                  {/* Unread Badge */}
-                  {conversation.unreadCount > 0 && (
-                    <div
-                      style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: 'var(--radius-full)',
-                        backgroundColor: 'var(--color-accent)',
-                        color: 'white',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 'var(--font-size-xs)',
-                        fontWeight: 700,
-                        flexShrink: 0,
-                        alignSelf: 'center',
-                      }}
-                    >
-                      {conversation.unreadCount > 9 ? '9+' : conversation.unreadCount}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          displayedConversations.map((conversation) => (
+            <ChatListItem
+              key={conversation.assignment.id}
+              assignment={conversation.assignment}
+              lastMessage={conversation.lastMessage}
+              unreadCount={conversation.unreadCount}
+              onClick={() => navigate(`/messages/${conversation.assignment.id}`)}
+            />
+          ))
         )}
       </div>
     </div>

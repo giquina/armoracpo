@@ -1,0 +1,64 @@
+.armora-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  border-radius: var(--armora-radius-full);
+  font-family: var(--armora-font-body);
+  font-weight: var(--armora-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.armora-status-badge--sm {
+  font-size: var(--armora-text-xs);
+  padding: 2px var(--armora-space-sm);
+}
+
+.armora-status-badge--md {
+  font-size: var(--armora-text-xs);
+}
+
+.armora-status-badge--lg {
+  font-size: var(--armora-text-sm);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+}
+
+.armora-status-badge--operational {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.armora-status-badge--operational .armora-status-badge__icon {
+  animation: armora-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.armora-status-badge--busy {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.armora-status-badge--offline {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.armora-status-badge__icon {
+  display: flex;
+  align-items: center;
+}
+
+.armora-status-badge__label {
+  white-space: nowrap;
+}
+
+@keyframes armora-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

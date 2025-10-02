@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { supabase } from './lib/supabase';
 import { initializeNotifications } from './services/notificationService';
+import { PageTransition } from './components/animations/PageTransition';
 
 // Screens
 import Login from './screens/Auth/Login';
@@ -22,6 +24,11 @@ import BottomNav from './components/layout/BottomNav';
 
 // Styles
 import './styles/global.css';
+
+// Dev mode bypass flag (set via sessionStorage when using DevPanel)
+const isDevMode = () => {
+  return process.env.NODE_ENV === 'development' && sessionStorage.getItem('devMode') === 'true';
+};
 
 // Protected Route wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -55,6 +62,12 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     }
   };
 
+  // Allow dev mode bypass
+  if (isDevMode()) {
+    console.log('[App] Dev mode active - bypassing authentication');
+    return <>{children}</>;
+  }
+
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
@@ -76,12 +89,22 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-function App() {
+// Animated routes wrapper
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation();
+
   return (
-    <Router>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
-        <Route path="/" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <PageTransition variant="fade">
+              <Login />
+            </PageTransition>
+          }
+        />
 
         {/* Protected Routes */}
         <Route
@@ -89,7 +112,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Dashboard />
+                <PageTransition variant="fade">
+                  <Dashboard />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -99,7 +124,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <AvailableJobs />
+                <PageTransition variant="fade">
+                  <AvailableJobs />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -109,7 +136,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <ActiveJob />
+                <PageTransition variant="fade">
+                  <ActiveJob />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -119,7 +148,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <JobHistory />
+                <PageTransition variant="fade">
+                  <JobHistory />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -129,7 +160,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Profile />
+                <PageTransition variant="fade">
+                  <Profile />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -139,7 +172,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Earnings />
+                <PageTransition variant="fade">
+                  <Earnings />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -149,7 +184,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Compliance />
+                <PageTransition variant="fade">
+                  <Compliance />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -159,7 +196,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Settings />
+                <PageTransition variant="fade">
+                  <Settings />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -169,7 +208,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Messages />
+                <PageTransition variant="fade">
+                  <Messages />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -179,7 +220,9 @@ function App() {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <MessageChat />
+                <PageTransition variant="fade">
+                  <MessageChat />
+                </PageTransition>
               </AppLayout>
             </ProtectedRoute>
           }
@@ -188,6 +231,14 @@ function App() {
         {/* Catch all - redirect to dashboard if authenticated, login if not */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
+    </AnimatePresence>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AnimatedRoutes />
       <Analytics />
     </Router>
   );

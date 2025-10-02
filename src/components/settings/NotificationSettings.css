@@ -1,0 +1,106 @@
+/* NotificationSettings.css */
+
+.notification-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+}
+
+.notification-settings__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--armora-space-md);
+}
+
+.notification-settings__item-content {
+  flex: 1;
+}
+
+.notification-settings__item-content h4 {
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0 0 var(--armora-space-xs) 0;
+  color: var(--armora-text-primary);
+}
+
+.notification-settings__item-content p {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin: 0;
+}
+
+.notification-settings__divider {
+  height: 1px;
+  background-color: var(--armora-border-light);
+  margin: var(--armora-space-sm) 0;
+}
+
+.notification-settings__quiet-hours {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+}
+
+.notification-settings__time-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+}
+
+.notification-settings__time-input label {
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-primary);
+}
+
+.notification-settings__time-input input[type="time"] {
+  padding: var(--armora-space-sm);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-base);
+  font-family: var(--armora-font-body);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  width: 50px;
+  height: 28px;
+  border-radius: var(--armora-radius-full);
+  position: relative;
+  cursor: pointer;
+  transition: background-color var(--armora-transition-base);
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.toggle-switch--on {
+  background-color: var(--armora-success);
+}
+
+.toggle-switch--off {
+  background-color: var(--armora-bg-tertiary);
+}
+
+.toggle-switch__slider {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--armora-radius-full);
+  background-color: var(--armora-bg-primary);
+  position: absolute;
+  top: 2px;
+  transition: transform var(--armora-transition-base);
+  box-shadow: var(--armora-shadow-sm);
+}
+
+.toggle-switch--on .toggle-switch__slider {
+  transform: translateX(22px);
+}
+
+.toggle-switch--off .toggle-switch__slider {
+  transform: translateX(2px);
+}

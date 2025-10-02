@@ -1,0 +1,103 @@
+/* AppearanceSettings.css */
+
+.appearance-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-lg);
+}
+
+.appearance-settings__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+}
+
+.appearance-settings__section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+}
+
+.appearance-settings__section h4 {
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0;
+  color: var(--armora-text-primary);
+}
+
+.appearance-settings__options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--armora-space-sm);
+}
+
+.appearance-settings__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--armora-space-xs);
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-primary);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+  min-height: 80px;
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+}
+
+.appearance-settings__option:hover:not(:disabled) {
+  border-color: var(--armora-navy);
+  background-color: var(--armora-bg-secondary);
+}
+
+.appearance-settings__option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.appearance-settings__option--active {
+  border-color: var(--armora-navy);
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
+
+.appearance-settings__option-icon {
+  font-size: var(--armora-text-2xl);
+}
+
+.appearance-settings__option-text {
+  font-weight: var(--armora-weight-bold);
+  font-family: var(--armora-font-display);
+}
+
+.appearance-settings__select {
+  width: 100%;
+  padding: var(--armora-space-md);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-base);
+  font-family: var(--armora-font-body);
+  background-color: var(--armora-bg-primary);
+  cursor: pointer;
+}
+
+.appearance-settings__select:focus {
+  outline: none;
+  border-color: var(--armora-navy);
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.1);
+}
+
+@media (max-width: 640px) {
+  .appearance-settings__options {
+    grid-template-columns: 1fr;
+  }
+
+  .appearance-settings__option {
+    flex-direction: row;
+    justify-content: flex-start;
+    min-height: 60px;
+  }
+}

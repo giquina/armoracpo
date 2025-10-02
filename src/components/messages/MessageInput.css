@@ -1,0 +1,144 @@
+/* MessageInput.css */
+
+.message-input {
+  background-color: var(--armora-bg-primary);
+  border-top: 1px solid var(--armora-border-light);
+  padding: var(--armora-space-md);
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--armora-z-dropdown);
+}
+
+.message-input__form {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--armora-space-sm);
+}
+
+.message-input__actions {
+  display: flex;
+  gap: var(--armora-space-xs);
+  align-items: center;
+}
+
+.message-input__action-button {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--armora-radius-md);
+  background-color: transparent;
+  border: 1px solid var(--armora-border-light);
+  color: var(--armora-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+}
+
+.message-input__action-button:hover:not(:disabled) {
+  background-color: var(--armora-bg-secondary);
+  color: var(--armora-navy);
+  border-color: var(--armora-navy);
+}
+
+.message-input__action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message-input__field-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.message-input__field {
+  width: 100%;
+  min-height: 44px;
+  max-height: 120px;
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  line-height: var(--armora-leading-normal);
+  resize: none;
+  transition: border-color var(--armora-transition-fast);
+  background-color: var(--armora-bg-primary);
+}
+
+.message-input__field:focus {
+  outline: none;
+  border-color: var(--armora-navy);
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.1);
+}
+
+.message-input__field:disabled {
+  background-color: var(--armora-bg-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.message-input__char-count {
+  position: absolute;
+  bottom: 6px;
+  right: 12px;
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  pointer-events: none;
+  background-color: var(--armora-bg-primary);
+  padding: 2px 4px;
+  border-radius: var(--armora-radius-sm);
+}
+
+.message-input__char-count--limit {
+  color: var(--armora-danger);
+  font-weight: var(--armora-weight-semibold);
+}
+
+.message-input__send {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--armora-radius-md);
+  background-color: var(--armora-bg-secondary);
+  border: none;
+  color: var(--armora-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+  flex-shrink: 0;
+}
+
+.message-input__send--active {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
+
+.message-input__send--active:hover:not(:disabled) {
+  background-color: var(--armora-navy-light);
+  transform: scale(1.05);
+}
+
+.message-input__send--active:active {
+  transform: scale(0.95);
+}
+
+.message-input__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .message-input__actions {
+    gap: 4px;
+  }
+
+  .message-input__action-button {
+    width: 36px;
+    height: 36px;
+  }
+}

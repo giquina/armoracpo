@@ -1,0 +1,44 @@
+.armora-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-md);
+}
+
+.armora-progress__track {
+  flex: 1;
+  height: 8px;
+  background-color: var(--armora-bg-tertiary);
+  border-radius: var(--armora-radius-full);
+  overflow: hidden;
+}
+
+.armora-progress__bar {
+  height: 100%;
+  border-radius: var(--armora-radius-full);
+  transition: width 0.5s ease-out;
+}
+
+.armora-progress--default .armora-progress__bar {
+  background-color: var(--armora-navy);
+}
+
+.armora-progress--success .armora-progress__bar {
+  background-color: var(--armora-success);
+}
+
+.armora-progress--warning .armora-progress__bar {
+  background-color: var(--armora-warning);
+}
+
+.armora-progress--danger .armora-progress__bar {
+  background-color: var(--armora-danger);
+}
+
+.armora-progress__label {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-secondary);
+  min-width: 40px;
+  text-align: right;
+}

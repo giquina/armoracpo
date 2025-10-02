@@ -13,8 +13,8 @@ root.render(
   </React.StrictMode>
 );
 
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
+// Service Worker Registration (disabled in GitHub Codespaces and non-production environments)
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production' && !window.location.hostname.includes('github.dev')) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/service-worker.js')
@@ -42,6 +42,8 @@ if ('serviceWorker' in navigator) {
         console.error('[App] Service Worker registration failed:', error);
       });
   });
+} else {
+  console.log('[App] Service Worker registration skipped (development environment)');
 }
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,62 @@
+.armora-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--armora-radius-full);
+  font-family: var(--armora-font-body);
+  font-weight: var(--armora-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.armora-badge--sm {
+  padding: 2px var(--armora-space-sm);
+  font-size: 10px;
+}
+
+.armora-badge--md {
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  font-size: var(--armora-text-xs);
+}
+
+.armora-badge--lg {
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  font-size: var(--armora-text-sm);
+}
+
+.armora-badge--default {
+  background-color: var(--armora-bg-tertiary);
+  color: var(--armora-text-primary);
+}
+
+.armora-badge--success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.armora-badge--warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.armora-badge--danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.armora-badge--info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.armora-badge--navy {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
+
+.armora-badge--gold {
+  background-color: var(--armora-gold);
+  color: var(--armora-navy);
+}

@@ -1,0 +1,52 @@
+/* EarningsBreakdown.css */
+
+.earnings-breakdown {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  border: 1px solid var(--armora-border-light);
+}
+
+.earnings-breakdown__title {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0 0 var(--armora-space-lg) 0;
+  color: var(--armora-text-primary);
+}
+
+.earnings-breakdown__chart {
+  height: 280px;
+  width: 100%;
+  margin-bottom: var(--armora-space-lg);
+}
+
+.earnings-breakdown__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--armora-space-md);
+}
+
+.earnings-breakdown__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  text-align: center;
+}
+
+.earnings-breakdown__stat-label {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--armora-weight-semibold);
+}
+
+.earnings-breakdown__stat-value {
+  font-size: var(--armora-text-xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-navy);
+  font-family: var(--armora-font-display);
+}

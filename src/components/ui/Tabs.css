@@ -1,0 +1,83 @@
+.armora-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.armora-tabs__header {
+  display: flex;
+  gap: var(--armora-space-sm);
+  border-bottom: 2px solid var(--armora-border-light);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.armora-tabs__header::-webkit-scrollbar {
+  display: none;
+}
+
+.armora-tabs__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+  padding: var(--armora-space-md) var(--armora-space-lg);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-secondary);
+  transition: var(--armora-transition-base);
+  white-space: nowrap;
+  min-height: var(--armora-touch-min);
+}
+
+.armora-tabs__button:hover {
+  color: var(--armora-text-primary);
+}
+
+.armora-tabs__button--active {
+  color: var(--armora-navy);
+  font-weight: var(--armora-weight-semibold);
+}
+
+.armora-tabs__button:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: -2px;
+}
+
+.armora-tabs__icon {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.armora-tabs__label {
+  display: inline-block;
+}
+
+.armora-tabs__indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--armora-navy);
+}
+
+.armora-tabs__content {
+  padding: var(--armora-space-lg) 0;
+}
+
+.armora-tabs__panel {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .armora-tabs__button {
+    padding: var(--armora-space-md);
+    font-size: var(--armora-text-sm);
+  }
+}

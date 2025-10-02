@@ -1,253 +1,348 @@
 import React, { useEffect, useState } from 'react';
-import { supabase, ProtectionAssignment } from '../../lib/supabase';
-import { format } from 'date-fns';
+import { motion } from 'framer-motion';
+import { FaSearch, FaList, FaMap, FaSortAmountDown } from 'react-icons/fa';
+import { ProtectionAssignment } from '../../lib/supabase';
+import { assignmentService } from '../../services/assignmentService';
+import { authService } from '../../services/authService';
+import JobCard from '../../components/jobs/JobCard';
+import FilterPanel, { JobFilters } from '../../components/jobs/FilterPanel';
+import JobsMap from '../../components/jobs/JobsMap';
+import JobDetailModal from '../../components/jobs/JobDetailModal';
 import '../../styles/global.css';
+
+type ViewMode = 'list' | 'map';
+type SortOption = 'distance' | 'rate' | 'date' | 'urgency';
 
 const AvailableJobs: React.FC = () => {
   const [assignments, setAssignments] = useState<ProtectionAssignment[]>([]);
+  const [filteredAssignments, setFilteredAssignments] = useState<ProtectionAssignment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'close_protection' | 'event_security' | 'residential_security'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [sortBy, setSortBy] = useState<SortOption>('date');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [cpoId, setCpoId] = useState<string>('');
 
-  const loadAvailableAssignments = React.useCallback(async () => {
-    try {
-      setLoading(true);
-      let query = supabase
-        .from('protection_assignments')
-        .select('*')
-        .eq('status', 'pending')
-        .is('cpo_id', null)
-        .order('scheduled_start_time', { ascending: true });
-
-      if (filter !== 'all') {
-        query = query.eq('assignment_type', filter);
-      }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-      setAssignments(data || []);
-    } catch (err) {
-      console.error('Error loading assignments:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [filter]);
+  const [filters, setFilters] = useState<JobFilters>({
+    dateRange: null,
+    locationRadius: 50,
+    rateRange: { min: 0, max: 200 },
+    assignmentTypes: [],
+    threatLevels: [],
+  });
 
   useEffect(() => {
+    loadCurrentUser();
     loadAvailableAssignments();
-  }, [loadAvailableAssignments]);
+  }, []);
 
-  const acceptAssignment = async (assignmentId: string) => {
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [assignments, filters, searchQuery, sortBy]);
+
+  const loadCurrentUser = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      // Get CPO profile
-      const { data: cpoData } = await supabase
-        .from('protection_officers')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
-
-      if (!cpoData) return;
-
-      // Accept assignment
-      const { error } = await supabase
-        .from('protection_assignments')
-        .update({
-          cpo_id: cpoData.id,
-          status: 'assigned'
-        })
-        .eq('id', assignmentId);
-
-      if (!error) {
-        // Reload assignments
-        loadAvailableAssignments();
-        alert('Assignment accepted! View it in your active assignments.');
+      const currentUser = await authService.getCurrentUser();
+      if (currentUser) {
+        setCpoId(currentUser.cpo.id);
       }
-    } catch (err) {
-      console.error('Error accepting assignment:', err);
-      alert('Failed to accept assignment. Please try again.');
+    } catch (error) {
+      console.error('Error loading user:', error);
     }
   };
 
+  const loadAvailableAssignments = async () => {
+    try {
+      setLoading(true);
+      const jobs = await assignmentService.getAvailableAssignments();
+      setAssignments(jobs);
+    } catch (error) {
+      console.error('Error loading assignments:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const applyFiltersAndSort = () => {
+    let filtered = [...assignments];
+
+    // Search filter
+    if (searchQuery) {
+      filtered = filtered.filter((job) =>
+        job.pickup_location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.assignment_type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Assignment type filter
+    if (filters.assignmentTypes.length > 0) {
+      filtered = filtered.filter((job) => filters.assignmentTypes.includes(job.assignment_type));
+    }
+
+    // Threat level filter
+    if (filters.threatLevels.length > 0) {
+      filtered = filtered.filter((job) => filters.threatLevels.includes(job.threat_level));
+    }
+
+    // Rate range filter
+    filtered = filtered.filter(
+      (job) => job.base_rate >= filters.rateRange.min && job.base_rate <= filters.rateRange.max
+    );
+
+    // Sort
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'rate':
+          return b.base_rate - a.base_rate;
+        case 'date':
+          return new Date(a.scheduled_start_time).getTime() - new Date(b.scheduled_start_time).getTime();
+        case 'urgency':
+          return new Date(a.scheduled_start_time).getTime() - new Date(b.scheduled_start_time).getTime();
+        case 'distance':
+        default:
+          return 0; // Would calculate actual distance in production
+      }
+    });
+
+    setFilteredAssignments(filtered);
+  };
+
+  const handleAcceptJob = async (assignmentId: string) => {
+    if (!cpoId) {
+      alert('Unable to accept assignment. Please try logging in again.');
+      return;
+    }
+
+    try {
+      await assignmentService.acceptAssignment(assignmentId, cpoId);
+      alert('Assignment accepted successfully! View it in your active assignments.');
+      loadAvailableAssignments();
+    } catch (error: any) {
+      console.error('Error accepting assignment:', error);
+      alert(error.message || 'Failed to accept assignment. Please try again.');
+    }
+  };
+
+  const handleViewDetails = (assignmentId: string) => {
+    setSelectedJobId(assignmentId);
+  };
+
+  const selectedJob = assignments.find((job) => job.id === selectedJobId) || null;
+
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+      <div
+        className="safe-top safe-bottom"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: 'var(--armora-bg-secondary)',
+        }}
+      >
+        <div className="spinner spinner-gold" />
       </div>
     );
   }
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-secondary)', paddingBottom: '80px' }}>
+    <div
+      className="safe-top safe-bottom"
+      style={{
+        minHeight: '100vh',
+        backgroundColor: 'var(--armora-bg-secondary)',
+        paddingBottom: '100px',
+      }}
+    >
       {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-lg)' }}>
-        <h1 style={{ fontSize: 'var(--font-size-2xl)' }}>Available Assignments</h1>
-        <p style={{ fontSize: 'var(--font-size-sm)', opacity: 0.9, marginTop: 'var(--spacing-xs)' }}>
-          {assignments.length} assignment{assignments.length !== 1 ? 's' : ''} available
+      <div
+        style={{
+          background: 'linear-gradient(135deg, var(--armora-navy) 0%, var(--armora-navy-light) 100%)',
+          color: 'white',
+          padding: 'var(--armora-space-lg)',
+          borderRadius: '0 0 var(--armora-radius-2xl) var(--armora-radius-2xl)',
+        }}
+      >
+        <h1 className="font-display" style={{ fontSize: 'var(--armora-text-2xl)', marginBottom: 'var(--armora-space-sm)' }}>
+          Available Assignments
+        </h1>
+        <p style={{ fontSize: 'var(--armora-text-sm)', opacity: 0.9 }}>
+          {filteredAssignments.length} assignment{filteredAssignments.length !== 1 ? 's' : ''} available
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="container" style={{ paddingTop: 'var(--spacing-md)', paddingBottom: 'var(--spacing-md)' }}>
-        <div style={{ display: 'flex', gap: 'var(--spacing-sm)', overflowX: 'auto', paddingBottom: 'var(--spacing-xs)' }}>
-          <button
-            onClick={() => setFilter('all')}
-            className="btn"
-            style={{
-              backgroundColor: filter === 'all' ? 'var(--color-primary)' : 'var(--color-bg-primary)',
-              color: filter === 'all' ? 'white' : 'var(--color-text-primary)',
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-              whiteSpace: 'nowrap',
-              fontSize: 'var(--font-size-sm)'
-            }}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilter('close_protection')}
-            className="btn"
-            style={{
-              backgroundColor: filter === 'close_protection' ? 'var(--color-primary)' : 'var(--color-bg-primary)',
-              color: filter === 'close_protection' ? 'white' : 'var(--color-text-primary)',
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-              whiteSpace: 'nowrap',
-              fontSize: 'var(--font-size-sm)'
-            }}
-          >
-            Close Protection
-          </button>
-          <button
-            onClick={() => setFilter('event_security')}
-            className="btn"
-            style={{
-              backgroundColor: filter === 'event_security' ? 'var(--color-primary)' : 'var(--color-bg-primary)',
-              color: filter === 'event_security' ? 'white' : 'var(--color-text-primary)',
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-              whiteSpace: 'nowrap',
-              fontSize: 'var(--font-size-sm)'
-            }}
-          >
-            Event Security
-          </button>
-          <button
-            onClick={() => setFilter('residential_security')}
-            className="btn"
-            style={{
-              backgroundColor: filter === 'residential_security' ? 'var(--color-primary)' : 'var(--color-bg-primary)',
-              color: filter === 'residential_security' ? 'white' : 'var(--color-text-primary)',
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-              whiteSpace: 'nowrap',
-              fontSize: 'var(--font-size-sm)'
-            }}
-          >
-            Residential
-          </button>
-        </div>
-      </div>
-
-      {/* Assignments List */}
-      <div className="container">
-        {assignments.length === 0 ? (
-          <div className="card" style={{ textAlign: 'center', padding: 'var(--spacing-xl)' }}>
-            <div style={{ fontSize: '48px', marginBottom: 'var(--spacing-md)' }}>📭</div>
-            <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>No Assignments Available</h3>
-            <p style={{ color: 'var(--color-text-secondary)' }}>
-              Check back soon for new opportunities
-            </p>
+      <div className="container" style={{ paddingTop: 'var(--armora-space-lg)' }}>
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          style={{ marginBottom: 'var(--armora-space-md)' }}
+        >
+          <div style={{ position: 'relative' }}>
+            <FaSearch
+              style={{
+                position: 'absolute',
+                left: 'var(--armora-space-md)',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'var(--armora-text-secondary)',
+              }}
+              size={16}
+            />
+            <input
+              type="text"
+              placeholder="Search by location or type..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                paddingLeft: 'calc(var(--armora-space-md) * 3)',
+              }}
+            />
           </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
-            {assignments.map((assignment) => (
-              <div key={assignment.id} className="card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--spacing-md)' }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-xs)' }}>
-                      <h3 style={{ margin: 0 }}>
-                        {assignment.assignment_type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-                      </h3>
-                      {assignment.special_instructions?.includes('TEST ASSIGNMENT') && (
-                        <span style={{
-                          background: '#ff9500',
-                          color: 'white',
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          fontSize: '11px',
-                          fontWeight: 'bold',
-                          letterSpacing: '0.5px'
-                        }}>
-                          TEST
-                        </span>
-                      )}
-                    </div>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
-                      {format(new Date(assignment.scheduled_start_time), 'PPp')}
-                    </p>
-                  </div>
-                  <span className={`badge badge-threat-${assignment.threat_level}`}>
-                    {assignment.threat_level.toUpperCase()}
-                  </span>
+        </motion.div>
+
+        {/* Controls */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          style={{
+            display: 'flex',
+            gap: 'var(--armora-space-sm)',
+            marginBottom: 'var(--armora-space-md)',
+          }}
+        >
+          {/* View Toggle */}
+          <div
+            style={{
+              display: 'flex',
+              backgroundColor: 'var(--armora-bg-primary)',
+              borderRadius: 'var(--armora-radius-md)',
+              padding: 'var(--armora-space-xs)',
+              border: '1px solid var(--armora-border-light)',
+            }}
+          >
+            <button
+              className={viewMode === 'list' ? 'btn-primary' : 'btn-secondary'}
+              style={{
+                padding: 'var(--armora-space-sm)',
+                minHeight: 'auto',
+                borderRadius: 'var(--armora-radius-sm)',
+              }}
+              onClick={() => setViewMode('list')}
+            >
+              <FaList size={16} />
+            </button>
+            <button
+              className={viewMode === 'map' ? 'btn-primary' : 'btn-secondary'}
+              style={{
+                padding: 'var(--armora-space-sm)',
+                minHeight: 'auto',
+                borderRadius: 'var(--armora-radius-sm)',
+                marginLeft: 'var(--armora-space-xs)',
+              }}
+              onClick={() => setViewMode('map')}
+            >
+              <FaMap size={16} />
+            </button>
+          </div>
+
+          {/* Sort Dropdown */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortOption)}
+            style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--armora-space-sm)',
+            }}
+          >
+            <option value="distance">Nearest First</option>
+            <option value="rate">Highest Rate</option>
+            <option value="date">Soonest</option>
+            <option value="urgency">Most Urgent</option>
+          </select>
+        </motion.div>
+
+        {/* Filter Panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <FilterPanel
+            filters={filters}
+            onFiltersChange={setFilters}
+            isOpen={isFilterOpen}
+            onToggle={() => setIsFilterOpen(!isFilterOpen)}
+          />
+        </motion.div>
+
+        {/* Map View */}
+        {viewMode === 'map' && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            style={{ marginBottom: 'var(--armora-space-md)' }}
+          >
+            <JobsMap jobs={filteredAssignments} onJobSelect={handleViewDetails} />
+          </motion.div>
+        )}
+
+        {/* Jobs List */}
+        {viewMode === 'list' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            {filteredAssignments.length === 0 ? (
+              <div className="card" style={{ textAlign: 'center', padding: 'var(--armora-space-xl)' }}>
+                <div style={{ fontSize: '64px', marginBottom: 'var(--armora-space-md)' }}>
+                  {searchQuery || filters.assignmentTypes.length > 0 ? '🔍' : '📭'}
                 </div>
-
-                <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                  <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Principal</p>
-                  <p style={{ fontWeight: 600 }}>{assignment.principal_name}</p>
-                </div>
-
-                <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                  <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Location</p>
-                  <p>{assignment.pickup_location}</p>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                  <div>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Duration</p>
-                    <p style={{ fontWeight: 600 }}>{assignment.estimated_duration_hours}h</p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Rate</p>
-                    <p style={{ fontWeight: 600, color: 'var(--color-success)' }}>
-                      £{assignment.base_rate}/hr
-                    </p>
-                  </div>
-                </div>
-
-                {assignment.special_instructions && (
-                  <div style={{
-                    padding: 'var(--spacing-md)',
-                    backgroundColor: 'var(--color-bg-secondary)',
-                    borderRadius: 'var(--radius-md)',
-                    marginBottom: 'var(--spacing-md)'
-                  }}>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-xs)' }}>
-                      Special Instructions
-                    </p>
-                    <p style={{ fontSize: 'var(--font-size-sm)' }}>{assignment.special_instructions}</p>
-                  </div>
-                )}
-
-                <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
-                  {assignment.vehicle_required && (
-                    <span className="badge badge-info">🚗 Vehicle Required</span>
-                  )}
-                  {assignment.armed_protection_required && (
-                    <span className="badge badge-danger">🔫 Armed</span>
-                  )}
-                </div>
-
-                <button
-                  onClick={() => acceptAssignment(assignment.id)}
-                  className="btn btn-success btn-full"
-                  style={{ marginTop: 'var(--spacing-md)' }}
-                >
-                  Accept Assignment
-                </button>
+                <h3 className="mb-sm">No Assignments Found</h3>
+                <p className="text-sm text-secondary">
+                  {searchQuery || filters.assignmentTypes.length > 0
+                    ? 'Try adjusting your filters or search criteria'
+                    : 'Check back soon for new opportunities'}
+                </p>
               </div>
-            ))}
-          </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--armora-space-md)' }}>
+                {filteredAssignments.map((job, index) => (
+                  <motion.div
+                    key={job.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                  >
+                    <JobCard
+                      assignment={job}
+                      onViewDetails={handleViewDetails}
+                      onAccept={handleAcceptJob}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
         )}
       </div>
+
+      {/* Job Detail Modal */}
+      <JobDetailModal
+        assignment={selectedJob}
+        isOpen={selectedJobId !== null}
+        onClose={() => setSelectedJobId(null)}
+        onAccept={handleAcceptJob}
+      />
     </div>
   );
 };

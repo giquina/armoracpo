@@ -7,9 +7,8 @@ import '../../styles/global.css';
 // DevPanel for quick navigation during development
 const DevPanel: React.FC = () => {
   const navigate = useNavigate();
+  console.log('🚀 DevPanel component loaded - v1.0');
   const [isOpen, setIsOpen] = useState(false);
-
-  if (process.env.NODE_ENV !== 'development') return null;
 
   const screens = [
     { name: 'Dashboard', path: '/dashboard', icon: '📊' },
@@ -24,86 +23,98 @@ const DevPanel: React.FC = () => {
   ];
 
   return (
-    <div style={{
-      position: 'fixed',
-      bottom: isOpen ? 0 : -320,
-      left: 0,
-      right: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.95)',
-      borderTop: '2px solid var(--color-primary)',
-      transition: 'bottom 0.3s ease',
-      zIndex: 9999,
-      maxHeight: '400px',
-      overflowY: 'auto',
-    }}>
-      {/* Toggle Button */}
+    <>
+      {/* Toggle Button - Always visible */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
-          position: 'absolute',
-          top: -40,
+          position: 'fixed',
+          bottom: 20,
           right: 20,
           backgroundColor: 'var(--color-primary)',
           color: 'white',
           border: 'none',
-          borderRadius: '8px 8px 0 0',
-          padding: '8px 16px',
+          borderRadius: '8px',
+          padding: '12px 20px',
           cursor: 'pointer',
           fontWeight: 600,
-          fontSize: '12px',
+          fontSize: '14px',
+          zIndex: 10000,
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
         }}
       >
         {isOpen ? '▼' : '▲'} DEV PANEL
       </button>
 
-      {/* Screen Grid */}
-      <div style={{ padding: '20px' }}>
-        <h3 style={{ color: 'var(--color-primary)', marginBottom: '16px', fontSize: '14px', textTransform: 'uppercase' }}>
-          Quick Navigation (Dev Mode)
-        </h3>
+      {/* Dev Panel */}
+      {isOpen && (
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-          gap: '12px',
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.95)',
+          borderTop: '2px solid var(--color-primary)',
+          zIndex: 9999,
+          maxHeight: '400px',
+          overflowY: 'auto',
+          animation: 'slideUp 0.3s ease',
         }}>
-          {screens.map((screen) => (
-            <button
-              key={screen.path}
-              onClick={() => {
-                navigate(screen.path);
-                setIsOpen(false);
-              }}
-              style={{
-                backgroundColor: 'var(--color-bg-secondary)',
-                color: 'var(--color-text-primary)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '8px',
-                padding: '12px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                fontWeight: 500,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-primary)';
-                e.currentTarget.style.transform = 'scale(1.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-            >
-              <span style={{ fontSize: '24px' }}>{screen.icon}</span>
-              <span>{screen.name}</span>
-            </button>
-          ))}
+          {/* Screen Grid */}
+          <div style={{ padding: '20px' }}>
+            <h3 style={{ color: 'var(--color-primary)', marginBottom: '16px', fontSize: '14px', textTransform: 'uppercase' }}>
+              Quick Navigation (Dev Mode)
+            </h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+              gap: '12px',
+            }}>
+              {screens.map((screen) => (
+                <button
+                  key={screen.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Navigating to:', screen.path);
+                    sessionStorage.setItem('devMode', 'true'); // Enable dev mode bypass
+                    navigate(screen.path);
+                    setIsOpen(false);
+                  }}
+                  style={{
+                    backgroundColor: 'var(--color-bg-secondary)',
+                    color: 'var(--color-text-primary)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    padding: '12px',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s',
+                    pointerEvents: 'auto',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--color-primary)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                >
+                  <span style={{ fontSize: '24px' }}>{screen.icon}</span>
+                  <span>{screen.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

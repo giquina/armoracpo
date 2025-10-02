@@ -1,19 +1,25 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
 import { supabase, ProtectionAssignment, AssignmentMessage } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
+import { ChatBubble, TypingIndicator, QuickReplyTemplates, MessageInput } from '../../components/messages';
+import { StatusBadge, LoadingSpinner, Card } from '../../components/ui';
 import '../../styles/global.css';
+import './MessageChat.css';
 
 const MessageChat: React.FC = () => {
   const { assignmentId } = useParams<{ assignmentId: string }>();
   const navigate = useNavigate();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<AssignmentMessage[]>([]);
   const [assignment, setAssignment] = useState<ProtectionAssignment | null>(null);
-  const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showQuickReplies, setShowQuickReplies] = useState(false);
 
   const loadChatData = useCallback(async () => {
     try {
@@ -23,7 +29,6 @@ const MessageChat: React.FC = () => {
       if (!user) return;
       setUserId(user.id);
 
-      // Load assignment details
       const { data: assignmentData } = await supabase
         .from('protection_assignments')
         .select('*')
@@ -32,11 +37,9 @@ const MessageChat: React.FC = () => {
 
       if (assignmentData) setAssignment(assignmentData);
 
-      // Load messages
       const msgs = await messageService.getMessages(assignmentId);
       setMessages(msgs);
 
-      // Mark messages as read
       await messageService.markAllAsRead(assignmentId, user.id);
     } catch (error) {
       console.error('Error loading chat:', error);
@@ -54,7 +57,6 @@ const MessageChat: React.FC = () => {
 
     let mounted = true;
 
-    // Mark messages as read with proper error handling
     const markRead = async () => {
       try {
         await messageService.markAllAsRead(assignmentId, userId);
@@ -65,14 +67,18 @@ const MessageChat: React.FC = () => {
 
     markRead();
 
-    // Subscribe to new messages
     const unsubscribe = messageService.subscribeToMessages(assignmentId, (message) => {
       if (mounted) {
         setMessages((prev) => [...prev, message]);
-        // Mark new messages as read with error handling
         messageService.markAllAsRead(assignmentId, userId).catch(error => {
           console.error('Error marking new message as read:', error);
         });
+
+        // Simulate typing indicator for principal messages
+        if (message.sender_type === 'principal') {
+          setIsTyping(true);
+          setTimeout(() => setIsTyping(false), 1000);
+        }
       }
     });
 
@@ -83,204 +89,156 @@ const MessageChat: React.FC = () => {
   }, [assignmentId, userId]);
 
   useEffect(() => {
-    // Scroll to bottom when messages change
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isTyping]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMessage.trim() || !assignmentId || !userId || sending) return;
+  const handleSendMessage = async (messageText: string) => {
+    if (!assignmentId || !userId) return;
 
-    setSending(true);
     try {
-      await messageService.sendMessage(assignmentId, userId, 'cpo', newMessage.trim());
-      setNewMessage('');
-    } catch (error: any) {
-      alert(error.message || 'Failed to send message');
-    } finally {
-      setSending(false);
+      await messageService.sendMessage(assignmentId, userId, 'cpo', messageText);
+      setShowQuickReplies(false);
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
   };
 
-  const formatMessageTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const handleQuickReply = (replyText: string) => {
+    handleSendMessage(replyText);
+  };
+
+  const getAssignmentTypeLabel = (type: string) => {
+    const labels: { [key: string]: string } = {
+      close_protection: 'Close Protection',
+      event_security: 'Event Security',
+      residential_security: 'Residential',
+      executive_protection: 'Executive',
+      transport_security: 'Transport',
+    };
+    return labels[type] || type;
   };
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+      <div className="message-chat">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
 
   if (!assignment) {
     return (
-      <div className="safe-top safe-bottom" style={{ minHeight: '100vh', padding: 'var(--spacing-lg)' }}>
-        <button className="btn btn-secondary" onClick={() => navigate('/messages')}>
-          ← Back to Messages
-        </button>
-        <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
-          <h2>Assignment Not Found</h2>
-        </div>
+      <div className="message-chat">
+        <div className="message-chat__error">Assignment not found</div>
       </div>
     );
   }
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="message-chat safe-top">
       {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-md)', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-sm)' }}>
-          <button
-            onClick={() => navigate('/messages')}
-            style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-              color: 'white',
-              fontSize: 'var(--font-size-xl)',
-              cursor: 'pointer',
-              padding: 'var(--spacing-xs)',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            ←
-          </button>
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundImage: assignment.principal_photo_url ? `url(${assignment.principal_photo_url})` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {!assignment.principal_photo_url && '👤'}
+      <div className="message-chat__header">
+        <button
+          className="message-chat__back"
+          onClick={() => navigate('/messages')}
+          aria-label="Back to messages"
+        >
+          <FiArrowLeft size={24} />
+        </button>
+
+        <div className="message-chat__header-info">
+          <div className="message-chat__principal">
+            <div className="message-chat__principal-avatar">
+              {assignment.principal_photo_url ? (
+                <img src={assignment.principal_photo_url} alt={assignment.principal_name} />
+              ) : (
+                <span>{assignment.principal_name.charAt(0)}</span>
+              )}
+            </div>
+            <div className="message-chat__principal-details">
+              <h2 className="message-chat__principal-name">{assignment.principal_name}</h2>
+              <p className="message-chat__principal-status">
+                {assignment.status === 'active' ? 'Assignment Active' : 'Assignment Scheduled'}
+              </p>
+            </div>
           </div>
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontSize: 'var(--font-size-lg)', marginBottom: '2px' }}>
-              {assignment.principal_name}
-            </h2>
-            <p style={{ fontSize: 'var(--font-size-xs)', opacity: 0.9 }}>
-              {assignment.assignment_type.replace('_', ' ').toUpperCase()} • {assignment.status.toUpperCase()}
+        </div>
+
+        <button
+          className="message-chat__menu"
+          aria-label="More options"
+        >
+          <FiMoreVertical size={20} />
+        </button>
+      </div>
+
+      {/* Assignment Context Card */}
+      <div className="message-chat__context">
+        <Card>
+          <div className="message-chat__context-content">
+            <div className="message-chat__context-badges">
+              <StatusBadge status={assignment.status} size="sm" />
+              <span className="badge badge-navy">
+                {getAssignmentTypeLabel(assignment.assignment_type)}
+              </span>
+              <span className={`badge badge-threat-${assignment.threat_level}`}>
+                {assignment.threat_level.toUpperCase()}
+              </span>
+            </div>
+            <p className="message-chat__context-location">
+              📍 {assignment.pickup_location}
             </p>
+            {assignment.special_instructions && (
+              <p className="message-chat__context-instructions">
+                ℹ️ {assignment.special_instructions}
+              </p>
+            )}
           </div>
-        </div>
-        <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.9 }}>
-          📍 {assignment.pickup_location}
-        </div>
+        </Card>
       </div>
 
       {/* Messages Container */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: 'var(--spacing-md)',
-          backgroundColor: 'var(--color-bg-secondary)',
-          paddingBottom: 'calc(60px + var(--spacing-md))', // Space for input + bottom nav
-        }}
-      >
+      <div className="message-chat__messages" ref={messagesContainerRef}>
         {messages.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: 'var(--spacing-xl)', color: 'var(--color-text-secondary)' }}>
-            <div style={{ fontSize: '48px', marginBottom: 'var(--spacing-md)' }}>💬</div>
-            <p>No messages yet. Start the conversation!</p>
+          <div className="message-chat__empty">
+            <p>No messages yet. Start the conversation with your principal.</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-            {messages.map((message) => {
-              const isOwnMessage = message.sender_id === userId;
-              return (
-                <div
-                  key={message.id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: isOwnMessage ? 'flex-end' : 'flex-start',
-                  }}
-                >
-                  <div
-                    style={{
-                      maxWidth: '75%',
-                      backgroundColor: isOwnMessage ? 'var(--color-primary)' : 'var(--color-bg-primary)',
-                      color: isOwnMessage ? 'white' : 'var(--color-text-primary)',
-                      padding: 'var(--spacing-sm) var(--spacing-md)',
-                      borderRadius: 'var(--radius-lg)',
-                      borderBottomRightRadius: isOwnMessage ? '4px' : 'var(--radius-lg)',
-                      borderBottomLeftRadius: isOwnMessage ? 'var(--radius-lg)' : '4px',
-                      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-                    }}
-                  >
-                    <p style={{ marginBottom: 'var(--spacing-xs)', wordWrap: 'break-word' }}>
-                      {message.message}
-                    </p>
-                    <div
-                      style={{
-                        fontSize: 'var(--font-size-xs)',
-                        opacity: 0.7,
-                        textAlign: 'right',
-                      }}
-                    >
-                      {formatMessageTime(message.created_at)}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <div ref={messagesEndRef} />
-          </div>
+          messages.map((message) => (
+            <ChatBubble
+              key={message.id}
+              message={message}
+              isSent={message.sender_type === 'cpo'}
+            />
+          ))
         )}
+
+        {isTyping && <TypingIndicator />}
+
+        <div ref={messagesEndRef} />
       </div>
 
-      {/* Message Input - Fixed at bottom */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 'max(var(--safe-area-bottom), 60px)', // Above bottom nav
-          left: 0,
-          right: 0,
-          backgroundColor: 'var(--color-bg-primary)',
-          borderTop: '1px solid var(--color-border-light)',
-          padding: 'var(--spacing-md)',
-          zIndex: 'calc(var(--z-nav) - 1)',
-        }}
-      >
-        <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
-            className="input"
-            style={{
-              flex: 1,
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-              fontSize: 'var(--font-size-md)',
-            }}
-            disabled={sending}
-          />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={{
-              minWidth: '60px',
-              padding: 'var(--spacing-sm) var(--spacing-md)',
-            }}
-            disabled={!newMessage.trim() || sending}
-          >
-            {sending ? '...' : '📤'}
-          </button>
-        </form>
+      {/* Quick Replies (Collapsible) */}
+      {showQuickReplies && (
+        <QuickReplyTemplates onSelect={handleQuickReply} />
+      )}
+
+      {/* Input Area */}
+      <div className="message-chat__input-area">
+        <button
+          className="message-chat__quick-replies-toggle"
+          onClick={() => setShowQuickReplies(!showQuickReplies)}
+        >
+          {showQuickReplies ? 'Hide' : 'Quick Replies'}
+        </button>
+        <MessageInput
+          onSend={handleSendMessage}
+          placeholder={`Message ${assignment.principal_name}...`}
+        />
       </div>
     </div>
   );

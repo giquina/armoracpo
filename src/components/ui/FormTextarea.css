@@ -1,0 +1,94 @@
+.armora-form-textarea__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+  width: 100%;
+}
+
+.armora-form-textarea__label {
+  display: block;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-primary);
+}
+
+.armora-form-textarea__required {
+  color: var(--armora-danger);
+  margin-left: 2px;
+}
+
+.armora-form-textarea {
+  width: 100%;
+  font-family: var(--armora-font-body);
+  font-size: 16px; /* Prevent zoom on iOS */
+  padding: var(--armora-space-md);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  background-color: var(--armora-bg-primary);
+  color: var(--armora-text-primary);
+  min-height: 120px;
+  resize: vertical;
+  transition: var(--armora-transition-base);
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: var(--armora-leading-normal);
+}
+
+.armora-form-textarea--auto-resize {
+  resize: none;
+  overflow: hidden;
+}
+
+.armora-form-textarea::placeholder {
+  color: var(--armora-text-tertiary);
+}
+
+.armora-form-textarea:focus {
+  outline: none;
+  border-color: var(--armora-navy);
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.1);
+}
+
+.armora-form-textarea:disabled {
+  background-color: var(--armora-bg-secondary);
+  color: var(--armora-text-secondary);
+  cursor: not-allowed;
+}
+
+.armora-form-textarea--error {
+  border-color: var(--armora-danger);
+}
+
+.armora-form-textarea--error:focus {
+  border-color: var(--armora-danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.armora-form-textarea__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--armora-space-md);
+}
+
+.armora-form-textarea__error {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-danger);
+  margin: 0;
+}
+
+.armora-form-textarea__helper {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  margin: 0;
+}
+
+.armora-form-textarea__char-count {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  white-space: nowrap;
+}

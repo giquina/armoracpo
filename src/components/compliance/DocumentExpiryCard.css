@@ -1,0 +1,145 @@
+/* DocumentExpiryCard.css */
+
+.document-expiry-card {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  border: 2px solid var(--armora-border-light);
+  transition: all var(--armora-transition-base);
+}
+
+.document-expiry-card--expired {
+  border-color: var(--armora-danger);
+  background-color: #fff5f5;
+}
+
+.document-expiry-card--expiring {
+  border-color: var(--armora-warning);
+  background-color: #fffbeb;
+}
+
+.document-expiry-card--valid {
+  border-color: var(--armora-success);
+}
+
+.document-expiry-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--armora-space-md);
+  margin-bottom: var(--armora-space-lg);
+}
+
+.document-expiry-card__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-2xl);
+  flex-shrink: 0;
+}
+
+.document-expiry-card__title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+}
+
+.document-expiry-card__title h4 {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  margin: 0;
+  color: var(--armora-text-primary);
+}
+
+.document-expiry-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+  margin-bottom: var(--armora-space-lg);
+}
+
+.document-expiry-card__detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+}
+
+.document-expiry-card__detail-label {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--armora-weight-semibold);
+}
+
+.document-expiry-card__detail-value {
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-primary);
+}
+
+.document-expiry-card__detail-value--expired {
+  color: var(--armora-danger);
+}
+
+.document-expiry-card__detail-value--expiring {
+  color: var(--armora-warning);
+}
+
+.document-expiry-card__detail-value--valid {
+  color: var(--armora-success);
+}
+
+.document-expiry-card__actions {
+  display: flex;
+  gap: var(--armora-space-sm);
+}
+
+.document-expiry-card__action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--armora-space-xs);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  border: 2px solid transparent;
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-semibold);
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+  min-height: 44px;
+}
+
+.document-expiry-card__action--primary {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
+
+.document-expiry-card__action--primary:hover {
+  background-color: var(--armora-navy-light);
+}
+
+.document-expiry-card__action--danger {
+  background-color: var(--armora-danger);
+  color: var(--armora-text-inverse);
+}
+
+.document-expiry-card__action--danger:hover {
+  background-color: #dc2626;
+}
+
+.document-expiry-card__action--secondary {
+  background-color: transparent;
+  color: var(--armora-navy);
+  border-color: var(--armora-navy);
+}
+
+.document-expiry-card__action--secondary:hover {
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
+}
