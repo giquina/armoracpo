@@ -23,3 +23,26 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .vercel
+
+# Android / TWA (Trusted Web Activity)
+# CRITICAL: Never commit keystore files - they contain your app signing keys
+*.keystore
+*.jks
+local.properties
+gradle.properties
+
+# Gradle build artifacts
+.gradle/
+app/build/
+app/.cxx/
+
+# Android Studio
+*.iml
+.idea/
+.DS_Store
+captures/
+.externalNativeBuild
+.cxx
+
+# Bubblewrap
+manifest-checksum.txt
