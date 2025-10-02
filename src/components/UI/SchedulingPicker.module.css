@@ -1,0 +1,407 @@
+/* SchedulingPicker Component Styles */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.pickerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.pickerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pickerLabel {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pickerIcon {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Progressive Disclosure Styles */
+.dateSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fullCalendarSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.minimizedDateDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  animation: minimizeCalendar 0.3s ease-out;
+}
+
+@keyframes minimizeCalendar {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.selectedDateInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateIcon {
+  font-size: 1.2rem;
+}
+
+.selectedDateText {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.changeDateButton {
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.changeDateButton:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.changeDateButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.timeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: expandTimeSelection 0.3s ease-out;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+@keyframes expandTimeSelection {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+}
+
+/* Confirmation Display */
+.confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 2px solid var(--color-success);
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.05);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confirmationIcon {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.confirmationText {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.confirmationText strong {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* Help Text */
+.helpText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-background-elevated);
+  border-radius: 8px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.helpItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+.helpIcon {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* ================= Condensed Variant ================= */
+.condensed {
+  gap: 20px;
+}
+
+.condensedRow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--color-border, rgba(255,255,255,0.15));
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.condensedTrigger {
+  appearance: none;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background .15s ease;
+  text-align: left;
+}
+
+.condensedTrigger:hover:not(:disabled) {
+  background: rgba(255,255,255,0.07);
+}
+
+.condensedTrigger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.condensedIcon {
+  margin-right: 10px;
+  font-size: 1.05rem;
+}
+
+.condensedPrimaryText {
+  flex: 1;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.condensedChevron {
+  margin-left: 12px;
+  opacity: .6;
+  font-size: .85rem;
+}
+
+.inlinePanel {
+  margin: 4px 0 12px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 12px;
+  animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.condensedHelpList {
+  list-style: none;
+  margin: 0;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.condensedHelpList li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 4px;
+}
+
+.condensedHelpList li::before {
+  content: '•';
+  opacity: .6;
+}
+
+.condensedConfirmation {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: var(--color-success);
+}
+
+@media (max-width: 640px) {
+  .condensedTrigger { font-size: 1rem; }
+  .condensedHelpList { font-size: 0.8rem; }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .pickerGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .label {
+    font-size: 1.2rem;
+  }
+
+  .pickerLabel {
+    font-size: 1rem;
+  }
+
+  .confirmation {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .confirmationText {
+    font-size: 1rem;
+  }
+
+  .helpText {
+    padding: 20px;
+  }
+
+  .helpItem {
+    font-size: 1rem;
+  }
+
+  /* Progressive Disclosure Mobile Styles */
+  .minimizedDateDisplay {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .selectedDateInfo {
+    width: 100%;
+  }
+
+  .selectedDateText {
+    font-size: 1.1rem;
+  }
+
+  .changeDateButton {
+    padding: 8px 16px;
+    font-size: 1rem;
+    align-self: flex-end;
+  }
+
+  .timeSection {
+    padding-top: 20px;
+    margin-top: 16px;
+  }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+  .container {
+    gap: 20px;
+  }
+
+  .confirmation {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .confirmationIcon {
+    align-self: center;
+    font-size: 1.5rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .confirmation {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .confirmation {
+    animation: none;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .confirmation {
+    background: rgba(34, 197, 94, 0.1);
+  }
+}

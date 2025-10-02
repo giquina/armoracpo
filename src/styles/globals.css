@@ -1,0 +1,413 @@
+/* ARMORA SECURITY TRANSPORT - GLOBAL STYLES */
+@import './variables.css';
+
+/* RESET & NORMALIZE */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* CRITICAL: Prevent images and media from causing horizontal scroll */
+img, video, iframe, canvas, svg {
+  max-width: 100%;
+}
+
+html {
+  font-size: 16px;
+  line-height: var(--line-base);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-base);
+  line-height: var(--line-base);
+  overflow-x: hidden; /* CRITICAL: Prevent horizontal scroll */
+  box-sizing: border-box;
+}
+
+/* Account for fixed recruitment banner at top */
+body.has-recruitment-banner {
+  padding-top: 40px;
+}
+
+/* Account for fixed achievement banner */
+body.has-achievement-banner {
+  padding-top: 100px;
+}
+
+/* PREMIUM SCROLLBARS */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--armora-gold);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-gold);
+}
+
+/* MOBILE SAFE AREAS */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* RESPONSIVE UTILITIES */
+.mobile-only {
+  display: block;
+}
+
+.tablet-up {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-up {
+    display: block;
+  }
+}
+
+/* TOUCH-FRIENDLY INTERACTIONS */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  box-sizing: border-box; /* Critical: ensure borders don't expand element size */
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  box-sizing: border-box; /* Critical: ensure borders don't expand button size */
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* FOCUS STYLES */
+*:focus {
+  outline: 2px solid var(--armora-gold);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* PREMIUM ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+  }
+}
+
+@keyframes orbitalSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* GLOBAL TYPOGRAPHY IMPROVEMENTS */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600; /* All headings get semibold weight */
+  line-height: var(--line-tight);
+}
+
+/* GLOBAL SPACING AND PADDING IMPROVEMENTS */
+.card, [class*="card"] {
+  padding: 20px !important; /* Up from 12-16px */
+  margin-bottom: var(--space-md);
+}
+
+.section {
+  margin-bottom: 32px !important; /* Up from 20px */
+}
+
+/* GLOBAL SHADOW IMPROVEMENTS */
+.card, [class*="card"] {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  border-radius: var(--radius-lg);
+}
+
+button {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  padding: 12px 24px; /* Increased button padding */
+}
+
+button:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0.9;
+}
+
+/* NAVIGATION SHADOW */
+nav, [class*="nav"], .app-header {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+}
+
+/* LIST IMPROVEMENTS */
+li {
+  margin-bottom: 8px;
+}
+
+/* UTILITY CLASSES */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* PREMIUM GRADIENT BACKGROUNDS */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--armora-dark) 0%, var(--bg-secondary) 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--armora-gold) 0%, var(--hover-gold) 100%);
+}
+
+/* LOADING STATES */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* CRITICAL: PREVENT HORIZONTAL SCROLLING ON ALL BREAKPOINTS */
+body,
+html {
+  overflow-x: hidden;
+}
+
+/* Allow #root to show card borders properly */
+#root {
+  overflow-x: visible; /* Allow borders to show */
+}
+
+/* CRITICAL: Ensure all potentially bordered elements use border-box */
+*[class*="card"],
+*[class*="button"],
+*[class*="input"],
+*[class*="form"],
+.button,
+.outline {
+  box-sizing: border-box !important;
+}
+
+/* CRITICAL: Prevent border clipping on outlined elements */
+button.outline,
+.outline,
+*[class*="outline"],
+button[variant="outline"],
+*[class*="scheduleButton"] {
+  overflow: visible !important; /* Ensure borders are never clipped */
+}
+
+/* Media elements already handled by main rule above */
+
+/* IMPROVED TEXT CONTRAST GLOBALLY */
+body {
+  color: #ffffff; /* Pure white for better contrast */
+}
+
+/* Better contrast for all text elements */
+p, span, div, label {
+  color: inherit;
+}
+
+/* Secondary text with better contrast */
+.text-secondary {
+  color: #94a3b8 !important;
+}
+
+/* Ensure good contrast on light backgrounds */
+.card, [class*="card"] {
+  color: var(--text-light-bg);
+}
+
+/* DESKTOP OPTIMIZATIONS */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-lg);
+    max-width: 1200px;
+  }
+
+  /* Larger typography for desktop */
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  /* Better button sizing for desktop */
+  button {
+    padding: 14px 28px;
+    font-size: var(--font-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 var(--space-xl);
+  }
+
+  /* Even larger headings for large screens */
+  h1 {
+    font-size: 3.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+
+  /* Enhanced button styling for desktop */
+  button {
+    padding: 16px 32px;
+    font-size: var(--font-xl);
+  }
+}
+
+/* MOBILE-FIRST RESPONSIVE DESIGN */
+@media (max-width: 320px) {
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
+  html {
+    font-size: 14px;
+  }
+}
