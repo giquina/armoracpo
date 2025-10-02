@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { supabase } from './lib/supabase';
 
 // Screens
@@ -152,6 +153,7 @@ function App() {
         {/* Catch all - redirect to dashboard if authenticated, login if not */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
+      <Analytics />
     </Router>
   );
 }
