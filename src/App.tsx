@@ -14,6 +14,8 @@ import Profile from './screens/Profile/Profile';
 import Earnings from './screens/Earnings/Earnings';
 import Compliance from './screens/Compliance/Compliance';
 import Settings from './screens/Settings/Settings';
+import Messages from './screens/Messages/Messages';
+import MessageChat from './screens/Messages/MessageChat';
 
 // Components
 import BottomNav from './components/layout/BottomNav';
@@ -158,6 +160,26 @@ function App() {
             <ProtectedRoute>
               <AppLayout>
                 <Settings />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Messages />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages/:assignmentId"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <MessageChat />
               </AppLayout>
             </ProtectedRoute>
           }

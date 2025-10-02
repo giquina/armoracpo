@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase, ProtectionOfficer, ProtectionAssignment } from '../../lib/supabase';
 import '../../styles/global.css';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [cpo, setCpo] = useState<ProtectionOfficer | null>(null);
   const [activeAssignment, setActiveAssignment] = useState<ProtectionAssignment | null>(null);
   const [availableCount, setAvailableCount] = useState(0);
@@ -186,16 +188,39 @@ const Dashboard: React.FC = () => {
         <div className="card">
           <h3 style={{ marginBottom: 'var(--spacing-md)' }}>Quick Actions</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-            <button className="btn btn-secondary" style={{ justifyContent: 'flex-start' }}>
+            <button
+              className="btn btn-secondary"
+              style={{ justifyContent: 'flex-start' }}
+              onClick={() => navigate('/messages')}
+            >
+              💬 Messages
+            </button>
+            <button
+              className="btn btn-secondary"
+              style={{ justifyContent: 'flex-start' }}
+              onClick={() => navigate('/history')}
+            >
               📋 View Assignment History
             </button>
-            <button className="btn btn-secondary" style={{ justifyContent: 'flex-start' }}>
+            <button
+              className="btn btn-secondary"
+              style={{ justifyContent: 'flex-start' }}
+              onClick={() => navigate('/earnings')}
+            >
               💰 Check Earnings
             </button>
-            <button className="btn btn-secondary" style={{ justifyContent: 'flex-start' }}>
+            <button
+              className="btn btn-secondary"
+              style={{ justifyContent: 'flex-start' }}
+              onClick={() => navigate('/compliance')}
+            >
               📜 Compliance Center
             </button>
-            <button className="btn btn-secondary" style={{ justifyContent: 'flex-start' }}>
+            <button
+              className="btn btn-secondary"
+              style={{ justifyContent: 'flex-start' }}
+              onClick={() => navigate('/settings')}
+            >
               ⚙️ Settings
             </button>
           </div>

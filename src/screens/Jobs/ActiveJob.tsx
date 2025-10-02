@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase, ProtectionAssignment } from '../../lib/supabase';
 import { format } from 'date-fns';
 import '../../styles/global.css';
 
 const ActiveJob: React.FC = () => {
+  const navigate = useNavigate();
   const [assignment, setAssignment] = useState<ProtectionAssignment | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -66,7 +68,7 @@ const ActiveJob: React.FC = () => {
         setAssignment({ ...assignment, ...updates });
         if (newStatus === 'completed') {
           alert('Assignment completed successfully!');
-          window.location.href = '/dashboard';
+          navigate('/dashboard');
         }
       }
     } catch (err) {

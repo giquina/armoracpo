@@ -2,7 +2,13 @@ import { messaging } from '../lib/firebase';
 import { getToken, onMessage } from 'firebase/messaging';
 import { supabase } from '../lib/supabase';
 
-const VAPID_KEY = 'BJjy-XYsrQgp-SEMNcwRh_4zTzRryjE-mlb10LsQnlL_oS-BYpGO9-B_x_gbsyHPJmMusybANJu2K5VvRw7mBvI';
+// SECURITY: VAPID key must be stored as an environment variable
+// Get this from Firebase Console → Project Settings → Cloud Messaging → Web Push certificates
+const VAPID_KEY = process.env.REACT_APP_FIREBASE_VAPID_KEY;
+
+if (!VAPID_KEY) {
+  console.error('[Notifications] VAPID key not configured in environment variables');
+}
 
 /**
  * Request notification permission and get FCM token
@@ -18,6 +24,12 @@ export async function requestNotificationPermission(): Promise<string | null> {
     // Check if messaging is initialized
     if (!messaging) {
       console.warn('[Notifications] Firebase messaging not initialized');
+      return null;
+    }
+
+    // Check if VAPID key is configured
+    if (!VAPID_KEY) {
+      console.error('[Notifications] VAPID key not configured');
       return null;
     }
 

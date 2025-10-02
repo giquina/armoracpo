@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase, ProtectionOfficer } from '../../lib/supabase';
 import '../../styles/global.css';
 
 const Settings: React.FC = () => {
+  const navigate = useNavigate();
   const [cpo, setCpo] = useState<ProtectionOfficer | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +34,7 @@ const Settings: React.FC = () => {
   const handleLogout = async () => {
     if (window.confirm('Are you sure you want to sign out?')) {
       await supabase.auth.signOut();
-      window.location.href = '/';
+      navigate('/', { replace: true });
     }
   };
 

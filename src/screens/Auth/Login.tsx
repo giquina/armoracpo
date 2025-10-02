@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { requestNotificationPermission } from '../../lib/firebase';
 import '../../styles/global.css';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,8 +49,8 @@ const Login: React.FC = () => {
       // Request notification permission and save FCM token
       await requestNotificationPermission(authData.user.id);
 
-      // Redirect to dashboard will be handled by route protection
-      window.location.href = '/dashboard';
+      // Redirect to dashboard
+      navigate('/dashboard', { replace: true });
     } catch (err: any) {
       setError(err.message || 'Failed to sign in. Please check your credentials.');
     } finally {

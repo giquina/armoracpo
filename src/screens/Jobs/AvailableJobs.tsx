@@ -163,9 +163,24 @@ const AvailableJobs: React.FC = () => {
               <div key={assignment.id} className="card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--spacing-md)' }}>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ marginBottom: 'var(--spacing-xs)' }}>
-                      {assignment.assignment_type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-                    </h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-xs)' }}>
+                      <h3 style={{ margin: 0 }}>
+                        {assignment.assignment_type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                      </h3>
+                      {assignment.special_instructions?.includes('TEST ASSIGNMENT') && (
+                        <span style={{
+                          background: '#ff9500',
+                          color: 'white',
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.5px'
+                        }}>
+                          TEST
+                        </span>
+                      )}
+                    </div>
                     <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
                       {format(new Date(assignment.scheduled_start_time), 'PPp')}
                     </p>

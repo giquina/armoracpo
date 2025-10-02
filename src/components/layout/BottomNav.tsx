@@ -1,15 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
+import { messageService } from '../../services/messageService';
 import '../../styles/global.css';
 
 const BottomNav: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const loadUnreadCount = useCallback(async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const count = await messageService.getTotalUnreadCount(user.id);
+      setUnreadCount(count);
+    } catch (error) {
+      console.error('Error loading unread count:', error);
+      // Don't update state on error to keep last known good value
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUnreadCount();
+
+    // Subscribe to message updates with error handling
+    const interval = setInterval(() => {
+      loadUnreadCount().catch(error => {
+        console.error('Polling error:', error);
+      });
+    }, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval);
+  }, [loadUnreadCount]);
 
   const navItems = [
     { path: '/dashboard', icon: '🏠', label: 'Home' },
     { path: '/jobs', icon: '📋', label: 'Jobs' },
-    { path: '/active', icon: '🛡️', label: 'Active' },
+    { path: '/messages', icon: '💬', label: 'Messages', badge: unreadCount },
     { path: '/earnings', icon: '💰', label: 'Earnings' },
     { path: '/profile', icon: '👤', label: 'Profile' },
   ];
@@ -32,7 +60,7 @@ const BottomNav: React.FC = () => {
       }}
     >
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
+        const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
         return (
           <button
             key={item.path}
@@ -51,9 +79,34 @@ const BottomNav: React.FC = () => {
               minHeight: 'var(--touch-target-min)',
               transition: 'all 0.2s ease',
               color: isActive ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+              position: 'relative',
             }}
           >
-            <span style={{ fontSize: 'var(--font-size-xl)' }}>{item.icon}</span>
+            <div style={{ position: 'relative' }}>
+              <span style={{ fontSize: 'var(--font-size-xl)' }}>{item.icon}</span>
+              {item.badge !== undefined && item.badge > 0 && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '-4px',
+                    right: '-8px',
+                    backgroundColor: 'var(--color-accent)',
+                    color: 'white',
+                    borderRadius: 'var(--radius-full)',
+                    minWidth: '18px',
+                    height: '18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    padding: '0 4px',
+                  }}
+                >
+                  {item.badge > 9 ? '9+' : item.badge}
+                </div>
+              )}
+            </div>
             <span
               style={{
                 fontSize: 'var(--font-size-xs)',

@@ -112,6 +112,16 @@ export interface IncidentReport {
   updated_at: string;
 }
 
+export interface AssignmentMessage {
+  id: string;
+  assignment_id: string;
+  sender_type: 'principal' | 'cpo';
+  sender_id: string;
+  message: string;
+  read: boolean;
+  created_at: string;
+}
+
 // Database type for Supabase client
 export type Database = {
   public: {
@@ -135,6 +145,11 @@ export type Database = {
         Row: IncidentReport;
         Insert: Omit<IncidentReport, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<IncidentReport, 'id' | 'created_at' | 'updated_at'>>;
+      };
+      assignment_messages: {
+        Row: AssignmentMessage;
+        Insert: Omit<AssignmentMessage, 'id' | 'created_at'>;
+        Update: Partial<Omit<AssignmentMessage, 'id' | 'created_at'>>;
       };
     };
   };
