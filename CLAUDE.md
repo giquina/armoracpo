@@ -143,10 +143,12 @@ pending → assigned → en_route → active → completed
 - `cancelled` - Assignment cancelled by either party
 
 ### Push Notifications (Firebase)
-- Service worker config expected in `public/service-worker.js`
+- Service worker config in `public/service-worker.js`
+- Notification service in `src/services/notificationService.ts`
 - VAPID key stored in env: `REACT_APP_FIREBASE_VAPID_KEY`
 - FCM token saved to `protection_officers.fcm_token`
-- Permission requested on login via `requestNotificationPermission()`
+- Auto-initialized on successful authentication (see App.tsx)
+- Gracefully handles unsupported browsers (null checks in place)
 
 ### Mobile-First Approach
 - **Baseline:** Design for 320px width minimum (iPhone SE)
@@ -190,6 +192,7 @@ Use these types consistently throughout the app.
 Business logic lives in `src/services/`:
 - `authService` - Authentication, user management, availability
 - `assignmentService` - Assignment CRUD, status updates, subscriptions
+- `notificationService` - FCM push notifications, token management
 
 Always use services for data operations, not direct Supabase calls in components.
 
@@ -339,12 +342,15 @@ Consider adding Cypress or Playwright for:
 
 Comprehensive docs available in `docs/`:
 - `docs/00-START-HERE.md` - Master index and quick start
+- `docs/DEPLOYMENT.md` - Complete Vercel + Google Play deployment guide
 - `docs/INFRASTRUCTURE-FINDINGS.md` - Backend architecture details
 - `docs/PROJECT-STATUS.md` - Current status and next steps
 - `docs/supabase.md` - Complete database schema reference
 - `docs/firebase.md` - Push notification setup guide
 - `docs/suggestions.md` - SIA compliance features
 - `docs/todo.md` - Development task breakdown
+- `TEST_REPORT.md` - Test coverage and verification report
+- `PWA_SETUP_COMPLETE.md` - PWA configuration details
 
 ## Quick Reference
 
@@ -374,12 +380,33 @@ await authService.updateLocation(cpoId, latitude, longitude);
 await assignmentService.completeAssignment(assignmentId);
 ```
 
+## TWA (Trusted Web Activity) - Android App
+
+### Building for Google Play
+The project includes Bubblewrap configuration for packaging as an Android app:
+
+```bash
+# Build signed release AAB for Google Play
+./gradlew clean bundleRelease
+
+# Output location
+app/build/outputs/bundle/release/app-release.aab
+```
+
+**Key files:**
+- `twa-manifest.json` - TWA configuration (package: com.armora.cpo)
+- `armora-cpo.keystore` - Android signing keystore (NEVER commit)
+- `public/.well-known/assetlinks.json` - Digital Asset Links verification
+- `app/build.gradle` - Android build configuration
+
+**Important:** The keystore password is stored securely. See `docs/DEPLOYMENT.md` for full TWA deployment instructions.
+
 ## Production Status
 
-**Current Phase:** Core features implemented, ready for PWA/TWA setup
+**Current Phase:** ✅ Production-ready with PWA and TWA support
 
 **Deployed:** Yes - `armoracpo.vercel.app`
 
-**Next Steps:** Service worker implementation, Google Play TWA packaging, push notification testing
+**TWA Status:** ✅ Signed AAB ready for Google Play Store upload
 
 **Infrastructure:** Production Supabase + Firebase fully operational with live data
