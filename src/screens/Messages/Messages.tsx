@@ -14,7 +14,6 @@ const Messages: React.FC = () => {
   const navigate = useNavigate();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cpoId, setCpoId] = useState<string | null>(null);
 
   const loadConversations = useCallback(async () => {
     try {
@@ -28,8 +27,6 @@ const Messages: React.FC = () => {
         .single();
 
       if (cpoData) {
-        setCpoId(cpoData.id);
-
         // Get all assignments for this CPO
         const { data: assignments } = await supabase
           .from('protection_assignments')

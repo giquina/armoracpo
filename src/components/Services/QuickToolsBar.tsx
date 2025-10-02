@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './QuickToolsBar.module.css';
 
 interface QuickToolsBarProps {
@@ -14,7 +14,7 @@ export function QuickToolsBar({
 }: QuickToolsBarProps) {
   const [isSticky, setIsSticky] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY > 300;
       setIsSticky(scrolled);

@@ -8,11 +8,7 @@ const AvailableJobs: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'close_protection' | 'event_security' | 'residential_security'>('all');
 
-  useEffect(() => {
-    loadAvailableAssignments();
-  }, [filter]);
-
-  const loadAvailableAssignments = async () => {
+  const loadAvailableAssignments = React.useCallback(async () => {
     try {
       setLoading(true);
       let query = supabase
@@ -35,7 +31,11 @@ const AvailableJobs: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
+
+  useEffect(() => {
+    loadAvailableAssignments();
+  }, [loadAvailableAssignments]);
 
   const acceptAssignment = async (assignmentId: string) => {
     try {
