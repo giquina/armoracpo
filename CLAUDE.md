@@ -229,6 +229,14 @@ All authenticated routes must be wrapped:
 ### Bottom Navigation
 Authenticated pages include `<BottomNav />` via `AppLayout` wrapper. The navigation is automatically included - don't add it to individual screens.
 
+### Dev Panel for Navigation (Development Only)
+The Login screen includes a hidden dev panel for quick navigation:
+- **Access:** Click the "▲ DEV PANEL" button at bottom of login screen
+- **Visibility:** Only shown in `NODE_ENV=development`
+- **Purpose:** Bypass authentication to test screens during development
+- **Screens:** Dashboard, Jobs, Active, History, Messages, Profile, Earnings, Compliance, Settings
+- **Location:** `src/screens/Auth/Login.tsx` (DevPanel component)
+
 ## SIA Compliance Requirements
 
 The UK Security Industry Authority (SIA) requires:
@@ -286,7 +294,36 @@ All Supabase queries must respect RLS policies:
 - Sign out unverified users immediately
 - Request notification permissions AFTER successful auth
 
-## Common Issues
+## Common Issues & Troubleshooting
+
+### Black Screen on Load
+**Symptoms:** Browser shows completely black/blank page
+**Common Causes:**
+1. **JSX Syntax Error:** Missing closing braces `}` or tags in React components
+2. **Corrupted .env file:** Check first line doesn't have extra text before `REACT_APP_`
+3. **Import Error:** Component fails to load due to missing dependency
+
+**Debug Steps:**
+```bash
+# 1. Check TypeScript compilation
+npx tsc --noEmit
+
+# 2. Check browser console (F12) for errors
+# Look for: "SyntaxError", "Cannot find module", "Unexpected token"
+
+# 3. Restart dev server
+# Kill port 3000 and restart: npm start
+```
+
+### Corrupted Environment File
+If `.env` file gets corrupted (e.g., extra text on first line):
+```bash
+# Check first line
+head -1 .env
+# Should start with: REACT_APP_SUPABASE_URL=
+
+# Fix: Edit .env and remove any text before REACT_APP_
+```
 
 ### Firebase Messaging Not Available
 Firebase messaging only works in supported browsers with:
@@ -410,3 +447,55 @@ app/build/outputs/bundle/release/app-release.aab
 **TWA Status:** ✅ Signed AAB ready for Google Play Store upload
 
 **Infrastructure:** Production Supabase + Firebase fully operational with live data
+
+## Known Issues & Technical Debt
+
+### TypeScript Errors (Non-Blocking)
+The app compiles and runs successfully, but has ~30 TypeScript warnings from **unused client-side features**:
+
+**Affected Areas (NOT used in CPO app):**
+- `src/components/Payment/` - Client payment components (3 files)
+- `src/components/Services/` - Client booking interface (10 files)
+- `src/components/BookingSummary/` - Client booking summary
+- `src/components/ServiceSelection/` - Client service selection
+- `src/contexts/AppContext.tsx` - Has unused client-specific features
+- `src/contexts/AuthContext.tsx` - Imports non-existent Supabase exports
+- `src/data/questionnaireData.ts` - Client onboarding questionnaire
+
+**Why These Exist:**
+This codebase was initially shared with the client app. These components are **intentionally not used** in the CPO operator interface.
+
+**Impact:**
+- ✅ Does NOT affect runtime functionality
+- ✅ Does NOT block deployment
+- ✅ Core CPO features work perfectly
+- ⚠️ Creates noise in TypeScript output
+
+**Resolution Strategy:**
+1. **Short-term:** Ignore these errors (they're isolated)
+2. **Long-term:** Remove client-specific code OR create separate client app repo
+
+### Core CPO Features (All Working)
+- ✅ Authentication with `authService.ts`
+- ✅ Assignment management with `assignmentService.ts`
+- ✅ Real-time updates via Supabase subscriptions
+- ✅ Push notifications via Firebase
+- ✅ GPS tracking
+- ✅ Earnings calculations
+- ✅ Profile management
+
+### Important: Use Services, Not Contexts
+**DO:** Use service layer for all data operations:
+```typescript
+import { authService } from '../services/authService';
+import { assignmentService } from '../services/assignmentService';
+```
+
+**DON'T:** Import from contexts with missing exports:
+```typescript
+// ❌ AVOID - Has broken imports
+import { signInWithEmail } from '../lib/supabase';
+import { AppContext } from '../contexts/AppContext';
+```
+
+The service layer (`src/services/`) is the **single source of truth** for business logic.
