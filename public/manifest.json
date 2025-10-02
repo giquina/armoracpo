@@ -1,7 +1,7 @@
 {
-  "short_name": "ArmoraCPO",
-  "name": "Armora Close Protection Officer",
-  "description": "Professional CPO operations platform for SIA-licensed security professionals",
+  "short_name": "Armora",
+  "name": "Armora Protection",
+  "description": "Professional Close Protection Officer Operations Platform",
   "icons": [
     {
       "src": "favicon.ico",
@@ -23,9 +23,11 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "theme_color": "#1a1a1a",
   "background_color": "#ffffff",
-  "categories": ["business", "security", "utilities"],
-  "prefer_related_applications": false
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["business", "security", "productivity"],
+  "prefer_related_applications": false,
+  "gcm_sender_id": "785567849849"
 }

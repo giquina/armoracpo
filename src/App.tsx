@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { supabase } from './lib/supabase';
+import { initializeNotifications } from './services/notificationService';
 
 // Screens
 import Login from './screens/Auth/Login';
@@ -24,6 +25,7 @@ import './styles/global.css';
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const notificationInitialized = useRef(false);
 
   useEffect(() => {
     checkAuth();
@@ -33,6 +35,17 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     try {
       const { data: { user } } = await supabase.auth.getUser();
       setAuthenticated(!!user);
+
+      // Initialize notifications once per session after successful authentication
+      if (user && !notificationInitialized.current) {
+        notificationInitialized.current = true;
+        try {
+          await initializeNotifications(user.id);
+        } catch (notificationError) {
+          // Gracefully handle notification errors - don't block authentication
+          console.error('[App] Notification initialization failed:', notificationError);
+        }
+      }
     } catch (error) {
       setAuthenticated(false);
     } finally {
