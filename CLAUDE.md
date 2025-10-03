@@ -448,32 +448,9 @@ app/build/outputs/bundle/release/app-release.aab
 
 **Infrastructure:** Production Supabase + Firebase fully operational with live data
 
-## Known Issues & Technical Debt
+## Known Issues
 
-### TypeScript Errors (Non-Blocking)
-The app compiles and runs successfully, but has ~30 TypeScript warnings from **unused client-side features**:
-
-**Affected Areas (NOT used in CPO app):**
-- `src/components/Payment/` - Client payment components (3 files)
-- `src/components/Services/` - Client booking interface (10 files)
-- `src/components/BookingSummary/` - Client booking summary
-- `src/components/ServiceSelection/` - Client service selection
-- `src/contexts/AppContext.tsx` - Has unused client-specific features
-- `src/contexts/AuthContext.tsx` - Imports non-existent Supabase exports
-- `src/data/questionnaireData.ts` - Client onboarding questionnaire
-
-**Why These Exist:**
-This codebase was initially shared with the client app. These components are **intentionally not used** in the CPO operator interface.
-
-**Impact:**
-- ✅ Does NOT affect runtime functionality
-- ✅ Does NOT block deployment
-- ✅ Core CPO features work perfectly
-- ⚠️ Creates noise in TypeScript output
-
-**Resolution Strategy:**
-1. **Short-term:** Ignore these errors (they're isolated)
-2. **Long-term:** Remove client-specific code OR create separate client app repo
+The app may have minor TypeScript warnings during builds, but all core CPO features are fully functional. Always use the service layer (`src/services/`) for data operations.
 
 ### Core CPO Features (All Working)
 - ✅ Authentication with `authService.ts`
@@ -483,19 +460,3 @@ This codebase was initially shared with the client app. These components are **i
 - ✅ GPS tracking
 - ✅ Earnings calculations
 - ✅ Profile management
-
-### Important: Use Services, Not Contexts
-**DO:** Use service layer for all data operations:
-```typescript
-import { authService } from '../services/authService';
-import { assignmentService } from '../services/assignmentService';
-```
-
-**DON'T:** Import from contexts with missing exports:
-```typescript
-// ❌ AVOID - Has broken imports
-import { signInWithEmail } from '../lib/supabase';
-import { AppContext } from '../contexts/AppContext';
-```
-
-The service layer (`src/services/`) is the **single source of truth** for business logic.
