@@ -4,7 +4,7 @@ import { Button } from './Button';
 import './EmptyState.css';
 
 export interface EmptyStateProps {
-  icon: IconType;
+  icon: IconType | string;
   title: string;
   description: string;
   action?: string;
@@ -13,7 +13,7 @@ export interface EmptyStateProps {
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
-  icon: Icon,
+  icon,
   title,
   description,
   action,
@@ -25,7 +25,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <div className={containerClasses}>
       <div className="armora-empty-state__icon">
-        <Icon />
+        {typeof icon === 'string' ? (
+          <span style={{ fontSize: '48px' }}>{icon}</span>
+        ) : (
+          React.createElement(icon)
+        )}
       </div>
       <h3 className="armora-empty-state__title">{title}</h3>
       <p className="armora-empty-state__description">{description}</p>

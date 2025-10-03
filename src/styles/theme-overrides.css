@@ -1,0 +1,193 @@
+/* THEME OVERRIDES - Professional Polish for ArmoraCPO */
+/* Import this in App.tsx or index.tsx */
+
+/* ===== BACKGROUND & LAYOUT IMPROVEMENTS ===== */
+
+/* Main app background - subtle gradient for depth */
+body {
+  background: linear-gradient(135deg, #f7fafc 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+/* Container for login and forms - add elevation */
+.auth-container,
+.login-card,
+.sign-in-card {
+  background: var(--bg-elevated, #ffffff);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--shadow-lg, 0 10px 15px rgba(0, 0, 0, 0.1));
+  padding: var(--space-8, 32px);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ===== NAVIGATION IMPROVEMENTS ===== */
+
+/* Bottom navigation bar - proper elevation and styling */
+.bottom-nav,
+nav[class*="bottom"],
+nav[class*="navigation"] {
+  background: var(--bg-elevated, #ffffff);
+  border-top: 1px solid var(--border-light, #e2e8f0);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+}
+
+/* Active navigation items - use gold accent */
+.bottom-nav-item.active,
+.nav-item.active,
+[aria-current="page"] {
+  color: var(--accent-primary, #FFD700) !important;
+}
+
+.bottom-nav-item.active svg,
+.nav-item.active svg {
+  color: var(--accent-primary, #FFD700);
+  fill: var(--accent-primary, #FFD700);
+}
+
+/* Navigation hover states */
+.bottom-nav-item:hover,
+.nav-item:hover {
+  color: var(--accent-hover, #e6c200);
+  background-color: rgba(255, 215, 0, 0.1);
+  border-radius: var(--radius-md, 8px);
+}
+
+/* ===== FORM IMPROVEMENTS ===== */
+
+/* Input fields - better borders and focus states */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+textarea,
+select {
+  border: 2px solid var(--border-medium, #cbd5e0);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  font-size: var(--text-base, 16px);
+  transition: all var(--duration-fast, 150ms) var(--ease-out);
+  min-height: var(--touch-comfortable, 48px);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-primary, #FFD700);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+/* Form labels - better spacing */
+label {
+  display: block;
+  margin-bottom: var(--space-2, 8px);
+  font-weight: var(--font-medium, 500);
+  color: var(--text-primary, #1a1a2e);
+  font-size: var(--text-sm, 14px);
+}
+
+/* ===== CARD & CONTAINER STYLING ===== */
+
+/* Generic card styling for consistency */
+.card,
+[class*="card"],
+[class*="Card"] {
+  background: var(--bg-elevated, #ffffff);
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-6, 24px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+  transition: box-shadow var(--duration-normal, 200ms) var(--ease-out);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* ===== LOADING STATES ===== */
+
+/* Fix washed-out loading appearance */
+.loading,
+[class*="loading"],
+[class*="Loading"] {
+  opacity: 1 !important;
+}
+
+/* Skeleton loaders */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===== HEADER & BRANDING ===== */
+
+/* App header/title improvements */
+.app-header,
+.page-header,
+h1.title {
+  color: var(--text-primary, #1a1a2e);
+  font-weight: var(--font-bold, 700);
+  margin-bottom: var(--space-4, 16px);
+}
+
+/* Logo with shield icon */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  color: var(--text-primary, #1a1a2e);
+}
+
+.logo-icon {
+  color: var(--accent-primary, #FFD700);
+  font-size: var(--text-2xl, 24px);
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Text color utilities */
+.text-gold {
+  color: var(--accent-primary, #FFD700);
+}
+
+.text-navy {
+  color: var(--text-primary, #1a1a2e);
+}
+
+/* Background utilities */
+.bg-elevated {
+  background: var(--bg-elevated, #ffffff);
+  box-shadow: var(--shadow-md);
+}
+
+/* Spacing utilities */
+.section-spacing {
+  margin-bottom: var(--space-8, 32px);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 768px) {
+  .auth-container,
+  .login-card {
+    margin: var(--space-4, 16px);
+    padding: var(--space-6, 24px);
+  }
+}

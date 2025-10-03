@@ -24,14 +24,22 @@
 }
 
 /* Variants */
+/* Primary button - Gold background for maximum visibility (Option A) */
 .armora-button--primary {
-  background-color: var(--armora-navy);
-  color: var(--armora-text-inverse);
+  background-color: var(--armora-gold);
+  color: var(--armora-navy);
   box-shadow: var(--armora-shadow-md);
 }
 
 .armora-button--primary:hover:not(:disabled) {
-  background-color: var(--armora-navy-light);
+  background-color: #e6c200; /* Darker gold for hover */
+  box-shadow: var(--armora-shadow-lg);
+  transform: translateY(-1px);
+}
+
+.armora-button--primary:active:not(:disabled) {
+  background-color: #ccac00; /* Even darker for pressed state */
+  transform: translateY(0);
 }
 
 .armora-button--gold {
@@ -46,13 +54,14 @@
 }
 
 .armora-button--secondary {
-  background-color: var(--armora-bg-secondary);
-  color: var(--armora-text-primary);
-  border-color: var(--armora-border-medium);
+  background-color: transparent;
+  color: var(--armora-navy);
+  border: 2px solid var(--armora-navy);
 }
 
 .armora-button--secondary:hover:not(:disabled) {
-  background-color: var(--armora-bg-tertiary);
+  background-color: var(--armora-navy);
+  color: var(--armora-text-inverse);
 }
 
 .armora-button--tertiary {

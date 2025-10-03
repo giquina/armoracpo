@@ -49,32 +49,32 @@ const Settings: React.FC = () => {
   if (!cpo) return null;
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-secondary)', paddingBottom: '80px' }}>
+    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--armora-bg-secondary)', paddingBottom: '80px' }}>
       {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-lg)' }}>
-        <h1 style={{ fontSize: 'var(--font-size-2xl)' }}>Settings</h1>
-        <p style={{ fontSize: 'var(--font-size-sm)', opacity: 0.9, marginTop: 'var(--spacing-xs)' }}>
+      <div style={{ backgroundColor: 'var(--armora-navy)', color: 'white', padding: 'var(--armora-space-lg)' }}>
+        <h1 style={{ fontSize: 'var(--armora-text-2xl)' }}>Settings</h1>
+        <p style={{ fontSize: 'var(--armora-text-sm)', opacity: 0.9, marginTop: 'var(--armora-space-xs)' }}>
           Manage your account and preferences
         </p>
       </div>
 
-      <div className="container" style={{ paddingTop: 'var(--spacing-lg)' }}>
+      <div className="container" style={{ paddingTop: 'var(--armora-space-lg)' }}>
         {/* Account Section */}
-        <h3 style={{ marginBottom: 'var(--spacing-md)', paddingLeft: 'var(--spacing-xs)' }}>
+        <h3 style={{ marginBottom: 'var(--armora-space-md)', paddingLeft: 'var(--armora-space-xs)' }}>
           Account
         </h3>
 
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-md)', borderBottom: '1px solid var(--color-border-light)' }}>
+        <div className="card" style={{ marginBottom: 'var(--armora-space-md)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-md)', marginBottom: 'var(--armora-space-md)', paddingBottom: 'var(--armora-space-md)', borderBottom: '1px solid var(--armora-border-light)' }}>
             <div style={{
               width: 60,
               height: 60,
               borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-bg-secondary)',
+              backgroundColor: 'var(--armora-bg-secondary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: 'var(--font-size-2xl)'
+              fontSize: 'var(--armora-text-2xl)'
             }}>
               {cpo.profile_photo_url ? (
                 <img src={cpo.profile_photo_url} alt={cpo.first_name} style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-full)', objectFit: 'cover' }} />
@@ -83,10 +83,10 @@ const Settings: React.FC = () => {
               )}
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
+              <p style={{ fontWeight: 600, marginBottom: 'var(--armora-space-xs)' }}>
                 {cpo.first_name} {cpo.last_name}
               </p>
-              <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+              <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                 {cpo.email}
               </p>
             </div>
@@ -98,16 +98,16 @@ const Settings: React.FC = () => {
         </div>
 
         {/* Preferences Section */}
-        <h3 style={{ marginBottom: 'var(--spacing-md)', paddingLeft: 'var(--spacing-xs)' }}>
+        <h3 style={{ marginBottom: 'var(--armora-space-md)', paddingLeft: 'var(--armora-space-xs)' }}>
           Preferences
         </h3>
 
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <div style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-md)', borderBottom: '1px solid var(--color-border-light)' }}>
+        <div className="card" style={{ marginBottom: 'var(--armora-space-md)' }}>
+          <div style={{ marginBottom: 'var(--armora-space-md)', paddingBottom: 'var(--armora-space-md)', borderBottom: '1px solid var(--armora-border-light)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <p style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>Push Notifications</p>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+                <p style={{ fontWeight: 600, marginBottom: 'var(--armora-space-xs)' }}>Push Notifications</p>
+                <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                   Get notified about new assignments
                 </p>
               </div>
@@ -115,7 +115,7 @@ const Settings: React.FC = () => {
                 width: 50,
                 height: 28,
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-success)',
+                backgroundColor: 'var(--armora-success)',
                 position: 'relative',
                 cursor: 'pointer'
               }}>
@@ -133,11 +133,11 @@ const Settings: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: 'var(--spacing-md)', paddingBottom: 'var(--spacing-md)', borderBottom: '1px solid var(--color-border-light)' }}>
+          <div style={{ marginBottom: 'var(--armora-space-md)', paddingBottom: 'var(--armora-space-md)', borderBottom: '1px solid var(--armora-border-light)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <p style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>Email Notifications</p>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+                <p style={{ fontWeight: 600, marginBottom: 'var(--armora-space-xs)' }}>Email Notifications</p>
+                <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                   Receive email updates
                 </p>
               </div>
@@ -145,7 +145,7 @@ const Settings: React.FC = () => {
                 width: 50,
                 height: 28,
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-success)',
+                backgroundColor: 'var(--armora-success)',
                 position: 'relative',
                 cursor: 'pointer'
               }}>
@@ -166,8 +166,8 @@ const Settings: React.FC = () => {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <p style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>SMS Notifications</p>
-                <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+                <p style={{ fontWeight: 600, marginBottom: 'var(--armora-space-xs)' }}>SMS Notifications</p>
+                <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                   Receive text messages for urgent updates
                 </p>
               </div>
@@ -175,7 +175,7 @@ const Settings: React.FC = () => {
                 width: 50,
                 height: 28,
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-bg-tertiary)',
+                backgroundColor: 'var(--armora-bg-tertiary)',
                 position: 'relative',
                 cursor: 'pointer'
               }}>
@@ -195,18 +195,18 @@ const Settings: React.FC = () => {
         </div>
 
         {/* Documents Section */}
-        <h3 style={{ marginBottom: 'var(--spacing-md)', paddingLeft: 'var(--spacing-xs)' }}>
+        <h3 style={{ marginBottom: 'var(--armora-space-md)', paddingLeft: 'var(--armora-space-xs)' }}>
           Documents & Compliance
         </h3>
 
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+        <div className="card" style={{ marginBottom: 'var(--armora-space-md)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             🛡️ Update SIA License
           </button>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             📋 Update Right to Work
           </button>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             🏦 Update Bank Details
           </button>
           <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start' }}>
@@ -215,18 +215,18 @@ const Settings: React.FC = () => {
         </div>
 
         {/* Support Section */}
-        <h3 style={{ marginBottom: 'var(--spacing-md)', paddingLeft: 'var(--spacing-xs)' }}>
+        <h3 style={{ marginBottom: 'var(--armora-space-md)', paddingLeft: 'var(--armora-space-xs)' }}>
           Support
         </h3>
 
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+        <div className="card" style={{ marginBottom: 'var(--armora-space-md)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             📞 Contact Support
           </button>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             📖 Help Center
           </button>
-          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--spacing-sm)' }}>
+          <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start', marginBottom: 'var(--armora-space-sm)' }}>
             📜 Terms & Conditions
           </button>
           <button className="btn btn-secondary btn-full" style={{ justifyContent: 'flex-start' }}>
@@ -235,11 +235,11 @@ const Settings: React.FC = () => {
         </div>
 
         {/* App Info */}
-        <div className="card" style={{ marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
-          <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-xs)' }}>
+        <div className="card" style={{ marginBottom: 'var(--armora-space-md)', textAlign: 'center' }}>
+          <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)', marginBottom: 'var(--armora-space-xs)' }}>
             ArmoraCPO Version 1.0.0
           </p>
-          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)' }}>
+          <p style={{ fontSize: 'var(--armora-text-xs)', color: 'var(--armora-text-secondary)' }}>
             © 2025 Armora. All rights reserved.
           </p>
         </div>

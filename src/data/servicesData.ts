@@ -1,4 +1,47 @@
-import { ServiceData } from '../components/Services/ServiceCard';
+// Service data types for CPO app
+export interface ServiceData {
+  id: string;
+  icon: string;
+  name: string;
+  tagline: string;
+  vehicle: string;
+  price: string;
+  protectionRate?: string;
+  transportRate?: string;
+  rating: string;
+  totalRides: string;
+  collapsedFeatures: string[];
+  collapsedReview: {
+    snippet: string;
+    author: string;
+  };
+  personalizedMessage: string;
+  whatYouGet: string[];
+  officerDescription: {
+    general: string;
+    qualifications: string[];
+  };
+  reviews: Array<{
+    rating: number;
+    text: string;
+    author: string;
+    role: string;
+  }>;
+  caseStudies: Array<{
+    title: string;
+    situation: string;
+    solution: string;
+    result: string;
+    userType: string;
+  }>;
+  trustSignals: string[];
+  stats: {
+    clients?: string;
+    rating?: string;
+    special?: string;
+    responseTime?: string;
+  };
+}
 
 export const SERVICES_DATA: ServiceData[] = [
   {

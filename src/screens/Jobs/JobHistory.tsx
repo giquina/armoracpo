@@ -50,26 +50,26 @@ const JobHistory: React.FC = () => {
   }
 
   return (
-    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-secondary)', paddingBottom: '80px' }}>
+    <div className="safe-top safe-bottom" style={{ minHeight: '100vh', backgroundColor: 'var(--armora-bg-secondary)', paddingBottom: '80px' }}>
       {/* Header */}
-      <div style={{ backgroundColor: 'var(--color-primary)', color: 'white', padding: 'var(--spacing-lg)' }}>
-        <h1 style={{ fontSize: 'var(--font-size-2xl)' }}>Assignment History</h1>
-        <p style={{ fontSize: 'var(--font-size-sm)', opacity: 0.9, marginTop: 'var(--spacing-xs)' }}>
+      <div style={{ backgroundColor: 'var(--armora-navy)', color: 'white', padding: 'var(--armora-space-lg)' }}>
+        <h1 style={{ fontSize: 'var(--armora-text-2xl)' }}>Assignment History</h1>
+        <p style={{ fontSize: 'var(--armora-text-sm)', opacity: 0.9, marginTop: 'var(--armora-space-xs)' }}>
           {assignments.length} completed assignment{assignments.length !== 1 ? 's' : ''}
         </p>
       </div>
 
-      <div className="container" style={{ paddingTop: 'var(--spacing-lg)' }}>
+      <div className="container" style={{ paddingTop: 'var(--armora-space-lg)' }}>
         {assignments.length === 0 ? (
-          <div className="card" style={{ textAlign: 'center', padding: 'var(--spacing-xl)' }}>
-            <div style={{ fontSize: '48px', marginBottom: 'var(--spacing-md)' }}>📋</div>
-            <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>No Assignment History</h3>
-            <p style={{ color: 'var(--color-text-secondary)' }}>
+          <div className="card" style={{ textAlign: 'center', padding: 'var(--armora-space-xl)' }}>
+            <div style={{ fontSize: '48px', marginBottom: 'var(--armora-space-md)' }}>📋</div>
+            <h3 style={{ marginBottom: 'var(--armora-space-sm)' }}>No Assignment History</h3>
+            <p style={{ color: 'var(--armora-text-secondary)' }}>
               Complete your first assignment to see it here
             </p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--armora-space-md)' }}>
             {assignments.map((assignment) => {
               const startTime = assignment.actual_start_time ? new Date(assignment.actual_start_time) : null;
               const endTime = assignment.actual_end_time ? new Date(assignment.actual_end_time) : null;
@@ -80,51 +80,51 @@ const JobHistory: React.FC = () => {
 
               return (
                 <div key={assignment.id} className="card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--spacing-md)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--armora-space-md)' }}>
                     <div>
-                      <h3 style={{ marginBottom: 'var(--spacing-xs)' }}>
+                      <h3 style={{ marginBottom: 'var(--armora-space-xs)' }}>
                         {assignment.assignment_type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                       </h3>
-                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+                      <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                         {endTime ? format(endTime, 'PPP') : 'N/A'}
                       </p>
                     </div>
                     <span className="badge badge-success">COMPLETED</span>
                   </div>
 
-                  <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Principal</p>
+                  <div style={{ marginBottom: 'var(--armora-space-md)' }}>
+                    <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>Principal</p>
                     <p style={{ fontWeight: 600 }}>{assignment.principal_name}</p>
                   </div>
 
-                  <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                    <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Location</p>
+                  <div style={{ marginBottom: 'var(--armora-space-md)' }}>
+                    <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>Location</p>
                     <p>{assignment.pickup_location}</p>
                     {assignment.dropoff_location && (
-                      <p style={{ fontSize: 'var(--font-size-sm)', marginTop: 'var(--spacing-xs)' }}>
+                      <p style={{ fontSize: 'var(--armora-text-sm)', marginTop: 'var(--armora-space-xs)' }}>
                         → {assignment.dropoff_location}
                       </p>
                     )}
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--armora-space-md)', marginBottom: 'var(--armora-space-md)' }}>
                     <div>
-                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Duration</p>
+                      <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>Duration</p>
                       <p style={{ fontWeight: 600 }}>{durationHours || 'N/A'}h</p>
                     </div>
                     <div>
-                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Rate</p>
+                      <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>Rate</p>
                       <p style={{ fontWeight: 600 }}>£{assignment.base_rate}/hr</p>
                     </div>
                     <div>
-                      <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Earned</p>
-                      <p style={{ fontWeight: 600, color: 'var(--color-success)' }}>
+                      <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>Earned</p>
+                      <p style={{ fontWeight: 600, color: 'var(--armora-success)' }}>
                         £{earnings || 'N/A'}
                       </p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: 'var(--spacing-sm)', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: 'var(--armora-space-sm)', flexWrap: 'wrap' }}>
                     <span className={`badge badge-threat-${assignment.threat_level}`}>
                       {assignment.threat_level.toUpperCase()}
                     </span>

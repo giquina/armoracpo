@@ -227,18 +227,21 @@ button {
 }
 
 .btn-primary {
-  background-color: var(--armora-navy);
-  color: var(--armora-text-inverse);
+  background-color: var(--armora-gold);
+  color: var(--armora-navy);
   box-shadow: var(--armora-shadow-md);
+  font-weight: var(--armora-weight-bold);
 }
 
 .btn-primary:hover {
-  background-color: var(--armora-navy-light);
+  background-color: var(--armora-gold-light);
+  box-shadow: var(--armora-shadow-lg);
+  transform: translateY(-1px);
 }
 
 .btn-primary:active {
-  background-color: var(--armora-navy-dark);
-  transform: translateY(1px);
+  background-color: var(--armora-gold-dark);
+  transform: translateY(0);
 }
 
 .btn-gold {

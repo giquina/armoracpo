@@ -31,8 +31,8 @@ const DevPanel: React.FC = () => {
           position: 'fixed',
           bottom: 20,
           right: 20,
-          backgroundColor: 'var(--color-primary)',
-          color: 'white',
+          backgroundColor: 'var(--armora-gold)',
+          color: 'var(--armora-navy)',
           border: 'none',
           borderRadius: '8px',
           padding: '12px 20px',
@@ -40,7 +40,7 @@ const DevPanel: React.FC = () => {
           fontWeight: 600,
           fontSize: '14px',
           zIndex: 10000,
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+          boxShadow: '0 4px 12px rgba(255, 215, 0, 0.4)',
         }}
       >
         {isOpen ? '▼' : '▲'} DEV PANEL
@@ -53,22 +53,50 @@ const DevPanel: React.FC = () => {
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.95)',
-          borderTop: '2px solid var(--color-primary)',
+          backgroundColor: 'var(--armora-navy)',
+          borderTop: '4px solid var(--armora-gold)',
+          boxShadow: '0 -4px 20px rgba(255, 215, 0, 0.3)',
           zIndex: 9999,
-          maxHeight: '400px',
+          maxHeight: '450px',
           overflowY: 'auto',
           animation: 'slideUp 0.3s ease',
         }}>
           {/* Screen Grid */}
-          <div style={{ padding: '20px' }}>
-            <h3 style={{ color: 'var(--color-primary)', marginBottom: '16px', fontSize: '14px', textTransform: 'uppercase' }}>
-              Quick Navigation (Dev Mode)
-            </h3>
+          <div style={{ padding: '24px' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid rgba(255, 215, 0, 0.2)'
+            }}>
+              <h3 style={{
+                color: 'var(--armora-gold)',
+                fontSize: '16px',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                letterSpacing: '0.5px',
+                margin: 0
+              }}>
+                🚀 Quick Navigation (Dev Mode)
+              </h3>
+              <div style={{
+                backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                color: 'var(--armora-gold)',
+                padding: '4px 12px',
+                borderRadius: '12px',
+                fontSize: '11px',
+                fontWeight: 600,
+                border: '1px solid rgba(255, 215, 0, 0.3)'
+              }}>
+                DEVELOPMENT
+              </div>
+            </div>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-              gap: '12px',
+              gap: '14px',
             }}>
               {screens.map((screen) => (
                 <button
@@ -82,28 +110,35 @@ const DevPanel: React.FC = () => {
                     setIsOpen(false);
                   }}
                   style={{
-                    backgroundColor: 'var(--color-bg-secondary)',
-                    color: 'var(--color-text-primary)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    padding: '12px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    color: 'var(--armora-light)',
+                    border: '2px solid rgba(255, 215, 0, 0.3)',
+                    borderRadius: '12px',
+                    padding: '16px 12px',
                     cursor: 'pointer',
-                    fontSize: '12px',
-                    fontWeight: 500,
+                    fontSize: '13px',
+                    fontWeight: 600,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '6px',
-                    transition: 'all 0.2s',
+                    gap: '8px',
+                    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                     pointerEvents: 'auto',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--color-primary)';
-                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.backgroundColor = 'var(--armora-gold)';
+                    e.currentTarget.style.color = 'var(--armora-navy)';
+                    e.currentTarget.style.borderColor = 'var(--armora-gold)';
+                    e.currentTarget.style.transform = 'translateY(-4px) scale(1.03)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(255, 215, 0, 0.4)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)';
-                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.color = 'var(--armora-light)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
                   }}
                 >
                   <span style={{ fontSize: '24px' }}>{screen.icon}</span>
@@ -174,38 +209,38 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-primary)' }}>
+      <div className="flex flex-col" style={{ minHeight: '100vh', backgroundColor: 'var(--armora-dark)' }}>
         {/* Header */}
-        <div className="safe-top" style={{ padding: 'var(--spacing-lg)', textAlign: 'center' }}>
-          <h1 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 700, marginBottom: 'var(--spacing-sm)' }}>
+        <div className="safe-top" style={{ padding: 'var(--space-lg, 24px)', textAlign: 'center' }}>
+          <h1 style={{ fontSize: 'var(--font-xxl, 38px)', fontWeight: 700, marginBottom: 'var(--space-sm, 8px)', color: 'var(--armora-light)' }}>
             🛡️ ArmoraCPO
           </h1>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
+          <p style={{ color: 'var(--text-secondary, #94a3b8)', fontSize: 'var(--font-sm, 17px)' }}>
             Professional Close Protection Officer Platform
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 'var(--spacing-2xl)' }}>
-          <div className="card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-            <h2 style={{ marginBottom: 'var(--spacing-md)' }}>Sign In</h2>
+        <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 'var(--space-xxl, 48px)', padding: 'var(--space-md, 16px)' }}>
+          <div className="card" style={{ marginBottom: 'var(--space-lg, 24px)', backgroundColor: 'var(--bg-card, #2a2a4a)', border: '1px solid rgba(255, 215, 0, 0.2)', padding: 'var(--space-xl, 32px)' }}>
+            <h2 style={{ marginBottom: 'var(--space-md, 16px)', color: 'var(--armora-light)', fontWeight: 700 }}>Sign In</h2>
 
             {error && (
               <div style={{
-                padding: 'var(--spacing-md)',
+                padding: 'var(--space-md, 16px)',
                 backgroundColor: '#fee2e2',
                 color: '#991b1b',
-                borderRadius: 'var(--radius-md)',
-                marginBottom: 'var(--spacing-md)',
-                fontSize: 'var(--font-size-sm)'
+                borderRadius: 'var(--radius-md, 8px)',
+                marginBottom: 'var(--space-md, 16px)',
+                fontSize: 'var(--font-sm, 17px)'
               }}>
                 {error}
               </div>
             )}
 
             <form onSubmit={handleLogin}>
-              <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                <label htmlFor="email" style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 500 }}>
+              <div style={{ marginBottom: 'var(--space-md, 16px)' }}>
+                <label htmlFor="email" style={{ display: 'block', marginBottom: 'var(--space-sm, 8px)', fontWeight: 500, color: 'var(--armora-light)' }}>
                   Email Address
                 </label>
                 <input
@@ -220,8 +255,8 @@ const Login: React.FC = () => {
                 />
               </div>
 
-              <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <label htmlFor="password" style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 500 }}>
+              <div style={{ marginBottom: 'var(--space-lg, 24px)' }}>
+                <label htmlFor="password" style={{ display: 'block', marginBottom: 'var(--space-sm, 8px)', fontWeight: 500, color: 'var(--armora-light)' }}>
                   Password
                 </label>
                 <input
@@ -240,11 +275,11 @@ const Login: React.FC = () => {
                 type="submit"
                 className="btn btn-primary btn-full"
                 disabled={loading}
-                style={{ position: 'relative' }}
+                style={{ position: 'relative', fontSize: 'var(--font-base, 16px)' }}
               >
                 {loading ? (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--spacing-sm)' }}>
-                    <div className="spinner" style={{ width: 20, height: 20, borderWidth: 2 }}></div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-sm, 8px)' }}>
+                    <div className="spinner" style={{ width: 20, height: 20, borderWidth: 2, borderColor: 'var(--armora-navy) transparent var(--armora-navy) transparent' }}></div>
                     <span>Signing In...</span>
                   </div>
                 ) : (
@@ -256,15 +291,16 @@ const Login: React.FC = () => {
 
           {/* SIA License Info */}
           <div style={{
-            padding: 'var(--spacing-md)',
-            backgroundColor: 'var(--color-bg-secondary)',
-            borderRadius: 'var(--radius-md)',
+            padding: 'var(--space-md, 16px)',
+            backgroundColor: 'var(--bg-card, #2a2a4a)',
+            border: '1px solid rgba(255, 215, 0, 0.15)',
+            borderRadius: 'var(--radius-md, 8px)',
             textAlign: 'center'
           }}>
-            <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
+            <p style={{ fontSize: 'var(--font-sm, 17px)', color: 'var(--armora-light)', marginBottom: 'var(--space-xs, 4px)' }}>
               <strong>SIA Licensed Professionals Only</strong>
             </p>
-            <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', marginTop: 'var(--spacing-sm)' }}>
+            <p style={{ fontSize: 'var(--font-xs, 14px)', color: 'var(--text-secondary, #94a3b8)', marginTop: 'var(--space-sm, 8px)' }}>
               All Close Protection Officers must hold a valid SIA license. Your account will be verified before activation.
             </p>
           </div>

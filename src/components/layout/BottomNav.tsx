@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FiHome, FiBriefcase, FiMessageSquare, FiDollarSign, FiUser } from 'react-icons/fi';
 import { supabase } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
 import '../../styles/global.css';
@@ -35,11 +36,11 @@ const BottomNav: React.FC = () => {
   }, [loadUnreadCount]);
 
   const navItems = [
-    { path: '/dashboard', icon: '🏠', label: 'Home' },
-    { path: '/jobs', icon: '📋', label: 'Jobs' },
-    { path: '/messages', icon: '💬', label: 'Messages', badge: unreadCount },
-    { path: '/earnings', icon: '💰', label: 'Earnings' },
-    { path: '/profile', icon: '👤', label: 'Profile' },
+    { path: '/dashboard', icon: FiHome, label: 'Home' },
+    { path: '/jobs', icon: FiBriefcase, label: 'Jobs' },
+    { path: '/messages', icon: FiMessageSquare, label: 'Messages', badge: unreadCount },
+    { path: '/earnings', icon: FiDollarSign, label: 'Earnings' },
+    { path: '/profile', icon: FiUser, label: 'Profile' },
   ];
 
   return (
@@ -49,18 +50,19 @@ const BottomNav: React.FC = () => {
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'var(--color-bg-primary)',
-        borderTop: '1px solid var(--color-border-light)',
+        backgroundColor: 'var(--armora-bg-primary)',
+        borderTop: '1px solid var(--armora-border-light)',
         display: 'flex',
         justifyContent: 'space-around',
-        paddingBottom: 'max(var(--spacing-sm), var(--safe-area-bottom))',
-        paddingTop: 'var(--spacing-sm)',
-        zIndex: 'var(--z-nav)',
+        paddingBottom: 'max(var(--armora-space-sm), env(safe-area-inset-bottom))',
+        paddingTop: 'var(--armora-space-sm)',
+        zIndex: 1000,
         boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
       }}
     >
       {navItems.map((item) => {
         const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+        const IconComponent = item.icon;
         return (
           <button
             key={item.path}
@@ -71,28 +73,28 @@ const BottomNav: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               flex: 1,
-              gap: 'var(--spacing-xs)',
-              padding: 'var(--spacing-sm)',
+              gap: 'var(--armora-space-xs)',
+              padding: 'var(--armora-space-sm)',
               backgroundColor: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              minHeight: 'var(--touch-target-min)',
+              minHeight: '44px',
               transition: 'all 0.2s ease',
-              color: isActive ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+              color: isActive ? 'var(--armora-gold)' : 'var(--armora-text-secondary)',
               position: 'relative',
             }}
           >
             <div style={{ position: 'relative' }}>
-              <span style={{ fontSize: 'var(--font-size-xl)' }}>{item.icon}</span>
+              <IconComponent size={24} />
               {item.badge !== undefined && item.badge > 0 && (
                 <div
                   style={{
                     position: 'absolute',
                     top: '-4px',
                     right: '-8px',
-                    backgroundColor: 'var(--color-accent)',
+                    backgroundColor: 'var(--armora-gold)',
                     color: 'white',
-                    borderRadius: 'var(--radius-full)',
+                    borderRadius: 'var(--armora-radius-full)',
                     minWidth: '18px',
                     height: '18px',
                     display: 'flex',
@@ -109,7 +111,7 @@ const BottomNav: React.FC = () => {
             </div>
             <span
               style={{
-                fontSize: 'var(--font-size-xs)',
+                fontSize: 'var(--armora-text-xs)',
                 fontWeight: isActive ? 600 : 400,
               }}
             >
@@ -122,8 +124,8 @@ const BottomNav: React.FC = () => {
                   bottom: 0,
                   width: '40px',
                   height: '3px',
-                  backgroundColor: 'var(--color-primary)',
-                  borderRadius: 'var(--radius-full)',
+                  backgroundColor: 'var(--armora-gold)',
+                  borderRadius: 'var(--armora-radius-full)',
                 }}
               />
             )}
