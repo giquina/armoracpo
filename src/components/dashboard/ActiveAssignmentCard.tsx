@@ -5,6 +5,7 @@ import { FaMapMarkerAlt, FaClock, FaUser, FaShieldAlt } from 'react-icons/fa';
 import { ProtectionAssignment } from '../../lib/supabase';
 import { format, differenceInMinutes } from 'date-fns';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface ActiveAssignmentCardProps {
   assignment: ProtectionAssignment | null;
@@ -62,7 +63,7 @@ const ActiveAssignmentCard: React.FC<ActiveAssignmentCardProps> = ({ assignment 
             marginBottom: 'var(--armora-space-md)',
           }}
         >
-          <FaShieldAlt color="var(--armora-border-medium)" size={64} />
+          <IconWrapper icon={FaShieldAlt} color="var(--armora-border-medium)" size={64}/>
         </motion.div>
         <h3 className="mb-sm">No Active Assignment</h3>
         <p className="text-sm text-secondary mb-md">
@@ -167,7 +168,7 @@ const ActiveAssignmentCard: React.FC<ActiveAssignmentCardProps> = ({ assignment 
             justifyContent: 'center',
           }}
         >
-          <FaUser color="white" size={20} />
+          <IconWrapper icon={FaUser} color="white" size={20}/>
         </div>
         <div style={{ flex: 1 }}>
           <p className="text-xs text-secondary" style={{ margin: 0, marginBottom: '2px' }}>
@@ -181,7 +182,7 @@ const ActiveAssignmentCard: React.FC<ActiveAssignmentCardProps> = ({ assignment 
 
       {/* Location */}
       <div className="flex items-start gap-sm mb-md">
-        <FaMapMarkerAlt color="var(--armora-danger)" size={16} style={{ marginTop: '2px' }} />
+        <IconWrapper icon={FaMapMarkerAlt} color="var(--armora-danger)" size={16} style={{ marginTop: '2px' }}/>
         <div style={{ flex: 1 }}>
           <p className="text-xs text-secondary" style={{ margin: 0, marginBottom: '4px' }}>
             Pickup Location
@@ -230,7 +231,7 @@ const ActiveAssignmentCard: React.FC<ActiveAssignmentCardProps> = ({ assignment 
             marginBottom: 'var(--armora-space-md)',
           }}
         >
-          <FaClock color="var(--armora-gold)" size={16} />
+          <IconWrapper icon={FaClock} color="var(--armora-gold)" size={16}/>
           <span className="text-sm font-semibold" style={{ color: 'var(--armora-gold)' }}>
             ETA: {timeRemaining}
           </span>

@@ -16,6 +16,7 @@ const DevPanel: React.FC = () => {
     { name: 'Active Job', path: '/active', icon: '🚨' },
     { name: 'Job History', path: '/history', icon: '📜' },
     { name: 'Messages', path: '/messages', icon: '💬' },
+    { name: 'Incidents', path: '/incidents', icon: '🚨' },
     { name: 'Profile', path: '/profile', icon: '👤' },
     { name: 'Earnings', path: '/earnings', icon: '💰' },
     { name: 'Compliance', path: '/compliance', icon: '✅' },
@@ -209,38 +210,40 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col" style={{ minHeight: '100vh', backgroundColor: 'var(--armora-dark)' }}>
+      <div className="flex flex-col" style={{ minHeight: '100vh', backgroundColor: 'var(--armora-bg-secondary)' }}>
         {/* Header */}
-        <div className="safe-top" style={{ padding: 'var(--space-lg, 24px)', textAlign: 'center' }}>
-          <h1 style={{ fontSize: 'var(--font-xxl, 38px)', fontWeight: 700, marginBottom: 'var(--space-sm, 8px)', color: 'var(--armora-light)' }}>
+        <div className="safe-top" style={{ padding: 'var(--armora-space-2xl)', textAlign: 'center', background: 'var(--armora-navy)', color: 'var(--armora-text-inverse)' }}>
+          <h1 style={{ fontSize: 'var(--armora-text-4xl)', fontWeight: 'var(--armora-weight-extrabold)', marginBottom: 'var(--armora-space-sm)' }}>
             🛡️ ArmoraCPO
           </h1>
-          <p style={{ color: 'var(--text-secondary, #94a3b8)', fontSize: 'var(--font-sm, 17px)' }}>
+          <p style={{ fontSize: 'var(--armora-text-base)' }}>
             Professional Close Protection Officer Platform
           </p>
         </div>
 
         {/* Login Form */}
-        <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 'var(--space-xxl, 48px)', padding: 'var(--space-md, 16px)' }}>
-          <div className="card" style={{ marginBottom: 'var(--space-lg, 24px)', backgroundColor: 'var(--bg-card, #2a2a4a)', border: '1px solid rgba(255, 215, 0, 0.2)', padding: 'var(--space-xl, 32px)' }}>
-            <h2 style={{ marginBottom: 'var(--space-md, 16px)', color: 'var(--armora-light)', fontWeight: 700 }}>Sign In</h2>
+        <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 'var(--armora-space-2xl)', padding: 'var(--armora-space-md)' }}>
+          <div className="card" style={{ marginBottom: 'var(--armora-space-lg)', padding: 'var(--armora-space-xl)' }}>
+            <h2 style={{ marginBottom: 'var(--armora-space-md)', fontWeight: 'var(--armora-weight-bold)' }}>Sign In</h2>
 
             {error && (
               <div style={{
-                padding: 'var(--space-md, 16px)',
+                padding: 'var(--armora-space-md)',
                 backgroundColor: '#fee2e2',
                 color: '#991b1b',
-                borderRadius: 'var(--radius-md, 8px)',
-                marginBottom: 'var(--space-md, 16px)',
-                fontSize: 'var(--font-sm, 17px)'
+                borderRadius: 'var(--armora-radius-md)',
+                marginBottom: 'var(--armora-space-md)',
+                fontSize: 'var(--armora-text-sm)',
+                fontWeight: 'var(--armora-weight-medium)',
+                border: '1px solid #fca5a5'
               }}>
                 {error}
               </div>
             )}
 
             <form onSubmit={handleLogin}>
-              <div style={{ marginBottom: 'var(--space-md, 16px)' }}>
-                <label htmlFor="email" style={{ display: 'block', marginBottom: 'var(--space-sm, 8px)', fontWeight: 500, color: 'var(--armora-light)' }}>
+              <div style={{ marginBottom: 'var(--armora-space-md)' }}>
+                <label htmlFor="email" style={{ display: 'block', marginBottom: 'var(--armora-space-sm)', fontWeight: 'var(--armora-weight-medium)' }}>
                   Email Address
                 </label>
                 <input
@@ -255,8 +258,8 @@ const Login: React.FC = () => {
                 />
               </div>
 
-              <div style={{ marginBottom: 'var(--space-lg, 24px)' }}>
-                <label htmlFor="password" style={{ display: 'block', marginBottom: 'var(--space-sm, 8px)', fontWeight: 500, color: 'var(--armora-light)' }}>
+              <div style={{ marginBottom: 'var(--armora-space-lg)' }}>
+                <label htmlFor="password" style={{ display: 'block', marginBottom: 'var(--armora-space-sm)', fontWeight: 'var(--armora-weight-medium)' }}>
                   Password
                 </label>
                 <input
@@ -273,13 +276,12 @@ const Login: React.FC = () => {
 
               <button
                 type="submit"
-                className="btn btn-primary btn-full"
+                className="btn btn-primary btn-full btn-lg"
                 disabled={loading}
-                style={{ position: 'relative', fontSize: 'var(--font-base, 16px)' }}
               >
                 {loading ? (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-sm, 8px)' }}>
-                    <div className="spinner" style={{ width: 20, height: 20, borderWidth: 2, borderColor: 'var(--armora-navy) transparent var(--armora-navy) transparent' }}></div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--armora-space-sm)' }}>
+                    <div className="spinner" style={{ width: 20, height: 20, borderWidth: 2 }}></div>
                     <span>Signing In...</span>
                   </div>
                 ) : (
@@ -287,20 +289,42 @@ const Login: React.FC = () => {
                 )}
               </button>
             </form>
+
+            {/* Signup Link */}
+            <div style={{ marginTop: 'var(--armora-space-lg)', textAlign: 'center' }}>
+              <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
+                Don't have an account?{' '}
+                <button
+                  onClick={() => navigate('/signup')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--armora-navy)',
+                    fontSize: 'var(--armora-text-sm)',
+                    fontWeight: 'var(--armora-weight-semibold)',
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    padding: 0,
+                    minHeight: 'auto'
+                  }}
+                >
+                  Sign Up
+                </button>
+              </p>
+            </div>
           </div>
 
           {/* SIA License Info */}
-          <div style={{
-            padding: 'var(--space-md, 16px)',
-            backgroundColor: 'var(--bg-card, #2a2a4a)',
-            border: '1px solid rgba(255, 215, 0, 0.15)',
-            borderRadius: 'var(--radius-md, 8px)',
-            textAlign: 'center'
+          <div className="card" style={{
+            textAlign: 'center',
+            backgroundColor: 'var(--armora-bg-navy)',
+            color: 'var(--armora-text-inverse)',
+            border: '2px solid var(--armora-gold)'
           }}>
-            <p style={{ fontSize: 'var(--font-sm, 17px)', color: 'var(--armora-light)', marginBottom: 'var(--space-xs, 4px)' }}>
+            <p style={{ fontSize: 'var(--armora-text-base)', marginBottom: 'var(--armora-space-xs)' }}>
               <strong>SIA Licensed Professionals Only</strong>
             </p>
-            <p style={{ fontSize: 'var(--font-xs, 14px)', color: 'var(--text-secondary, #94a3b8)', marginTop: 'var(--space-sm, 8px)' }}>
+            <p style={{ fontSize: 'var(--armora-text-sm)', marginTop: 'var(--armora-space-sm)', opacity: 0.9 }}>
               All Close Protection Officers must hold a valid SIA license. Your account will be verified before activation.
             </p>
           </div>

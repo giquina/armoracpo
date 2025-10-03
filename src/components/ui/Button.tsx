@@ -1,12 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import { LoadingSpinner } from './LoadingSpinner';
 import './Button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'icon' | 'danger' | 'success' | 'gold';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'full';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
@@ -51,12 +51,11 @@ export const Button: React.FC<ButtonProps> = ({
       whileTap={!isDisabled ? { scale: 0.96, y: 1 } : {}}
       transition={{
         duration: 0.2,
-        ease: 'easeInOut',
       }}
       {...props}
     >
       {loading ? (
-        <LoadingSpinner size="sm" color={variant === 'primary' || variant === 'navy' ? 'white' : 'navy'} />
+        <LoadingSpinner size="sm" color={variant === 'primary' ? 'white' : 'navy'} />
       ) : (
         <>
           {icon && iconPosition === 'left' && <span className="armora-button__icon">{icon}</span>}

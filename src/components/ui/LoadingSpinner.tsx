@@ -19,7 +19,7 @@ const spinVariants = {
     transition: {
       duration: 0.8,
       repeat: Infinity,
-      ease: 'linear',
+      ease: "linear" as const,
     },
   },
 };
@@ -31,7 +31,7 @@ const pulseVariants = {
     transition: {
       duration: 1,
       repeat: Infinity,
-      ease: 'easeInOut',
+      ease: "easeInOut" as const,
     },
   },
 };
@@ -42,7 +42,7 @@ const bounceVariants = {
     transition: {
       duration: 0.6,
       repeat: Infinity,
-      ease: 'easeInOut',
+      ease: "easeInOut" as const,
     },
   },
 };

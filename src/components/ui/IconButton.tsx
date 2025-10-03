@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import './IconButton.css';
 
 export type IconButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 
-export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends Omit<HTMLMotionProps<'button'>, 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'> {
   icon: React.ReactNode;
   variant?: IconButtonVariant;
   tooltip?: string;

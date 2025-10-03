@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { FiDownload, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { PaymentRecord } from '../../lib/supabase';
-import { StatusBadge } from '../ui';
 import './PaymentHistoryTable.css';
 
 interface PaymentHistoryTableProps {
@@ -20,14 +20,18 @@ const PaymentHistoryTable: React.FC<PaymentHistoryTableProps> = ({ payments, onE
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentPayments = payments.slice(startIndex, endIndex);
 
-  const getStatusVariant = (status: string): 'success' | 'warning' | 'danger' | 'info' => {
+  const getStatusClass = (status: string): string => {
     switch (status) {
-      case 'completed': return 'success';
-      case 'processing': return 'info';
-      case 'pending': return 'warning';
-      case 'failed': return 'danger';
-      default: return 'info';
+      case 'completed': return 'badge-success';
+      case 'processing': return 'badge-info';
+      case 'pending': return 'badge-warning';
+      case 'failed': return 'badge-danger';
+      default: return 'badge-info';
     }
+  };
+
+  const getStatusLabel = (status: string): string => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
   };
 
   return (
@@ -36,7 +40,7 @@ const PaymentHistoryTable: React.FC<PaymentHistoryTableProps> = ({ payments, onE
         <h3>Payment History</h3>
         {onExport && (
           <button className="payment-history-table__export" onClick={onExport}>
-            <FiDownload size={16} />
+            <IconWrapper icon={FiDownload} size={16} />
             <span>Export CSV</span>
           </button>
         )}
@@ -69,11 +73,9 @@ const PaymentHistoryTable: React.FC<PaymentHistoryTableProps> = ({ payments, onE
                       {payment.payment_method.replace('_', ' ')}
                     </td>
                     <td>
-                      <StatusBadge
-                        status={payment.payment_status}
-                        variant={getStatusVariant(payment.payment_status)}
-                        size="sm"
-                      />
+                      <span className={`badge ${getStatusClass(payment.payment_status)}`}>
+                        {getStatusLabel(payment.payment_status)}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -88,7 +90,7 @@ const PaymentHistoryTable: React.FC<PaymentHistoryTableProps> = ({ payments, onE
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
               >
-                <FiChevronLeft size={18} />
+                <IconWrapper icon={FiChevronLeft} size={18} />
               </button>
               <span className="payment-history-table__page-info">
                 Page {currentPage} of {totalPages}
@@ -98,7 +100,7 @@ const PaymentHistoryTable: React.FC<PaymentHistoryTableProps> = ({ payments, onE
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
               >
-                <FiChevronRight size={18} />
+                <IconWrapper icon={FiChevronRight} size={18} />
               </button>
             </div>
           )}

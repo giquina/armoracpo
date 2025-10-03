@@ -6,6 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { FiUpload, FiX, FiCheck } from 'react-icons/fi';
 import { AvatarUploadProps } from './types';
 import { supabase } from '../../lib/supabase';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * AvatarUpload Component
@@ -206,7 +207,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
               }}
               aria-label="Close"
             >
-              <FiX size={18} />
+              <IconWrapper icon={FiX} size={18} />
             </button>
           </div>
 
@@ -227,7 +228,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
                 }}
               >
                 <input {...getInputProps()} />
-                <FiUpload size={48} color="var(--armora-navy)" style={{ marginBottom: 'var(--armora-space-md)' }} />
+                <IconWrapper icon={FiUpload} size={48} color="var(--armora-navy)" style={{ marginBottom: 'var(--armora-space-md)' }}/>
                 <p style={{ fontSize: 'var(--armora-text-lg)', fontWeight: 'var(--armora-weight-medium)', marginBottom: 'var(--armora-space-sm)' }}>
                   {isDragActive ? 'Drop image here' : 'Drag & drop or click to select'}
                 </p>
@@ -307,7 +308,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
                   </>
                 ) : (
                   <>
-                    <FiCheck size={18} />
+                    <IconWrapper icon={FiCheck} size={18}/>
                     Save Photo
                   </>
                 )}

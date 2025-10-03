@@ -1,0 +1,104 @@
+.signature-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signature-pad-container {
+  margin-bottom: var(--armora-space-md);
+}
+
+.signature-pad-container label {
+  display: block;
+  margin-bottom: var(--armora-space-sm);
+  color: var(--armora-text-primary);
+  font-size: var(--armora-text-sm);
+  font-weight: 600;
+}
+
+.signature-canvas {
+  width: 100%;
+  height: 200px;
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  background: white;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.btn-clear {
+  margin-top: var(--armora-space-sm);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  background: var(--armora-bg-tertiary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-sm);
+  color: var(--armora-text-primary);
+  font-size: var(--armora-text-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear:hover {
+  background: var(--armora-bg-primary);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.signature-disclaimer {
+  padding: var(--armora-space-sm);
+  background: var(--armora-bg-primary);
+  border-left: 3px solid var(--armora-gold);
+  border-radius: var(--armora-radius-sm);
+  margin-top: var(--armora-space-md);
+}
+
+.signature-disclaimer small {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  line-height: 1.4;
+}
+
+.btn-save {
+  flex: 1;
+  padding: var(--armora-space-md);
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--armora-gold);
+  border: none;
+  color: var(--armora-bg-primary);
+}
+
+.btn-save:hover:not(:disabled) {
+  background: var(--armora-gold-hover);
+}
+
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: var(--armora-space-sm);
+  background: var(--armora-bg-primary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-sm);
+  color: var(--armora-text-primary);
+  font-size: var(--armora-text-md);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--armora-gold);
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiChevronRight } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './SettingsList.css';
 
 export interface SettingItem {
@@ -41,7 +42,7 @@ const SettingsList: React.FC<SettingsListProps> = ({ sections }) => {
                   )}
                 </div>
                 {item.showChevron !== false && (
-                  <FiChevronRight className="settings-list__item-chevron" size={20} />
+                  <IconWrapper icon={FiChevronRight} className="settings-list__item-chevron" size={20} />
                 )}
               </button>
             ))}

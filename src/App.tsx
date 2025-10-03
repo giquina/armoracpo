@@ -8,7 +8,9 @@ import { PageTransition } from './components/animations/PageTransition';
 
 // Screens
 import Login from './screens/Auth/Login';
+import Signup from './screens/Auth/Signup';
 import Dashboard from './screens/Dashboard/Dashboard';
+import Jobs from './screens/Jobs/Jobs';
 import AvailableJobs from './screens/Jobs/AvailableJobs';
 import ActiveJob from './screens/Jobs/ActiveJob';
 import JobHistory from './screens/Jobs/JobHistory';
@@ -18,6 +20,10 @@ import Compliance from './screens/Compliance/Compliance';
 import Settings from './screens/Settings/Settings';
 import Messages from './screens/Messages/Messages';
 import MessageChat from './screens/Messages/MessageChat';
+import IncidentReports from './screens/Incidents/IncidentReports';
+import IncidentReportDetail from './screens/Incidents/IncidentReportDetail';
+import NewIncidentReport from './screens/Incidents/NewIncidentReport';
+import DailyOccurrenceBook from './screens/DOB/DailyOccurrenceBook';
 
 // Components
 import BottomNav from './components/layout/BottomNav';
@@ -105,6 +111,14 @@ const AnimatedRoutes: React.FC = () => {
             </PageTransition>
           }
         />
+        <Route
+          path="/signup"
+          element={
+            <PageTransition variant="fade">
+              <Signup />
+            </PageTransition>
+          }
+        />
 
         {/* Protected Routes */}
         <Route
@@ -121,6 +135,18 @@ const AnimatedRoutes: React.FC = () => {
         />
         <Route
           path="/jobs"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition variant="fade">
+                  <Jobs />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/jobs/available"
           element={
             <ProtectedRoute>
               <AppLayout>
@@ -222,6 +248,54 @@ const AnimatedRoutes: React.FC = () => {
               <AppLayout>
                 <PageTransition variant="fade">
                   <MessageChat />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/incidents"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition variant="fade">
+                  <IncidentReports />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/incidents/new"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition variant="fade">
+                  <NewIncidentReport />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/incidents/:id"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition variant="fade">
+                  <IncidentReportDetail />
+                </PageTransition>
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dob"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <PageTransition variant="fade">
+                  <DailyOccurrenceBook />
                 </PageTransition>
               </AppLayout>
             </ProtectedRoute>

@@ -4,6 +4,7 @@ import { FiShield, FiEdit2, FiAlertTriangle, FiCheckCircle } from 'react-icons/f
 import { format, differenceInDays } from 'date-fns';
 import { SIALicenseSectionProps } from './types';
 import { EditProfileModal } from './EditProfileModal';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * SIALicenseSection Component
@@ -21,12 +22,12 @@ export const SIALicenseSection: React.FC<SIALicenseSectionProps> = ({ cpo, onUpd
 
   const getExpiryStatus = () => {
     if (isExpired) {
-      return { color: 'var(--armora-danger)', icon: <FiAlertTriangle />, text: 'EXPIRED', bgColor: '#fee2e2' };
+      return { color: 'var(--armora-danger)', icon: <IconWrapper icon={FiAlertTriangle} />, text: 'EXPIRED', bgColor: '#fee2e2' };
     }
     if (isExpiringSoon) {
-      return { color: '#92400e', icon: <FiAlertTriangle />, text: `Expires in ${daysUntilExpiry} days`, bgColor: '#fef3c7' };
+      return { color: '#92400e', icon: <IconWrapper icon={FiAlertTriangle} />, text: `Expires in ${daysUntilExpiry} days`, bgColor: '#fef3c7' };
     }
-    return { color: 'var(--armora-success)', icon: <FiCheckCircle />, text: 'Valid', bgColor: '#d1fae5' };
+    return { color: 'var(--armora-success)', icon: <IconWrapper icon={FiCheckCircle} />, text: 'Valid', bgColor: '#d1fae5' };
   };
 
   const status = getExpiryStatus();
@@ -42,11 +43,11 @@ export const SIALicenseSection: React.FC<SIALicenseSectionProps> = ({ cpo, onUpd
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--armora-space-md)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)' }}>
-          <FiShield size={20} color="var(--armora-navy)" />
+          <IconWrapper icon={FiShield} size={20} color="var(--armora-navy)"/>
           <h3>SIA License Information</h3>
         </div>
         <button onClick={() => setIsEditing(true)} className="btn-sm btn-outline-navy">
-          <FiEdit2 size={14} />
+          <IconWrapper icon={FiEdit2} size={14}/>
           Edit
         </button>
       </div>

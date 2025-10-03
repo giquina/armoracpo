@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCheckCircle, FaExclamationCircle, FaExclamationTriangle, FaInfoCircle, FaTimes } from 'react-icons/fa';
 import { IconButton } from './IconButton';
 import './Toast.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -65,11 +66,11 @@ export const Toast: React.FC<ToastProps> = ({
           aria-live="assertive"
         >
           <div className="armora-toast__icon">
-            <Icon />
+            <IconWrapper icon={Icon} />
           </div>
           <p className="armora-toast__message">{message}</p>
           <IconButton
-            icon={<FaTimes />}
+            icon={<IconWrapper icon={FaTimes} />}
             onClick={onClose}
             variant="ghost"
             aria-label="Close notification"

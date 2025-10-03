@@ -1,6 +1,7 @@
 import React from 'react';
 import { differenceInDays, format } from 'date-fns';
 import { FiUpload, FiDownload } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './DocumentExpiryCard.css';
 
 export interface Document {
@@ -92,7 +93,7 @@ const DocumentExpiryCard: React.FC<DocumentExpiryCardProps> = ({
             className="document-expiry-card__action document-expiry-card__action--secondary"
             onClick={() => onDownload(document.documentUrl!)}
           >
-            <FiDownload size={16} />
+            <IconWrapper icon={FiDownload} size={16} />
             <span>View</span>
           </button>
         )}
@@ -101,7 +102,7 @@ const DocumentExpiryCard: React.FC<DocumentExpiryCardProps> = ({
             className={`document-expiry-card__action document-expiry-card__action--${isExpired || isExpiringSoon ? 'danger' : 'primary'}`}
             onClick={() => onUpload(document.id)}
           >
-            <FiUpload size={16} />
+            <IconWrapper icon={FiUpload} size={16} />
             <span>{isExpired || isExpiringSoon ? 'Renew' : 'Update'}</span>
           </button>
         )}

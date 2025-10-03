@@ -10,6 +10,7 @@ import QuickStatsWidget from '../../components/dashboard/QuickStatsWidget';
 import ActiveAssignmentCard from '../../components/dashboard/ActiveAssignmentCard';
 import RecommendedJobs from '../../components/dashboard/RecommendedJobs';
 import PerformanceInsights from '../../components/dashboard/PerformanceInsights';
+import RecentIncidentsWidget from '../../components/dashboard/RecentIncidentsWidget';
 import '../../styles/global.css';
 
 const Dashboard: React.FC = () => {
@@ -185,11 +186,21 @@ const Dashboard: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Performance Insights */}
+        {/* Recent Incidents Widget */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
+          style={{ marginBottom: 'var(--armora-space-md)' }}
+        >
+          <RecentIncidentsWidget cpoId={cpo.id} />
+        </motion.div>
+
+        {/* Performance Insights */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
         >
           <PerformanceInsights cpoId={cpo.id} />
         </motion.div>

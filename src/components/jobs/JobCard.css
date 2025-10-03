@@ -1,0 +1,268 @@
+.job-card {
+  background: var(--armora-bg-primary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  cursor: pointer;
+  transition: var(--armora-transition-base);
+}
+
+.job-card:hover {
+  border-color: var(--armora-gold);
+  box-shadow: var(--armora-shadow-gold);
+}
+
+/* Header */
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.job-card-title-section {
+  flex: 1;
+}
+
+.job-card-title {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+  margin: 0 0 var(--armora-space-sm) 0;
+  line-height: var(--armora-leading-tight);
+  font-family: var(--armora-font-display);
+}
+
+.job-card-client {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+}
+
+.job-card-client-type {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-gold);
+  font-weight: var(--armora-weight-medium);
+}
+
+.job-card-rating {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-warning);
+  font-weight: var(--armora-weight-semibold);
+}
+
+/* Bookmark Button */
+.job-card-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--armora-bg-secondary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  color: var(--armora-text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: var(--armora-transition-base);
+  flex-shrink: 0;
+}
+
+.job-card-bookmark:hover {
+  background: var(--armora-bg-tertiary);
+  color: var(--armora-navy);
+}
+
+.job-card-bookmark.saved {
+  background: var(--armora-gold);
+  border-color: var(--armora-gold);
+  color: var(--armora-navy);
+}
+
+/* Info Grid */
+.job-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.job-card-info-item {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-primary);
+}
+
+.job-card-info-icon {
+  font-size: 14px;
+  color: var(--armora-text-secondary);
+  flex-shrink: 0;
+}
+
+.job-card-distance {
+  margin-left: auto;
+  color: var(--armora-text-secondary);
+  font-size: var(--armora-text-xs);
+}
+
+/* Pay Rate */
+.job-card-pay {
+  display: flex;
+  align-items: baseline;
+  gap: var(--armora-space-sm);
+  padding: var(--armora-space-md);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--armora-radius-md);
+  margin-bottom: var(--armora-space-md);
+}
+
+.job-card-pay-amount {
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-success);
+  font-family: var(--armora-font-display);
+}
+
+.job-card-pay-label {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Requirements */
+.job-card-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--armora-space-sm);
+  margin-bottom: var(--armora-space-md);
+}
+
+.job-card-requirement {
+  background: var(--armora-bg-secondary);
+  border: 1px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-sm);
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-primary);
+  font-weight: var(--armora-weight-medium);
+  white-space: nowrap;
+}
+
+.job-card-requirement-more {
+  background: transparent;
+  border: 1px dashed var(--armora-border-medium);
+  border-radius: var(--armora-radius-sm);
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Description */
+.job-card-description {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  line-height: var(--armora-leading-normal);
+  margin: 0 0 var(--armora-space-md) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer */
+.job-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--armora-space-md);
+  border-top: 1px solid var(--armora-border-light);
+  margin-bottom: var(--armora-space-md);
+}
+
+.job-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+}
+
+.job-card-applicants {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+}
+
+.job-card-meta-icon {
+  font-size: 14px;
+}
+
+.job-card-separator {
+  color: var(--armora-border-medium);
+}
+
+.job-card-posted {
+  color: var(--armora-text-secondary);
+}
+
+.job-card-deadline {
+  font-size: var(--armora-text-xs);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-warning);
+}
+
+/* Apply Button */
+.job-card-apply-btn {
+  width: 100%;
+  background: var(--armora-gold);
+  border: none;
+  border-radius: var(--armora-radius-md);
+  padding: var(--armora-space-md) var(--armora-space-lg);
+  color: var(--armora-navy);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-bold);
+  font-family: var(--armora-font-body);
+  cursor: pointer;
+  transition: var(--armora-transition-base);
+  min-height: var(--armora-touch-min);
+}
+
+.job-card-apply-btn:hover {
+  background: var(--armora-gold-light);
+  transform: translateY(-2px);
+  box-shadow: var(--armora-shadow-gold);
+}
+
+.job-card-apply-btn:active {
+  transform: translateY(0);
+  background: var(--armora-gold-dark);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .job-card {
+    padding: 16px;
+  }
+
+  .job-card-title {
+    font-size: 15px;
+  }
+
+  .job-card-pay-amount {
+    font-size: 20px;
+  }
+
+  .job-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .job-card-deadline {
+    align-self: flex-end;
+  }
+}

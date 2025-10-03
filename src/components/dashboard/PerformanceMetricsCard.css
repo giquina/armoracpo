@@ -1,0 +1,213 @@
+/* Performance Metrics Card */
+
+.performance-metrics-card {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  box-shadow: var(--armora-shadow-md);
+  border: 1px solid var(--armora-border-light);
+}
+
+/* Header */
+.performance-metrics-card__header {
+  margin-bottom: var(--armora-space-lg);
+  padding-bottom: var(--armora-space-md);
+  border-bottom: 1px solid var(--armora-border-light);
+}
+
+.performance-metrics-card__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-text-primary);
+  margin: 0 0 var(--armora-space-xs) 0;
+}
+
+.performance-metrics-card__subtitle {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Grid */
+.performance-metrics-card__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--armora-space-lg);
+  margin-bottom: var(--armora-space-lg);
+}
+
+/* Metric */
+.performance-metrics-card__metric {
+  display: flex;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-lg);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  border: 1px solid var(--armora-border-light);
+}
+
+.performance-metrics-card__metric-icon-wrapper {
+  flex-shrink: 0;
+}
+
+.performance-metrics-card__metric-icon {
+  font-size: 32px;
+  color: var(--armora-navy);
+}
+
+.performance-metrics-card__metric-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-xs);
+}
+
+.performance-metrics-card__metric-label {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.performance-metrics-card__metric-value-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: var(--armora-space-xs);
+}
+
+.performance-metrics-card__metric-value {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-3xl);
+  font-weight: var(--armora-weight-extrabold);
+  line-height: 1;
+}
+
+.performance-metrics-card__metric-value--success {
+  color: var(--armora-success);
+}
+
+.performance-metrics-card__metric-value--warning {
+  color: var(--armora-warning);
+}
+
+.performance-metrics-card__metric-value--danger {
+  color: var(--armora-danger);
+}
+
+.performance-metrics-card__metric-value--navy {
+  color: var(--armora-navy);
+}
+
+.performance-metrics-card__metric-value--gold {
+  color: var(--armora-gold);
+}
+
+.performance-metrics-card__metric-max {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-tertiary);
+}
+
+.performance-metrics-card__metric-subtext {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-tertiary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Gauge */
+.performance-metrics-card__gauge {
+  width: 100%;
+  height: 6px;
+  background-color: var(--armora-border-light);
+  border-radius: var(--armora-radius-full);
+  overflow: hidden;
+  margin-top: var(--armora-space-xs);
+}
+
+.performance-metrics-card__gauge-fill {
+  height: 100%;
+  border-radius: var(--armora-radius-full);
+  transition: width 1s ease-in-out;
+}
+
+.performance-metrics-card__gauge-fill--success {
+  background-color: var(--armora-success);
+}
+
+.performance-metrics-card__gauge-fill--warning {
+  background-color: var(--armora-warning);
+}
+
+.performance-metrics-card__gauge-fill--danger {
+  background-color: var(--armora-danger);
+}
+
+/* Stars */
+.performance-metrics-card__stars {
+  display: flex;
+  gap: var(--armora-space-xs);
+  margin-top: var(--armora-space-xs);
+}
+
+.performance-metrics-card__star {
+  font-size: 18px;
+}
+
+.performance-metrics-card__star--filled {
+  color: var(--armora-gold);
+  fill: var(--armora-gold);
+}
+
+.performance-metrics-card__star--half {
+  color: var(--armora-gold);
+}
+
+.performance-metrics-card__star--empty {
+  color: var(--armora-border-medium);
+}
+
+/* Footer */
+.performance-metrics-card__footer {
+  padding-top: var(--armora-space-md);
+  border-top: 1px solid var(--armora-border-light);
+}
+
+.performance-metrics-card__footer-text {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .performance-metrics-card__grid {
+    grid-template-columns: 1fr;
+    gap: var(--armora-space-md);
+  }
+}
+
+@media (max-width: 640px) {
+  .performance-metrics-card {
+    padding: var(--armora-space-md);
+  }
+
+  .performance-metrics-card__metric {
+    padding: var(--armora-space-md);
+  }
+
+  .performance-metrics-card__metric-icon {
+    font-size: 24px;
+  }
+
+  .performance-metrics-card__metric-value {
+    font-size: var(--armora-text-2xl);
+  }
+}

@@ -190,9 +190,18 @@ Use these types consistently throughout the app.
 
 ### Service Layer Pattern
 Business logic lives in `src/services/`:
-- `authService` - Authentication, user management, availability
+- `auth.service.ts` - **NEW (Jan 2025)** Comprehensive authentication service with signup/signin/signout, profile management, password reset
+- `authService` - Legacy authentication service (being phased out in favor of auth.service.ts)
 - `assignmentService` - Assignment CRUD, status updates, subscriptions
 - `notificationService` - FCM push notifications, token management
+
+**IMPORTANT:** Use the new `auth.service.ts` for all authentication operations. It provides:
+- Complete signup flow with CPO profile auto-creation
+- Signin/signout with session management
+- Profile retrieval (user profile + CPO profile)
+- Profile updates
+- Password reset/update
+- Auth state change listener
 
 Always use services for data operations, not direct Supabase calls in components.
 
@@ -278,9 +287,17 @@ Progressive Web App features:
 ### Row Level Security (RLS)
 All Supabase queries must respect RLS policies:
 - CPOs can ONLY access their own profile data
-- CPOs can ONLY see assignments assigned to them
+- CPOs can ONLY see assignments assigned to them OR pending assignments (for acceptance)
 - No access to other CPOs' information
 - No access to client/principal private data
+
+**RLS Migration:** Comprehensive RLS policies have been created in `/supabase/migrations/20250103_enable_rls_policies.sql` (944 lines). This migration includes:
+- Policies for all core tables (protection_officers, protection_assignments, payments, incidents, messages, reviews, etc.)
+- Helper functions for role checking (`is_cpo`, `get_cpo_id`, `is_assignment_principal`, `is_assignment_cpo`)
+- Storage bucket policies for secure file access
+- Verification views (`rls_status`, `rls_policies`) for monitoring
+
+**Deployment:** See `/docs/RLS_DEPLOYMENT.md` for instructions on deploying RLS policies to Supabase.
 
 ### Data Validation
 - Validate all form inputs client-side AND server-side
@@ -381,13 +398,20 @@ Comprehensive docs available in `docs/`:
 - `docs/00-START-HERE.md` - Master index and quick start
 - `docs/DEPLOYMENT.md` - Complete Vercel + Google Play deployment guide
 - `docs/INFRASTRUCTURE-FINDINGS.md` - Backend architecture details
-- `docs/PROJECT-STATUS.md` - Current status and next steps
+- `docs/PROJECT-STATUS.md` - Current status and next steps (updated Jan 3, 2025)
+- `docs/RLS_DEPLOYMENT.md` - **NEW (Jan 2025)** RLS policies deployment guide
 - `docs/supabase.md` - Complete database schema reference
 - `docs/firebase.md` - Push notification setup guide
 - `docs/suggestions.md` - SIA compliance features
-- `docs/todo.md` - Development task breakdown
+- `docs/todo.md` - Development task breakdown (updated Jan 3, 2025)
 - `TEST_REPORT.md` - Test coverage and verification report
 - `PWA_SETUP_COMPLETE.md` - PWA configuration details
+
+### Database Migrations
+- `supabase/migrations/20250103_enable_rls_policies.sql` - **NEW** Comprehensive RLS policies (944 lines)
+- `supabase/migrations/20250103_insert_test_data.sql` - **NEW** Test data for development (783 lines)
+- `supabase/migrations/20250103_verify_rls.sql` - RLS verification queries
+- `supabase/migrations/20250102000000_create_assignment_messages.sql` - Assignment messaging table
 
 ## Quick Reference
 
@@ -448,15 +472,52 @@ app/build/outputs/bundle/release/app-release.aab
 
 **Infrastructure:** Production Supabase + Firebase fully operational with live data
 
+## Recent Updates (January 2025)
+
+### Authentication System Overhaul
+A comprehensive authentication service has been implemented:
+- **New Service:** `/src/services/auth.service.ts` (287 lines)
+- **Features:** Complete signup/signin/signout, CPO profile auto-creation, password reset, profile management
+- **Integration:** Fully integrated with Supabase Auth and protection_officers table
+- **Status:** ✅ Complete and ready for use
+
+### Database Security (RLS Policies)
+Comprehensive Row Level Security policies have been created:
+- **Migration:** `/supabase/migrations/20250103_enable_rls_policies.sql` (944 lines)
+- **Coverage:** All core tables (protection_officers, assignments, payments, incidents, messages, reviews, etc.)
+- **Helper Functions:** Role checking functions (is_cpo, get_cpo_id, etc.)
+- **Storage Security:** Bucket policies for cpo-profiles, compliance-documents, incident-evidence
+- **Status:** ✅ Created, ready for deployment (see `/docs/RLS_DEPLOYMENT.md`)
+
+### Test Data
+Development test data has been created:
+- **Migration:** `/supabase/migrations/20250103_insert_test_data.sql` (783 lines)
+- **Includes:** 5 test CPOs, 8 assignments, 4 payments, 2 incidents, 5 messages
+- **Status:** ✅ Created, ready for deployment to dev/staging environments
+- **Warning:** ⚠️ Development/testing ONLY - DO NOT run in production
+
+### Environment Configuration
+Production Supabase credentials have been configured:
+- **File:** `.env` (updated with real credentials)
+- **Supabase URL:** https://jmzvrqwjmlnvxojculee.supabase.co
+- **Supabase Anon Key:** Configured and ready
+- **Status:** ✅ Complete
+
 ## Known Issues
 
 The app may have minor TypeScript warnings during builds, but all core CPO features are fully functional. Always use the service layer (`src/services/`) for data operations.
 
-### Core CPO Features (All Working)
-- ✅ Authentication with `authService.ts`
+### Core CPO Features (Status)
+- ✅ Authentication with new `auth.service.ts` (fully implemented)
 - ✅ Assignment management with `assignmentService.ts`
 - ✅ Real-time updates via Supabase subscriptions
 - ✅ Push notifications via Firebase
 - ✅ GPS tracking
 - ✅ Earnings calculations
 - ✅ Profile management
+
+### Pending Tasks
+- [ ] Deploy RLS policies to Supabase (migration ready, needs manual deployment)
+- [ ] Deploy test data to dev/staging environment
+- [ ] Test complete authentication flow with new auth.service.ts
+- [ ] Verify CPO profile creation during signup

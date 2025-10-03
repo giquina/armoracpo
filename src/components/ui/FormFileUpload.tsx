@@ -4,6 +4,7 @@ import { FaCloudUploadAlt, FaFile, FaTimes } from 'react-icons/fa';
 import { IconButton } from './IconButton';
 import { ProgressBar } from './ProgressBar';
 import './FormFileUpload.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 export interface FormFileUploadProps {
   accept?: string;
@@ -104,7 +105,7 @@ export const FormFileUpload: React.FC<FormFileUploadProps> = ({
       <div {...getRootProps()} className={dropzoneClasses}>
         <input {...getInputProps()} />
         <div className="armora-file-upload__content">
-          <FaCloudUploadAlt className="armora-file-upload__icon" />
+          <IconWrapper icon={FaCloudUploadAlt} className="armora-file-upload__icon"/>
           {isDragActive ? (
             <p className="armora-file-upload__text">Drop files here...</p>
           ) : (
@@ -124,7 +125,7 @@ export const FormFileUpload: React.FC<FormFileUploadProps> = ({
         <div className="armora-file-upload__files">
           {files.map((file, index) => (
             <div key={`${file.name}-${index}`} className="armora-file-upload__file">
-              <FaFile className="armora-file-upload__file-icon" />
+              <IconWrapper icon={FaFile} className="armora-file-upload__file-icon"/>
               <div className="armora-file-upload__file-info">
                 <p className="armora-file-upload__file-name">{file.name}</p>
                 <p className="armora-file-upload__file-size">
@@ -133,7 +134,7 @@ export const FormFileUpload: React.FC<FormFileUploadProps> = ({
               </div>
               {!uploading && (
                 <IconButton
-                  icon={<FaTimes />}
+                  icon={<IconWrapper icon={FaTimes} />}
                   onClick={() => handleRemoveFile(index)}
                   variant="ghost"
                   aria-label="Remove file"

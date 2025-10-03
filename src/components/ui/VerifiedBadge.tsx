@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import './VerifiedBadge.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 export interface VerifiedBadgeProps {
   size?: 'sm' | 'md' | 'lg';
@@ -30,7 +31,7 @@ export const VerifiedBadge: React.FC<VerifiedBadgeProps> = ({
       onMouseLeave={() => setShowTooltip(false)}
     >
       <div className={badgeClasses} aria-label={tooltip} role="img">
-        <FaCheckCircle className="armora-verified-badge__icon" />
+        <IconWrapper icon={FaCheckCircle} className="armora-verified-badge__icon"/>
       </div>
       {showTooltip && <div className="armora-verified-badge__tooltip">{tooltip}</div>}
     </div>

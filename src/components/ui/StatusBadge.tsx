@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaBriefcase, FaMoon } from 'react-icons/fa';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './StatusBadge.css';
 
 export type CPOStatus = 'operational' | 'busy' | 'offline';
@@ -51,12 +52,13 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   // Pulse animation for operational status
   const pulseAnimation = status === 'operational' ? {
     scale: [1, 1.05, 1],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: 'easeInOut',
-    },
   } : {};
+
+  const pulseTransition = status === 'operational' ? {
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut" as const,
+  } : undefined;
 
   return (
     <motion.div
@@ -64,6 +66,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       role="status"
       aria-label={`Status: ${config.label}`}
       animate={pulseAnimation}
+      transition={pulseTransition}
     >
       {showIcon && (
         <motion.div
@@ -74,10 +77,10 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut" as const,
           }}
         >
-          <Icon className="armora-status-badge__icon" />
+          <IconWrapper icon={Icon} className="armora-status-badge__icon" />
         </motion.div>
       )}
       <span className="armora-status-badge__label">{config.label}</span>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiToggleLeft, FiToggleRight, FiClock, FiMap, FiTruck } from 'react-icons/fi';
 import { AvailabilitySectionProps } from './types';
 import { authService } from '../../services/authService';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * AvailabilitySection Component
@@ -74,9 +75,9 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({ cpo, o
             {isUpdating ? (
               <div className="spinner" style={{ width: 32, height: 32, borderWidth: 2 }} />
             ) : cpo.is_available ? (
-              <FiToggleRight size={48} color="var(--armora-success)" />
+              <IconWrapper icon={FiToggleRight} size={48} color="var(--armora-success)"/>
             ) : (
-              <FiToggleLeft size={48} color="var(--armora-text-tertiary)" />
+              <IconWrapper icon={FiToggleLeft} size={48} color="var(--armora-text-tertiary)"/>
             )}
           </button>
         </div>
@@ -87,7 +88,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({ cpo, o
         {/* Travel Radius (Mock Data) */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiMap size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiMap} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               Travel Radius
             </p>
@@ -100,7 +101,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({ cpo, o
         {/* Working Hours (Mock Data) */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiClock size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiClock} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               Preferred Working Hours
             </p>
@@ -114,7 +115,7 @@ export const AvailabilitySection: React.FC<AvailabilitySectionProps> = ({ cpo, o
         {cpo.vehicle_make && (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-              <FiTruck size={16} color="var(--armora-navy)" />
+              <IconWrapper icon={FiTruck} size={16} color="var(--armora-navy)"/>
               <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
                 Vehicle
               </p>

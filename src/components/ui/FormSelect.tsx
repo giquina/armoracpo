@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import './FormSelect.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 export interface SelectOption {
   value: string;
@@ -110,7 +111,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
           <span className={`armora-form-select__value ${!selectedOptions.length ? 'armora-form-select__value--placeholder' : ''}`}>
             {displayValue}
           </span>
-          <FaChevronDown className="armora-form-select__icon" />
+          <IconWrapper icon={FaChevronDown} className="armora-form-select__icon"/>
         </button>
         {isOpen && (
           <div className="armora-form-select__dropdown" role="listbox">
@@ -142,7 +143,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
                       aria-selected={isSelected}
                     >
                       {option.label}
-                      {multiple && isSelected && <FaCheck className="armora-form-select__check" />}
+                      {multiple && isSelected && <IconWrapper icon={FaCheck} className="armora-form-select__check"/>}
                     </button>
                   );
                 })

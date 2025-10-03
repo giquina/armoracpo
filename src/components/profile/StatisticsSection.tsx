@@ -4,6 +4,7 @@ import { FiBarChart2, FiTrendingUp, FiCheckCircle, FiDollarSign } from 'react-ic
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { StatisticsSectionProps } from './types';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -62,32 +63,32 @@ export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ cpo }) => 
     >
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-lg)' }}>
-        <FiBarChart2 size={20} color="var(--armora-navy)" />
+        <IconWrapper icon={FiBarChart2} size={20} color="var(--armora-navy)"/>
         <h3>Performance Statistics</h3>
       </div>
 
       {/* Key Stats Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--armora-space-md)', marginBottom: 'var(--armora-space-lg)' }}>
         <StatCard
-          icon={<FiCheckCircle size={20} color="var(--armora-success)" />}
+          icon={<IconWrapper icon={FiCheckCircle} size={20} color="var(--armora-success)"/>}
           label="Total Assignments"
           value={stats.totalAssignments.toString()}
           color="var(--armora-success)"
         />
         <StatCard
-          icon={<FiTrendingUp size={20} color="var(--armora-gold)" />}
+          icon={<IconWrapper icon={FiTrendingUp} size={20} color="var(--armora-gold)"/>}
           label="Average Rating"
           value={`${stats.averageRating.toFixed(1)} ⭐`}
           color="var(--armora-gold)"
         />
         <StatCard
-          icon={<FiCheckCircle size={20} color="var(--armora-info)" />}
+          icon={<IconWrapper icon={FiCheckCircle} size={20} color="var(--armora-info)"/>}
           label="On-Time %"
           value={`${stats.onTimePercentage}%`}
           color="var(--armora-info)"
         />
         <StatCard
-          icon={<FiDollarSign size={20} color="var(--armora-navy)" />}
+          icon={<IconWrapper icon={FiDollarSign} size={20} color="var(--armora-navy)"/>}
           label="Total Earnings"
           value={`£${stats.totalEarnings.toLocaleString()}`}
           color="var(--armora-navy)"

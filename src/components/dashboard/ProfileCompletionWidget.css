@@ -1,0 +1,168 @@
+/* Profile Completion Widget */
+
+.profile-completion-widget {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  box-shadow: var(--armora-shadow-md);
+  border: 1px solid var(--armora-border-light);
+}
+
+/* Header */
+.profile-completion-widget__header {
+  margin-bottom: var(--armora-space-lg);
+  padding-bottom: var(--armora-space-md);
+  border-bottom: 1px solid var(--armora-border-light);
+}
+
+.profile-completion-widget__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-text-primary);
+  margin: 0 0 var(--armora-space-xs) 0;
+}
+
+.profile-completion-widget__subtitle {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Body */
+.profile-completion-widget__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--armora-space-lg);
+}
+
+/* Circle Progress */
+.profile-completion-widget__circle-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.profile-completion-widget__circle {
+  transform: rotate(0deg);
+}
+
+.profile-completion-widget__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.profile-completion-widget__percentage-value {
+  display: block;
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-4xl);
+  font-weight: var(--armora-weight-extrabold);
+  color: var(--armora-text-primary);
+  line-height: 1;
+}
+
+.profile-completion-widget__percentage-label {
+  display: block;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+  margin-top: var(--armora-space-xs);
+}
+
+/* Sections */
+.profile-completion-widget__sections {
+  width: 100%;
+}
+
+.profile-completion-widget__sections-title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+  margin: 0 0 var(--armora-space-md) 0;
+}
+
+.profile-completion-widget__sections-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-sm);
+}
+
+.profile-completion-widget__section-item {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  cursor: pointer;
+  transition: var(--armora-transition-base);
+}
+
+.profile-completion-widget__section-item:hover {
+  background-color: var(--armora-bg-tertiary);
+  transform: translateX(4px);
+}
+
+.profile-completion-widget__section-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.profile-completion-widget__section-check {
+  color: var(--armora-success);
+}
+
+.profile-completion-widget__section-circle {
+  color: var(--armora-text-tertiary);
+}
+
+.profile-completion-widget__section-name {
+  flex: 1;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-primary);
+}
+
+.profile-completion-widget__section-arrow {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--armora-text-tertiary);
+  transition: var(--armora-transition-base);
+}
+
+.profile-completion-widget__section-item:hover .profile-completion-widget__section-arrow {
+  color: var(--armora-navy);
+  transform: translateX(4px);
+}
+
+/* CTA Button */
+.profile-completion-widget__cta {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .profile-completion-widget {
+    padding: var(--armora-space-md);
+  }
+
+  .profile-completion-widget__circle-container {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-completion-widget__percentage-value {
+    font-size: var(--armora-text-3xl);
+  }
+}

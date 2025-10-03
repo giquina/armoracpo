@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiSend } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './QuickReplyTemplates.css';
 
 interface QuickReplyTemplatesProps {
@@ -30,7 +31,7 @@ const QuickReplyTemplates: React.FC<QuickReplyTemplatesProps> = ({ onSelect }) =
           >
             <span className="quick-reply-templates__icon">{reply.icon}</span>
             <span className="quick-reply-templates__text">{reply.text}</span>
-            <FiSend size={14} className="quick-reply-templates__send" />
+            <IconWrapper icon={FiSend} size={14} className="quick-reply-templates__send" />
           </button>
         ))}
       </div>

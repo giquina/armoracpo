@@ -2,6 +2,7 @@ import React from 'react';
 import { ProtectionOfficer } from '../../lib/supabase';
 import { FaShieldAlt, FaStar } from 'react-icons/fa';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface WelcomeHeaderProps {
   cpo: ProtectionOfficer;
@@ -105,7 +106,7 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
                   backdropFilter: 'blur(10px)',
                 }}
               >
-                <FaStar color="var(--armora-gold)" size={14} />
+                <IconWrapper icon={FaStar} color="var(--armora-gold)" size={14}/>
                 <span style={{ fontSize: 'var(--armora-text-sm)', fontWeight: 'var(--armora-weight-semibold)' }}>
                   {cpo.rating.toFixed(1)}
                 </span>
@@ -124,7 +125,7 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
                   border: '1px solid rgba(16, 185, 129, 0.3)',
                 }}
               >
-                <FaShieldAlt color="var(--armora-success)" size={12} />
+                <IconWrapper icon={FaShieldAlt} color="var(--armora-success)" size={12}/>
                 <span
                   style={{
                     fontSize: 'var(--armora-text-xs)',

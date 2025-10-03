@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FiHome, FiBriefcase, FiMessageSquare, FiDollarSign, FiUser } from 'react-icons/fi';
+import { FiHome, FiBriefcase, FiMessageSquare, FiDollarSign, FiUser, FiAlertTriangle } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { supabase } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
 import '../../styles/global.css';
@@ -38,8 +39,8 @@ const BottomNav: React.FC = () => {
   const navItems = [
     { path: '/dashboard', icon: FiHome, label: 'Home' },
     { path: '/jobs', icon: FiBriefcase, label: 'Jobs' },
+    { path: '/incidents', icon: FiAlertTriangle, label: 'Incidents' },
     { path: '/messages', icon: FiMessageSquare, label: 'Messages', badge: unreadCount },
-    { path: '/earnings', icon: FiDollarSign, label: 'Earnings' },
     { path: '/profile', icon: FiUser, label: 'Profile' },
   ];
 
@@ -85,7 +86,7 @@ const BottomNav: React.FC = () => {
             }}
           >
             <div style={{ position: 'relative' }}>
-              <IconComponent size={24} />
+              <IconWrapper icon={IconComponent} size={24} />
               {item.badge !== undefined && item.badge > 0 && (
                 <div
                   style={{

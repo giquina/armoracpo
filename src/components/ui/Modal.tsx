@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes } from 'react-icons/fa';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { IconButton } from './IconButton';
 import './Modal.css';
 
@@ -75,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
                     {title}
                   </h3>
                   <IconButton
-                    icon={<FaTimes />}
+                    icon={<IconWrapper icon={FaTimes} />}
                     onClick={onClose}
                     variant="ghost"
                     aria-label="Close modal"
@@ -85,7 +86,7 @@ export const Modal: React.FC<ModalProps> = ({
               {!title && (
                 <div className="armora-modal__close-btn">
                   <IconButton
-                    icon={<FaTimes />}
+                    icon={<IconWrapper icon={FaTimes} />}
                     onClick={onClose}
                     variant="ghost"
                     aria-label="Close modal"

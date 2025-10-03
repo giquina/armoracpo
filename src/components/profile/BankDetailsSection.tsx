@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiDollarSign, FiEdit2, FiCheckCircle, FiCreditCard } from 'react-icons/fi';
 import { BankDetailsSectionProps } from './types';
 import { EditProfileModal } from './EditProfileModal';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * BankDetailsSection Component
@@ -28,11 +29,11 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--armora-space-md)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)' }}>
-          <FiDollarSign size={20} color="var(--armora-navy)" />
+          <IconWrapper icon={FiDollarSign} size={20} color="var(--armora-navy)"/>
           <h3>Payment Details</h3>
         </div>
         <button onClick={() => setIsEditing(true)} className="btn-sm btn-outline-navy">
-          <FiEdit2 size={14} />
+          <IconWrapper icon={FiEdit2} size={14}/>
           Edit
         </button>
       </div>
@@ -49,7 +50,7 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
           gap: 'var(--armora-space-sm)',
         }}
       >
-        <FiCheckCircle size={20} color="#065f46" />
+        <IconWrapper icon={FiCheckCircle} size={20} color="#065f46"/>
         <div>
           <p style={{ fontWeight: 'var(--armora-weight-semibold)', color: '#065f46', marginBottom: 'var(--armora-space-xs)' }}>
             Stripe Connected
@@ -64,7 +65,7 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--armora-space-md)' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiCreditCard size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiCreditCard} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               Account Holder
             </p>
@@ -76,7 +77,7 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiCreditCard size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiCreditCard} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               Account Number
             </p>
@@ -88,7 +89,7 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiCreditCard size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiCreditCard} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               Sort Code
             </p>
@@ -100,7 +101,7 @@ export const BankDetailsSection: React.FC<BankDetailsSectionProps> = ({ cpo, onU
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-            <FiCreditCard size={16} color="var(--armora-navy)" />
+            <IconWrapper icon={FiCreditCard} size={16} color="var(--armora-navy)"/>
             <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
               National Insurance Number
             </p>

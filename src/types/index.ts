@@ -1192,3 +1192,461 @@ export interface SafeServiceFundMetrics {
   communityRank: number;
   lastUpdated: string;
 }
+
+// ============================================================================
+// INCIDENT REPORTING SYSTEM TYPES (Issue #2 - Priority P0)
+// ============================================================================
+
+/**
+ * Classification of security incidents following SIA standards
+ * and BS 8507 close protection guidelines
+ */
+export type IncidentClassification =
+  | 'security_breach'      // Unauthorized access, perimeter breach
+  | 'threat_verbal'        // Verbal threats or intimidation
+  | 'threat_physical'      // Physical assault or attempted assault
+  | 'suspicious_activity'  // Surveillance, stalking, suspicious persons
+  | 'medical_emergency'    // Principal medical emergency
+  | 'accident'             // Vehicle accident, slip/fall
+  | 'equipment_failure'    // Security equipment malfunction
+  | 'protocol_deviation'   // Deviation from security protocol
+  | 'environmental'        // Weather, fire, natural disaster
+  | 'lost_property'        // Principal property loss/theft
+  | 'privacy_breach'       // Unauthorized photography, media intrusion
+  | 'communication_failure' // Radio/phone failure during assignment
+  | 'other';               // Other incident requiring documentation
+
+/**
+ * Severity level for risk assessment and escalation
+ */
+export type IncidentSeverity =
+  | 'critical'   // Immediate threat to life, requires emergency response
+  | 'high'       // Significant threat requiring urgent action
+  | 'medium'     // Moderate concern requiring timely response
+  | 'low'        // Minor incident for documentation
+  | 'informational'; // No threat, awareness only
+
+/**
+ * Current status of incident investigation/resolution
+ */
+export type IncidentStatus =
+  | 'draft'           // CPO creating report, not yet submitted
+  | 'submitted'       // Submitted for review
+  | 'under_review'    // Management reviewing
+  | 'investigated'    // Investigation complete
+  | 'resolved'        // Incident resolved
+  | 'escalated'       // Escalated to authorities
+  | 'closed';         // Case closed
+
+/**
+ * GPS-tagged media attachment with chain of custody
+ */
+export interface IncidentMediaAttachment {
+  id: string;
+  type: 'photo' | 'video' | 'audio' | 'document';
+  url: string;
+  thumbnail?: string;
+  filename: string;
+  fileSize: number;
+  mimeType: string;
+  duration?: number; // For video/audio in seconds
+  gpsData: {
+    latitude: number;
+    longitude: number;
+    accuracy: number; // meters
+    timestamp: string; // ISO 8601
+    address?: string; // Reverse geocoded address
+  };
+  metadata: {
+    capturedAt: string; // ISO 8601
+    capturedBy: string; // CPO ID
+    deviceInfo: string; // "iPhone 14 Pro" or "Samsung Galaxy S23"
+    fileHash: string; // SHA-256 for integrity verification
+  };
+  chainOfCustody: IncidentChainOfCustodyEntry[];
+}
+
+/**
+ * Chain of custody tracking for legal admissibility
+ */
+export interface IncidentChainOfCustodyEntry {
+  id: string;
+  timestamp: string; // ISO 8601
+  action: 'captured' | 'uploaded' | 'viewed' | 'downloaded' | 'shared' | 'transferred' | 'deleted';
+  performedBy: {
+    userId: string;
+    userName: string;
+    role: string; // "CPO", "Manager", "Legal Team"
+  };
+  details: string;
+  ipAddress?: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+/**
+ * Digital signature capture for legal validation
+ */
+export interface IncidentSignature {
+  id: string;
+  signatureData: string; // Base64 encoded signature image
+  signedBy: {
+    userId: string;
+    userName: string;
+    role: 'cpo' | 'witness' | 'principal' | 'manager';
+  };
+  signedAt: string; // ISO 8601
+  ipAddress: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+  };
+  deviceInfo: string;
+  statement: string; // "I certify that this report is accurate to the best of my knowledge"
+}
+
+/**
+ * Witness statement with contact information
+ */
+export interface IncidentWitness {
+  id: string;
+  name: string;
+  contactPhone?: string;
+  contactEmail?: string;
+  relationship: 'principal' | 'bystander' | 'colleague' | 'security_staff' | 'law_enforcement' | 'other';
+  statement: string;
+  willingToTestify: boolean;
+  signature?: IncidentSignature;
+  contactedAt?: string; // ISO 8601
+}
+
+/**
+ * Law enforcement involvement details
+ */
+export interface IncidentLawEnforcementDetails {
+  reported: boolean;
+  reportedAt?: string; // ISO 8601
+  forceName?: string; // "Metropolitan Police", "West Midlands Police"
+  stationName?: string;
+  officerName?: string;
+  officerBadgeNumber?: string;
+  crimeReferenceNumber?: string; // Crime reference number
+  reportingOfficerPhone?: string;
+  arrestsMade: boolean;
+  arrestDetails?: string;
+  evidenceCollected: string[];
+  followUpRequired: boolean;
+  followUpDetails?: string;
+}
+
+/**
+ * Principal details (anonymized for data protection)
+ */
+export interface IncidentPrincipalDetails {
+  principalId: string;
+  principalName?: string; // Optional, may be redacted
+  injuryStatus: 'none' | 'minor' | 'moderate' | 'severe' | 'critical';
+  injuryDescription?: string;
+  medicalAttentionRequired: boolean;
+  medicalAttentionDetails?: string;
+  hospitalName?: string;
+  ambulanceServiceNumber?: string;
+  principalStatement?: string;
+  principalSignature?: IncidentSignature;
+}
+
+/**
+ * Environmental conditions at time of incident
+ */
+export interface IncidentEnvironmentalConditions {
+  weather: 'clear' | 'rain' | 'snow' | 'fog' | 'wind' | 'storm';
+  visibility: 'excellent' | 'good' | 'poor' | 'very_poor';
+  lighting: 'daylight' | 'dusk' | 'dark' | 'artificial_good' | 'artificial_poor';
+  temperature?: number; // Celsius
+  crowdLevel: 'empty' | 'light' | 'moderate' | 'heavy' | 'extremely_crowded';
+  noiseLevel: 'quiet' | 'normal' | 'loud' | 'very_loud';
+}
+
+/**
+ * Immediate actions taken by CPO
+ */
+export interface IncidentImmediateAction {
+  id: string;
+  timestamp: string; // ISO 8601
+  action: string;
+  result: string;
+  performedBy: string; // CPO ID
+}
+
+/**
+ * Follow-up action required
+ */
+export interface IncidentFollowUpAction {
+  id: string;
+  action: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  assignedTo?: string; // User ID
+  dueDate?: string; // ISO 8601
+  status: 'pending' | 'in_progress' | 'completed' | 'cancelled';
+  completedAt?: string; // ISO 8601
+  notes?: string;
+}
+
+/**
+ * Complete incident report structure
+ */
+export interface IncidentReport {
+  // Core identification
+  id: string;
+  incidentNumber: string; // Format: "IR-YYYYMMDD-XXXX"
+
+  // Assignment context
+  assignmentId?: string; // If incident occurred during assignment
+  assignmentReference?: string;
+
+  // Classification and severity
+  classification: IncidentClassification;
+  severity: IncidentSeverity;
+  status: IncidentStatus;
+
+  // Temporal data
+  incidentDateTime: string; // ISO 8601 - When incident occurred
+  reportedDateTime: string; // ISO 8601 - When report was created
+  submittedDateTime?: string; // ISO 8601 - When report was submitted
+
+  // Location data with GPS
+  location: {
+    address: string;
+    postcode?: string;
+    city: string;
+    coordinates: {
+      latitude: number;
+      longitude: number;
+      accuracy: number; // meters
+    };
+    venue?: string; // "Heathrow Terminal 5", "Claridge's Hotel"
+    venueType?: string; // "airport", "hotel", "restaurant", "residence"
+  };
+
+  // Reporting CPO
+  reportingOfficer: {
+    officerId: string;
+    officerName: string;
+    siaLicenseNumber: string;
+    officerPhone: string;
+    officerEmail: string;
+  };
+
+  // Principal details
+  principal?: IncidentPrincipalDetails;
+
+  // Incident description
+  description: {
+    summary: string; // Brief 1-2 sentence overview
+    detailedNarrative: string; // Full chronological account
+    triggerFactors?: string; // What led to the incident
+    outcome: string; // How incident concluded
+  };
+
+  // Parties involved
+  suspectDetails?: {
+    count: number;
+    descriptions: string[]; // Physical descriptions
+    identifications?: string[]; // Names if known
+    vehicleDescriptions?: string[];
+    vehicleRegistrations?: string[];
+    weaponsOrTools?: string[];
+    directionsOfFlight?: string[];
+  };
+
+  witnesses: IncidentWitness[];
+
+  // Environmental context
+  environmentalConditions: IncidentEnvironmentalConditions;
+
+  // Actions taken
+  immediateActions: IncidentImmediateAction[];
+  communicationsLog: Array<{
+    timestamp: string;
+    from: string;
+    to: string;
+    method: 'radio' | 'phone' | 'sms' | 'app';
+    summary: string;
+  }>;
+
+  // Equipment and resources
+  equipmentUsed: string[]; // "Body camera", "First aid kit", "Vehicle"
+  equipmentFailures?: string[];
+
+  // Law enforcement
+  lawEnforcement?: IncidentLawEnforcementDetails;
+
+  // Media and evidence
+  mediaAttachments: IncidentMediaAttachment[];
+  additionalEvidence?: string[];
+
+  // Signatures
+  signatures: IncidentSignature[];
+
+  // Follow-up
+  followUpActions: IncidentFollowUpAction[];
+  reviewRequired: boolean;
+  managementNotified: boolean;
+  managementNotifiedAt?: string;
+
+  // Lessons learned and recommendations
+  lessonsLearned?: string;
+  protocolRecommendations?: string;
+  trainingRecommendations?: string;
+
+  // Audit trail
+  createdAt: string; // ISO 8601
+  updatedAt: string; // ISO 8601
+  createdBy: string; // CPO ID
+  lastModifiedBy: string; // User ID
+  submittedBy?: string; // User ID
+  reviewedBy?: string; // Manager ID
+  reviewedAt?: string; // ISO 8601
+
+  // Data protection
+  dataClassification: 'public' | 'internal' | 'confidential' | 'restricted';
+  retentionPeriod: 'standard' | 'extended' | 'legal_hold'; // 7 years standard, extended for serious incidents
+  gdprConsent: {
+    principalConsent: boolean;
+    witnessConsent: boolean[];
+    consentObtainedAt: string;
+  };
+
+  // Export and sharing
+  exported: boolean;
+  exportedAt?: string;
+  exportedBy?: string;
+  exportFormat?: 'pdf' | 'json';
+  sharedWith?: Array<{
+    userId: string;
+    userName: string;
+    role: string;
+    sharedAt: string;
+  }>;
+}
+
+/**
+ * Incident report list item (summary view)
+ */
+export interface IncidentReportSummary {
+  id: string;
+  incidentNumber: string;
+  classification: IncidentClassification;
+  severity: IncidentSeverity;
+  status: IncidentStatus;
+  incidentDateTime: string;
+  location: {
+    address: string;
+    city: string;
+  };
+  reportingOfficer: {
+    officerId: string;
+    officerName: string;
+  };
+  summary: string;
+  hasMediaAttachments: boolean;
+  mediaCount: number;
+  requiresFollowUp: boolean;
+  createdAt: string;
+}
+
+/**
+ * Incident report filters for list view
+ */
+export interface IncidentReportFilters {
+  dateRange?: {
+    start: string; // ISO 8601
+    end: string; // ISO 8601
+  };
+  classifications?: IncidentClassification[];
+  severities?: IncidentSeverity[];
+  statuses?: IncidentStatus[];
+  assignmentId?: string;
+  reportingOfficerId?: string;
+  searchQuery?: string;
+  requiresFollowUp?: boolean;
+  hasMediaAttachments?: boolean;
+}
+
+/**
+ * Incident statistics for dashboard
+ */
+export interface IncidentStatistics {
+  totalIncidents: number;
+  incidentsByClassification: Record<IncidentClassification, number>;
+  incidentsBySeverity: Record<IncidentSeverity, number>;
+  incidentsByStatus: Record<IncidentStatus, number>;
+  recentIncidents: IncidentReportSummary[];
+  pendingFollowUps: number;
+  averageResolutionTime: number; // hours
+  incidentTrends: Array<{
+    period: string; // "2025-W01", "2025-01"
+    count: number;
+    severity: IncidentSeverity;
+  }>;
+}
+
+// ============================================================================
+// DAILY OCCURRENCE BOOK (DOB) SYSTEM TYPES
+// ============================================================================
+
+/**
+ * Event types for DOB entries - key operational events during assignments
+ */
+export type DOBEventType =
+  | 'assignment_start'      // Protection detail commenced
+  | 'assignment_end'        // Protection detail completed
+  | 'location_change'       // Significant location change during detail
+  | 'principal_pickup'      // Principal collected from location
+  | 'principal_dropoff'     // Principal delivered to destination
+  | 'route_deviation'       // Unplanned route change
+  | 'communication'         // Important communication logged
+  | 'manual_note'           // Manual entry by CPO
+  | 'incident'              // Security incident (links to incident report)
+  | 'other';                // Other notable occurrence
+
+/**
+ * DOB entry - single occurrence in the daily log
+ * Immutable once submitted, GPS-tagged, chronological record
+ */
+export interface DOBEntry {
+  id: string;
+  assignmentId?: string;           // Link to assignment if applicable
+  assignmentReference?: string;     // Human-readable assignment reference
+  cpoId: string;                   // CPO who created the entry
+  entryType: 'auto' | 'manual';    // Auto-generated vs manual entry
+  timestamp: string;                // ISO 8601 - When event occurred
+  eventType: DOBEventType;          // Classification of event
+  gpsCoordinates?: {
+    latitude: number;
+    longitude: number;
+    accuracy: number;               // Accuracy in meters
+  };
+  description: string;              // Detailed description of occurrence
+  metadata?: Record<string, any>;   // Additional context (weather, witnesses, etc.)
+  isImmutable: boolean;             // True once submitted (cannot be edited)
+  createdAt: string;                // ISO 8601 - When entry was created
+  updatedAt: string;                // ISO 8601 - Last modification time
+}
+
+/**
+ * Filters for querying DOB entries
+ */
+export interface DOBFilters {
+  assignmentId?: string;            // Filter by specific assignment
+  dateRange?: {
+    start: string;                  // ISO 8601
+    end: string;                    // ISO 8601
+  };
+  entryType?: 'auto' | 'manual';    // Filter by entry type
+  eventType?: DOBEventType;         // Filter by event type
+  searchQuery?: string;             // Search in description
+}

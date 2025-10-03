@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiEdit2, FiStar, FiCheckCircle } from 'react-icons/fi';
 import { ProfileHeaderProps } from './types';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * ProfileHeader Component
@@ -12,12 +13,9 @@ import { ProfileHeaderProps } from './types';
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cpo, onEditAvatar }) => {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <FiStar
-        key={i}
+      <IconWrapper icon={FiStar} key={i}
         size={16}
-        fill={i < Math.floor(rating) ? 'var(--armora-gold)' : 'none'}
-        color={i < Math.floor(rating) ? 'var(--armora-gold)' : 'rgba(255,255,255,0.5)'}
-      />
+        color={i < Math.floor(rating) ? 'var(--armora-gold)' : 'rgba(255,255,255,0.5)'}/>
     ));
   };
 
@@ -82,7 +80,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cpo, onEditAvatar 
           }}
           aria-label="Edit avatar"
         >
-          <FiEdit2 size={16} />
+          <IconWrapper icon={FiEdit2} size={16}/>
         </button>
       </div>
 
@@ -118,7 +116,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cpo, onEditAvatar 
         {/* Verification Badge */}
         {cpo.verification_status === 'verified' && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-xs)' }}>
-            <FiCheckCircle size={18} color="var(--armora-gold)" />
+            <IconWrapper icon={FiCheckCircle} size={18} color="var(--armora-gold)"/>
             <span style={{ fontSize: 'var(--armora-text-sm)', fontWeight: 'var(--armora-weight-medium)' }}>
               Verified
             </span>

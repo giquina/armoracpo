@@ -1,0 +1,276 @@
+/* ErrorDisplay Component Styles - ArmoraCPO */
+
+.armora-error-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--armora-space-2xl) var(--armora-space-md);
+  text-align: center;
+  min-height: 400px;
+  background-color: var(--armora-bg-primary);
+}
+
+/* Error Icon Container */
+.armora-error-display__icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--armora-radius-full);
+  background-color: rgba(239, 68, 68, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--armora-space-lg);
+}
+
+.armora-error-display__icon-inner {
+  font-size: 40px;
+  color: var(--armora-danger);
+}
+
+/* Error Title */
+.armora-error-display__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-text-primary);
+  margin-bottom: var(--armora-space-sm);
+  line-height: var(--armora-leading-tight);
+}
+
+/* Error Message */
+.armora-error-display__message {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  color: var(--armora-text-secondary);
+  margin-bottom: var(--armora-space-xl);
+  max-width: 500px;
+  line-height: var(--armora-leading-relaxed);
+}
+
+/* Error Code */
+.armora-error-display__code {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-tertiary);
+  margin-bottom: var(--armora-space-lg);
+  padding: var(--armora-space-xs) var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-sm);
+  font-weight: var(--armora-weight-medium);
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+/* Suggestions Section */
+.armora-error-display__suggestions {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: var(--armora-space-xl);
+}
+
+.armora-error-display__suggestions-title {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+  margin-bottom: var(--armora-space-md);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.armora-error-display__suggestions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.armora-error-display__suggestions-item {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  line-height: var(--armora-leading-relaxed);
+  padding: var(--armora-space-sm) 0;
+  padding-left: var(--armora-space-lg);
+  position: relative;
+}
+
+.armora-error-display__suggestions-item::before {
+  content: '•';
+  position: absolute;
+  left: var(--armora-space-sm);
+  color: var(--armora-gold);
+  font-weight: var(--armora-weight-bold);
+  font-size: var(--armora-text-base);
+}
+
+/* Actions Section */
+.armora-error-display__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: var(--armora-space-lg);
+}
+
+/* Contact Support Link */
+.armora-error-display__support {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin-top: var(--armora-space-md);
+}
+
+.armora-error-display__support-link {
+  color: var(--armora-navy);
+  text-decoration: none;
+  font-weight: var(--armora-weight-semibold);
+  transition: var(--armora-transition-base);
+  border-bottom: 2px solid transparent;
+}
+
+.armora-error-display__support-link:hover {
+  color: var(--armora-gold);
+  border-bottom-color: var(--armora-gold);
+}
+
+.armora-error-display__support-link:active {
+  color: var(--armora-gold-dark);
+}
+
+/* Divider */
+.armora-error-display__divider {
+  width: 100%;
+  max-width: 500px;
+  height: 1px;
+  background-color: var(--armora-border-light);
+  margin: var(--armora-space-lg) 0;
+}
+
+/* Button Overrides for Better Spacing */
+.armora-error-display__actions .armora-button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 640px) {
+  .armora-error-display {
+    padding: var(--armora-space-xl) var(--armora-space-md);
+    min-height: 300px;
+  }
+
+  .armora-error-display__icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--armora-space-md);
+  }
+
+  .armora-error-display__icon-inner {
+    font-size: 32px;
+  }
+
+  .armora-error-display__title {
+    font-size: var(--armora-text-xl);
+    margin-bottom: var(--armora-space-xs);
+  }
+
+  .armora-error-display__message {
+    font-size: var(--armora-text-sm);
+    margin-bottom: var(--armora-space-lg);
+  }
+
+  .armora-error-display__code {
+    font-size: 0.625rem; /* 10px */
+    margin-bottom: var(--armora-space-md);
+  }
+
+  .armora-error-display__suggestions {
+    margin-bottom: var(--armora-space-lg);
+  }
+
+  .armora-error-display__suggestions-title {
+    font-size: 0.75rem; /* 12px */
+  }
+
+  .armora-error-display__suggestions-item {
+    font-size: 0.813rem; /* 13px */
+    padding: var(--armora-space-xs) 0;
+  }
+
+  .armora-error-display__actions {
+    gap: var(--armora-space-sm);
+  }
+
+  .armora-error-display__support {
+    font-size: 0.813rem; /* 13px */
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .armora-error-display {
+    padding: var(--armora-space-3xl) var(--armora-space-lg);
+  }
+
+  .armora-error-display__actions {
+    flex-direction: row;
+    max-width: 100%;
+  }
+
+  .armora-error-display__actions .armora-button {
+    width: auto;
+    flex: 1;
+  }
+}
+
+/* Accessibility - High Contrast Mode */
+@media (prefers-contrast: high) {
+  .armora-error-display__icon {
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 2px solid var(--armora-danger);
+  }
+
+  .armora-error-display__suggestions-item::before {
+    color: var(--armora-text-primary);
+  }
+
+  .armora-error-display__support-link {
+    border-bottom: 2px solid var(--armora-navy);
+  }
+}
+
+/* Animation Classes for Entrance */
+.armora-error-display--fade-in {
+  animation: errorFadeIn 0.4s ease-out;
+}
+
+@keyframes errorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .armora-error-display__actions {
+    display: none;
+  }
+
+  .armora-error-display__icon {
+    display: none;
+  }
+
+  .armora-error-display {
+    min-height: auto;
+    padding: var(--armora-space-md);
+  }
+}

@@ -1,0 +1,241 @@
+/* Signature Capture Component Styling */
+
+.signature-capture {
+  margin: var(--armora-space-lg) 0;
+  padding: var(--armora-space-lg);
+  border: 2px solid var(--armora-border);
+  border-radius: var(--armora-radius-lg);
+  background: var(--armora-bg-primary);
+}
+
+/* Signature Header */
+.signature-header {
+  margin-bottom: var(--armora-space-md);
+}
+
+.signature-title {
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-navy);
+  margin: 0 0 var(--armora-space-xs) 0;
+}
+
+.signature-subtitle {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin: 0;
+}
+
+/* Signature Statement */
+.signature-statement {
+  padding: var(--armora-space-md);
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--armora-radius-md);
+  margin-bottom: var(--armora-space-lg);
+}
+
+.statement-text {
+  margin: 0;
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-primary);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Signature Pad Container */
+.signature-pad-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto var(--armora-space-md);
+  border: 2px solid var(--armora-navy);
+  border-radius: var(--armora-radius-md);
+  background: white;
+  overflow: hidden;
+}
+
+.signature-pad {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.signature-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.signature-placeholder p {
+  margin: 0;
+  font-size: var(--armora-text-lg);
+  color: rgba(10, 31, 68, 0.3);
+  font-style: italic;
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Signature Actions */
+.signature-actions {
+  display: flex;
+  gap: var(--armora-space-md);
+  justify-content: center;
+  margin-bottom: var(--armora-space-lg);
+}
+
+.btn-clear,
+.btn-save {
+  padding: var(--armora-space-sm) var(--armora-space-lg);
+  border-radius: var(--armora-radius-md);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-semibold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  min-width: 120px;
+}
+
+.btn-clear {
+  background: var(--armora-bg-secondary);
+  color: var(--armora-text-primary);
+  border-color: var(--armora-border);
+}
+
+.btn-clear:hover:not(:disabled) {
+  background: var(--armora-error);
+  color: white;
+  border-color: var(--armora-error);
+}
+
+.btn-save {
+  background: var(--armora-gold);
+  color: var(--armora-navy);
+  border-color: var(--armora-gold);
+}
+
+.btn-save:hover:not(:disabled) {
+  background: var(--armora-navy);
+  color: var(--armora-gold);
+  border-color: var(--armora-navy);
+}
+
+.btn-clear:disabled,
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Signature Confirmation */
+.signature-confirmation {
+  display: flex;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-md);
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--armora-radius-md);
+  margin-bottom: var(--armora-space-lg);
+}
+
+.confirmation-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--armora-success);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.confirmation-details {
+  flex: 1;
+}
+
+.confirmation-text {
+  margin: 0 0 var(--armora-space-xs) 0;
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-primary);
+}
+
+.confirmation-text:last-child {
+  margin-bottom: 0;
+}
+
+.confirmation-text strong {
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-navy);
+}
+
+/* Signature Legal Notice */
+.signature-legal-notice {
+  padding: var(--armora-space-md);
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--armora-radius-md);
+}
+
+.legal-text {
+  margin: 0;
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  line-height: 1.5;
+}
+
+.legal-text strong {
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .signature-capture {
+    padding: var(--armora-space-md);
+  }
+
+  .signature-pad-container {
+    max-width: 100%;
+  }
+
+  .signature-pad {
+    height: 150px;
+  }
+
+  .signature-actions {
+    flex-direction: column;
+  }
+
+  .btn-clear,
+  .btn-save {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .signature-confirmation {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .confirmation-icon {
+    margin-bottom: var(--armora-space-sm);
+  }
+}
+
+/* Tablet Responsive */
+@media (max-width: 768px) and (min-width: 641px) {
+  .signature-pad {
+    height: 180px;
+  }
+}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { supabase, ProtectionAssignment, AssignmentMessage } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
 import { ChatBubble, TypingIndicator, QuickReplyTemplates, MessageInput } from '../../components/messages';
-import { StatusBadge, LoadingSpinner, Card } from '../../components/ui';
+import { LoadingSpinner, Card } from '../../components/ui';
 import '../../styles/global.css';
 import './MessageChat.css';
 
@@ -122,6 +123,30 @@ const MessageChat: React.FC = () => {
     return labels[type] || type;
   };
 
+  const getStatusLabel = (status: string): string => {
+    const labels: { [key: string]: string } = {
+      pending: 'Pending',
+      assigned: 'Assigned',
+      en_route: 'En Route',
+      active: 'Active',
+      completed: 'Completed',
+      cancelled: 'Cancelled',
+    };
+    return labels[status] || status;
+  };
+
+  const getStatusClass = (status: string): string => {
+    const classes: { [key: string]: string } = {
+      pending: 'badge-warning',
+      assigned: 'badge-info',
+      en_route: 'badge-primary',
+      active: 'badge-success',
+      completed: 'badge-secondary',
+      cancelled: 'badge-danger',
+    };
+    return classes[status] || 'badge-info';
+  };
+
   if (loading) {
     return (
       <div className="message-chat">
@@ -147,7 +172,7 @@ const MessageChat: React.FC = () => {
           onClick={() => navigate('/messages')}
           aria-label="Back to messages"
         >
-          <FiArrowLeft size={24} />
+          <IconWrapper icon={FiArrowLeft} size={24} />
         </button>
 
         <div className="message-chat__header-info">
@@ -172,7 +197,7 @@ const MessageChat: React.FC = () => {
           className="message-chat__menu"
           aria-label="More options"
         >
-          <FiMoreVertical size={20} />
+          <IconWrapper icon={FiMoreVertical} size={20} />
         </button>
       </div>
 
@@ -181,7 +206,9 @@ const MessageChat: React.FC = () => {
         <Card>
           <div className="message-chat__context-content">
             <div className="message-chat__context-badges">
-              <StatusBadge status={assignment.status} size="sm" />
+              <span className={`badge ${getStatusClass(assignment.status)}`}>
+                {getStatusLabel(assignment.status)}
+              </span>
               <span className="badge badge-navy">
                 {getAssignmentTypeLabel(assignment.assignment_type)}
               </span>

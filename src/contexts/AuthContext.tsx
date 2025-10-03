@@ -2,16 +2,18 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import {
   supabase,
+  ProtectionOfficer,
   signUpWithEmail,
   signInWithEmail,
   signInWithGoogle,
-  signOut,
-  getCurrentUser,
   getUserProfile,
   updateUserProfile,
   saveQuestionnaireResponse,
-} from "../lib/supabase"
+} from '../lib/supabase';
+import { authService } from '../services/auth.service';
+import type { ProfileData } from '../services/auth.service';
 
+// Legacy Profile interface for backward compatibility
 interface Profile {
   id: string;
   email: string;
@@ -31,6 +33,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   profile: Profile | null;
+  cpoProfile: ProtectionOfficer | null; // CPO-specific profile data
   loading: boolean;
   error: string | null;
   // Auth methods
@@ -41,7 +44,7 @@ interface AuthContextType {
   // Profile methods
   updateProfile: (updates: Partial<Profile>) => Promise<void>;
   refreshProfile: () => Promise<void>;
-  // Protection service methods
+  // Protection service methods (legacy)
   saveQuestionnaire: (responses: any) => Promise<void>;
   acknowledgeMartynsLaw: () => Promise<void>;
 }
@@ -57,6 +60,7 @@ export const useAuth = () => {
       user: null,
       session: null,
       profile: null,
+      cpoProfile: null,
       loading: false,
       error: null,
       signUp: async () => {},
@@ -76,15 +80,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [cpoProfile, setCpoProfile] = useState<ProtectionOfficer | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch user profile
+  // Fetch user profile using new auth service
   const fetchProfile = async (userId: string) => {
     try {
-      const { data, error } = await getUserProfile(userId);
-      if (error) throw error;
-      setProfile(data);
+      // Load basic profile
+      const { profile: basicProfile, error: profileError } = await authService.getCurrentUserProfile();
+      if (profileError) throw profileError;
+
+      // Convert ProfileData to legacy Profile format
+      if (basicProfile) {
+        setProfile({
+          id: basicProfile.id,
+          email: basicProfile.email,
+          full_name: basicProfile.full_name,
+          phone_number: basicProfile.phone,
+        });
+
+        // If user is a CPO, load CPO profile
+        if (basicProfile.user_type === 'cpo') {
+          const { profile: cpoData, error: cpoError } = await authService.getCPOProfile(userId);
+          if (cpoError) {
+            console.warn('Error fetching CPO profile:', cpoError);
+          } else {
+            setCpoProfile(cpoData);
+          }
+        }
+      }
     } catch (err: any) {
       console.error('Error fetching profile:', err);
       setError(err.message);
@@ -121,6 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await fetchProfile(session.user.id);
       } else {
         setProfile(null);
+        setCpoProfile(null);
       }
 
       // Handle auth events
@@ -221,13 +247,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      const { error } = await signOut();
+      const { error } = await authService.signOut();
       if (error) throw error;
 
       // Clear local state
       setUser(null);
       setSession(null);
       setProfile(null);
+      setCpoProfile(null);
 
       // Clear localStorage
       localStorage.removeItem('armoraUser');
@@ -314,6 +341,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     session,
     profile,
+    cpoProfile,
     loading,
     error,
     signUp,

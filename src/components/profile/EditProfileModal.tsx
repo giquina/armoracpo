@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiSave } from 'react-icons/fi';
 import { EditProfileModalProps, FormField } from './types';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * EditProfileModal Component
@@ -201,7 +202,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
               }}
               aria-label="Close"
             >
-              <FiX size={18} />
+              <IconWrapper icon={FiX} size={18} />
             </button>
           </div>
 
@@ -251,7 +252,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   </>
                 ) : (
                   <>
-                    <FiSave size={18} />
+                    <IconWrapper icon={FiSave} size={18}/>
                     Save Changes
                   </>
                 )}

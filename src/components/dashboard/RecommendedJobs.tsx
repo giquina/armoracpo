@@ -6,6 +6,7 @@ import { ProtectionAssignment } from '../../lib/supabase';
 import { assignmentService } from '../../services/assignmentService';
 import { format } from 'date-fns';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface RecommendedJobsProps {
   cpoId: string;
@@ -132,7 +133,7 @@ const RecommendedJobs: React.FC<RecommendedJobsProps> = ({ cpoId, onAccept }) =>
                   border: '1px solid rgba(212, 175, 55, 0.3)',
                 }}
               >
-                <FaStar color="var(--armora-gold)" size={12} />
+                <IconWrapper icon={FaStar} color="var(--armora-gold)" size={12}/>
                 <span
                   className="text-xs font-bold"
                   style={{ color: 'var(--armora-gold)' }}
@@ -167,7 +168,7 @@ const RecommendedJobs: React.FC<RecommendedJobsProps> = ({ cpoId, onAccept }) =>
 
               {/* Location */}
               <div className="flex items-start gap-sm mb-md">
-                <FaMapMarkerAlt color="var(--armora-danger)" size={14} style={{ marginTop: '2px' }} />
+                <IconWrapper icon={FaMapMarkerAlt} color="var(--armora-danger)" size={14} style={{ marginTop: '2px' }}/>
                 <div style={{ flex: 1 }}>
                   <p className="text-sm" style={{ margin: 0 }}>
                     {job.pickup_location}
@@ -192,7 +193,7 @@ const RecommendedJobs: React.FC<RecommendedJobsProps> = ({ cpoId, onAccept }) =>
                     Rate
                   </p>
                   <div className="flex items-center gap-xs">
-                    <FaPoundSign color="var(--armora-success)" size={12} />
+                    <IconWrapper icon={FaPoundSign} color="var(--armora-success)" size={12}/>
                     <span className="text-sm font-bold" style={{ color: 'var(--armora-success)' }}>
                       {job.base_rate}/hr
                     </span>
@@ -203,7 +204,7 @@ const RecommendedJobs: React.FC<RecommendedJobsProps> = ({ cpoId, onAccept }) =>
                     Duration
                   </p>
                   <div className="flex items-center gap-xs">
-                    <FaClock color="var(--armora-text-secondary)" size={12} />
+                    <IconWrapper icon={FaClock} color="var(--armora-text-secondary)" size={12}/>
                     <span className="text-sm font-semibold">
                       {job.estimated_duration_hours}h
                     </span>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaFilter, FaTimes, FaMapMarkerAlt, FaPoundSign, FaCalendar } from 'react-icons/fa';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 export interface JobFilters {
   dateRange: { start: string; end: string } | null;
@@ -84,7 +85,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange, isO
         }}
       >
         <div className="flex items-center gap-sm">
-          <FaFilter size={14} />
+          <IconWrapper icon={FaFilter} size={14}/>
           <span>Filters</span>
           {(filters.assignmentTypes.length > 0 || filters.threatLevels.length > 0) && (
             <span
@@ -102,7 +103,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange, isO
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          {isOpen ? <FaTimes size={14} /> : <FaFilter size={14} />}
+          {isOpen ? <IconWrapper icon={FaTimes} size={14}/> : <IconWrapper icon={FaFilter} size={14}/>}
         </motion.div>
       </button>
 
@@ -125,7 +126,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange, isO
               {/* Location Radius */}
               <div style={{ marginBottom: 'var(--armora-space-lg)' }}>
                 <div className="flex items-center gap-sm mb-sm">
-                  <FaMapMarkerAlt color="var(--armora-danger)" size={14} />
+                  <IconWrapper icon={FaMapMarkerAlt} color="var(--armora-danger)" size={14}/>
                   <label className="font-semibold" style={{ margin: 0 }}>
                     Location Radius
                   </label>
@@ -155,7 +156,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange, isO
               {/* Rate Range */}
               <div style={{ marginBottom: 'var(--armora-space-lg)' }}>
                 <div className="flex items-center gap-sm mb-sm">
-                  <FaPoundSign color="var(--armora-success)" size={14} />
+                  <IconWrapper icon={FaPoundSign} color="var(--armora-success)" size={14}/>
                   <label className="font-semibold" style={{ margin: 0 }}>
                     Hourly Rate Range
                   </label>
@@ -203,7 +204,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange, isO
               {/* Assignment Types */}
               <div style={{ marginBottom: 'var(--armora-space-lg)' }}>
                 <div className="flex items-center gap-sm mb-sm">
-                  <FaCalendar color="var(--armora-navy)" size={14} />
+                  <IconWrapper icon={FaCalendar} color="var(--armora-navy)" size={14}/>
                   <label className="font-semibold" style={{ margin: 0 }}>
                     Assignment Type
                   </label>

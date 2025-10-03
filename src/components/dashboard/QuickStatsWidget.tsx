@@ -2,6 +2,7 @@ import React from 'react';
 import { FaStar, FaClock, FaCheckCircle, FaFire } from 'react-icons/fa';
 import { ProtectionOfficer } from '../../lib/supabase';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface QuickStatsWidgetProps {
   cpo: ProtectionOfficer;
@@ -102,7 +103,7 @@ const QuickStatsWidget: React.FC<QuickStatsWidgetProps> = ({
                 zIndex: 1,
               }}
             >
-              <Icon color={stat.color} size={24} />
+              <IconWrapper icon={Icon} color={stat.color} size={24} />
             </div>
 
             {/* Value */}

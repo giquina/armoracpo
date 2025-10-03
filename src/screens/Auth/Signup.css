@@ -1,0 +1,366 @@
+.armora-signup {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--armora-navy-dark) 0%, var(--armora-navy) 50%, var(--armora-navy-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--armora-space-lg);
+}
+
+.armora-signup__container {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.armora-signup__header {
+  text-align: center;
+  margin-bottom: var(--armora-space-2xl);
+}
+
+.armora-signup__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-4xl);
+  font-weight: var(--armora-weight-extrabold);
+  color: var(--armora-navy);
+  margin-bottom: var(--armora-space-sm);
+}
+
+.armora-signup__subtitle {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  color: var(--armora-text-secondary);
+}
+
+/* Form Container */
+.armora-signup__form-container {
+  min-height: 500px;
+  position: relative;
+  margin-bottom: var(--armora-space-xl);
+}
+
+.armora-signup__form {
+  width: 100%;
+}
+
+.armora-signup__step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-lg);
+}
+
+.armora-signup__step-title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-navy);
+  margin-bottom: var(--armora-space-md);
+}
+
+.armora-signup__section-title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-lg);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-navy);
+  margin-top: var(--armora-space-md);
+  margin-bottom: var(--armora-space-sm);
+  padding-bottom: var(--armora-space-sm);
+  border-bottom: 2px solid var(--armora-border-light);
+}
+
+/* Row Layout */
+.armora-signup__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--armora-space-md);
+}
+
+/* Password Field with Toggle */
+.armora-signup__password-field {
+  position: relative;
+}
+
+.armora-signup__password-toggle {
+  position: absolute;
+  right: var(--armora-space-md);
+  top: 44px;
+  background: none;
+  border: none;
+  color: var(--armora-text-secondary);
+  cursor: pointer;
+  padding: var(--armora-space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--armora-transition-base);
+}
+
+.armora-signup__password-toggle:hover {
+  color: var(--armora-navy);
+}
+
+/* Password Strength Indicator */
+.armora-signup__password-strength {
+  margin-top: calc(var(--armora-space-sm) * -1);
+  margin-bottom: var(--armora-space-md);
+}
+
+.armora-signup__password-strength-label {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin-bottom: var(--armora-space-xs);
+  display: block;
+}
+
+.armora-signup__password-strength-text {
+  font-weight: var(--armora-weight-semibold);
+  text-transform: capitalize;
+}
+
+.armora-signup__password-strength-text--weak {
+  color: var(--armora-danger);
+}
+
+.armora-signup__password-strength-text--medium {
+  color: var(--armora-warning);
+}
+
+.armora-signup__password-strength-text--strong {
+  color: var(--armora-success);
+}
+
+.armora-signup__password-strength-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--armora-bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.armora-signup__password-strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.armora-signup__password-strength-fill--weak {
+  width: 33%;
+  background-color: var(--armora-danger);
+}
+
+.armora-signup__password-strength-fill--medium {
+  width: 66%;
+  background-color: var(--armora-warning);
+}
+
+.armora-signup__password-strength-fill--strong {
+  width: 100%;
+  background-color: var(--armora-success);
+}
+
+/* Login Link */
+.armora-signup__login-link {
+  text-align: center;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin-top: var(--armora-space-md);
+}
+
+.armora-signup__login-link a {
+  color: var(--armora-navy);
+  text-decoration: none;
+  font-weight: var(--armora-weight-semibold);
+  transition: var(--armora-transition-base);
+}
+
+.armora-signup__login-link a:hover {
+  color: var(--armora-gold);
+  text-decoration: underline;
+}
+
+/* Language Management */
+.armora-signup__language-item {
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+}
+
+/* Terms & Conditions */
+.armora-signup__terms {
+  margin-bottom: var(--armora-space-md);
+}
+
+.armora-signup__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--armora-space-md);
+  cursor: pointer;
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  color: var(--armora-text-primary);
+  line-height: var(--armora-leading-relaxed);
+}
+
+.armora-signup__checkbox {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--armora-navy);
+}
+
+.armora-signup__checkbox-label a {
+  color: var(--armora-navy);
+  text-decoration: none;
+  font-weight: var(--armora-weight-semibold);
+  transition: var(--armora-transition-base);
+}
+
+.armora-signup__checkbox-label a:hover {
+  color: var(--armora-gold);
+  text-decoration: underline;
+}
+
+.armora-signup__error {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-danger);
+  margin-top: var(--armora-space-xs);
+}
+
+/* Summary */
+.armora-signup__summary {
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  padding: var(--armora-space-lg);
+  margin-top: var(--armora-space-xl);
+}
+
+.armora-signup__summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--armora-space-sm) 0;
+  border-bottom: 1px solid var(--armora-border-light);
+}
+
+.armora-signup__summary-item:last-child {
+  border-bottom: none;
+}
+
+.armora-signup__summary-label {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-secondary);
+}
+
+.armora-signup__summary-value {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-text-primary);
+}
+
+/* Navigation Buttons */
+.armora-signup__navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--armora-space-md);
+  padding-top: var(--armora-space-xl);
+  border-top: 2px solid var(--armora-border-light);
+}
+
+.armora-signup__navigation .armora-button {
+  flex: 1;
+  max-width: 200px;
+}
+
+.armora-signup__navigation .armora-button:only-child {
+  margin-left: auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .armora-signup {
+    padding: var(--armora-space-md);
+  }
+
+  .armora-signup__container {
+    padding: var(--armora-space-lg);
+  }
+
+  .armora-signup__title {
+    font-size: var(--armora-text-3xl);
+  }
+
+  .armora-signup__subtitle {
+    font-size: var(--armora-text-sm);
+  }
+
+  .armora-signup__step-title {
+    font-size: var(--armora-text-xl);
+  }
+
+  .armora-signup__row {
+    grid-template-columns: 1fr;
+  }
+
+  .armora-signup__form-container {
+    min-height: 450px;
+  }
+
+  .armora-signup__navigation {
+    flex-direction: column-reverse;
+  }
+
+  .armora-signup__navigation .armora-button {
+    max-width: 100%;
+  }
+
+  .armora-signup__navigation .armora-button:only-child {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .armora-signup {
+    padding: var(--armora-space-sm);
+  }
+
+  .armora-signup__container {
+    padding: var(--armora-space-md);
+  }
+
+  .armora-signup__title {
+    font-size: var(--armora-text-2xl);
+  }
+
+  .armora-signup__header {
+    margin-bottom: var(--armora-space-xl);
+  }
+
+  .armora-signup__form-container {
+    min-height: 400px;
+  }
+
+  .armora-signup__summary {
+    padding: var(--armora-space-md);
+  }
+}
+
+/* Animation support */
+@media (prefers-reduced-motion: reduce) {
+  .armora-signup__form {
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ProtectionAssignment, AssignmentMessage } from '../../lib/supabase';
-import { StatusBadge } from '../ui';
 import './ChatListItem.css';
 
 interface ChatListItemProps {
@@ -42,6 +41,30 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
     return labels[type] || type;
   };
 
+  const getStatusLabel = (status: string): string => {
+    const labels: { [key: string]: string } = {
+      pending: 'Pending',
+      assigned: 'Assigned',
+      en_route: 'En Route',
+      active: 'Active',
+      completed: 'Completed',
+      cancelled: 'Cancelled',
+    };
+    return labels[status] || status;
+  };
+
+  const getStatusClass = (status: string): string => {
+    const classes: { [key: string]: string } = {
+      pending: 'badge-warning',
+      assigned: 'badge-info',
+      en_route: 'badge-primary',
+      active: 'badge-success',
+      completed: 'badge-secondary',
+      cancelled: 'badge-danger',
+    };
+    return classes[status] || 'badge-info';
+  };
+
   return (
     <div
       className={`chat-list-item ${unreadCount > 0 ? 'chat-list-item--unread' : ''}`}
@@ -68,10 +91,9 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
         </div>
 
         <div className="chat-list-item__badges">
-          <StatusBadge
-            status={assignment.status}
-            size="sm"
-          />
+          <span className={`badge ${getStatusClass(assignment.status)}`}>
+            {getStatusLabel(assignment.status)}
+          </span>
           <span className="badge badge-navy">
             {getAssignmentTypeLabel(assignment.assignment_type)}
           </span>

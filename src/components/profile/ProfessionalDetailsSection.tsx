@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiBriefcase, FiEdit2 } from 'react-icons/fi';
 import { ProfessionalDetailsSectionProps } from './types';
 import { EditProfileModal } from './EditProfileModal';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * ProfessionalDetailsSection Component
@@ -30,11 +31,11 @@ export const ProfessionalDetailsSection: React.FC<ProfessionalDetailsSectionProp
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--armora-space-md)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)' }}>
-          <FiBriefcase size={20} color="var(--armora-navy)" />
+          <IconWrapper icon={FiBriefcase} size={20} color="var(--armora-navy)"/>
           <h3>Professional Details</h3>
         </div>
         <button onClick={() => setIsEditing(true)} className="btn-sm btn-outline-navy">
-          <FiEdit2 size={14} />
+          <IconWrapper icon={FiEdit2} size={14}/>
           Edit
         </button>
       </div>

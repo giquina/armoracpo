@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiLock, FiShield, FiEye, FiTrash2, FiAlertTriangle } from 'react-icons/fi';
 import { SecuritySettingsSectionProps } from './types';
 import { supabase } from '../../lib/supabase';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * SecuritySettingsSection Component
@@ -57,7 +58,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
     >
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-lg)' }}>
-        <FiLock size={20} color="var(--armora-navy)" />
+        <IconWrapper icon={FiLock} size={20} color="var(--armora-navy)"/>
         <h3>Security Settings</h3>
       </div>
 
@@ -65,7 +66,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--armora-space-md)' }}>
         {/* Change Password */}
         <SettingItem
-          icon={<FiLock size={18} />}
+          icon={<IconWrapper icon={FiLock} size={18}/>}
           title="Change Password"
           description="Update your account password"
           action={
@@ -77,7 +78,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
 
         {/* Two-Factor Authentication */}
         <SettingItem
-          icon={<FiShield size={18} />}
+          icon={<IconWrapper icon={FiShield} size={18}/>}
           title="Two-Factor Authentication"
           description="Add an extra layer of security"
           action={
@@ -87,7 +88,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
 
         {/* Privacy Settings */}
         <SettingItem
-          icon={<FiEye size={18} />}
+          icon={<IconWrapper icon={FiEye} size={18}/>}
           title="Privacy Settings"
           description="Control who can see your information"
           action={
@@ -99,7 +100,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
 
         {/* Delete Account */}
         <SettingItem
-          icon={<FiTrash2 size={18} color="var(--armora-danger)" />}
+          icon={<IconWrapper icon={FiTrash2} size={18} color="var(--armora-danger)"/>}
           title="Delete Account"
           description="Permanently delete your account and data"
           action={
@@ -216,7 +217,7 @@ export const SecuritySettingsSection: React.FC<SecuritySettingsSectionProps> = (
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-md)' }}>
-              <FiAlertTriangle size={24} color="var(--armora-danger)" />
+              <IconWrapper icon={FiAlertTriangle} size={24} color="var(--armora-danger)"/>
               <h3 style={{ color: 'var(--armora-danger)' }}>Delete Account</h3>
             </div>
 

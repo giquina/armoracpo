@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiRefreshCw } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { supabase, ProtectionAssignment, AssignmentMessage } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';
 import { ChatListItem } from '../../components/messages';
-import { Tabs, EmptyState, LoadingSpinner } from '../../components/ui';
+import { EmptyState, LoadingSpinner } from '../../components/ui';
 import '../../styles/global.css';
 import './Messages.css';
 
@@ -138,7 +139,7 @@ const Messages: React.FC = () => {
             disabled={refreshing}
             aria-label="Refresh messages"
           >
-            <FiRefreshCw size={20} className={refreshing ? 'spinning' : ''} />
+            <IconWrapper icon={FiRefreshCw} size={20} className={refreshing ? 'spinning' : ''} />
           </button>
         </div>
         <p className="messages-header__subtitle">
@@ -149,7 +150,7 @@ const Messages: React.FC = () => {
       {/* Search Bar */}
       <div className="messages-search">
         <div className="messages-search__input-wrapper">
-          <FiSearch className="messages-search__icon" size={18} />
+          <IconWrapper icon={FiSearch} className="messages-search__icon" size={18} />
           <input
             type="text"
             className="messages-search__input"
@@ -170,14 +171,20 @@ const Messages: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <Tabs
-        tabs={[
-          { id: 'active', label: `Active (${activeConversations.length})` },
-          { id: 'archived', label: `Archived (${archivedConversations.length})` }
-        ]}
-        activeTab={activeTab}
-        onChange={(id) => setActiveTab(id as 'active' | 'archived')}
-      />
+      <div className="messages-tabs">
+        <button
+          className={`messages-tabs__button ${activeTab === 'active' ? 'messages-tabs__button--active' : ''}`}
+          onClick={() => setActiveTab('active')}
+        >
+          Active ({activeConversations.length})
+        </button>
+        <button
+          className={`messages-tabs__button ${activeTab === 'archived' ? 'messages-tabs__button--active' : ''}`}
+          onClick={() => setActiveTab('archived')}
+        >
+          Archived ({archivedConversations.length})
+        </button>
+      </div>
 
       {/* Conversations List */}
       <div className="messages-list">

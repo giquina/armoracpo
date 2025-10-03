@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { FaPoundSign, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -108,7 +109,7 @@ const EarningsSummary: React.FC<EarningsSummaryProps> = ({ cpoId }) => {
         <div>
           <p className="text-sm text-secondary mb-xs">This Month's Earnings</p>
           <div className="flex items-center gap-sm">
-            <FaPoundSign color="var(--armora-gold)" size={28} />
+            <IconWrapper icon={FaPoundSign} color="var(--armora-gold)" size={28}/>
             <h1
               className="font-display"
               style={{
@@ -141,9 +142,9 @@ const EarningsSummary: React.FC<EarningsSummaryProps> = ({ cpoId }) => {
           }}
         >
           {isIncrease ? (
-            <FaArrowUp color="var(--armora-success)" size={14} />
+            <IconWrapper icon={FaArrowUp} color="var(--armora-success)" size={14}/>
           ) : (
-            <FaArrowDown color="var(--armora-danger)" size={14} />
+            <IconWrapper icon={FaArrowDown} color="var(--armora-danger)" size={14}/>
           )}
           <span
             className="text-sm font-semibold"

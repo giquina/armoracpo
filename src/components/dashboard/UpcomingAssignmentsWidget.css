@@ -1,0 +1,223 @@
+/* Upcoming Assignments Widget */
+
+.upcoming-assignments-widget {
+  background-color: var(--armora-bg-primary);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-lg);
+  box-shadow: var(--armora-shadow-md);
+  border: 1px solid var(--armora-border-light);
+}
+
+/* Header */
+.upcoming-assignments-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--armora-space-lg);
+  padding-bottom: var(--armora-space-md);
+  border-bottom: 1px solid var(--armora-border-light);
+}
+
+.upcoming-assignments-widget__header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+}
+
+.upcoming-assignments-widget__header-icon {
+  font-size: 20px;
+  color: var(--armora-navy);
+}
+
+.upcoming-assignments-widget__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-xl);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-text-primary);
+  margin: 0;
+}
+
+/* List */
+.upcoming-assignments-widget__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--armora-space-md);
+}
+
+/* Assignment Item */
+.upcoming-assignments-widget__item {
+  display: flex;
+  gap: var(--armora-space-md);
+  padding: var(--armora-space-md);
+  background-color: var(--armora-bg-secondary);
+  border-radius: var(--armora-radius-md);
+  border-left: 3px solid var(--armora-navy);
+  transition: var(--armora-transition-base);
+}
+
+.upcoming-assignments-widget__item:hover {
+  background-color: var(--armora-bg-tertiary);
+  transform: translateX(4px);
+}
+
+/* Date Badge */
+.upcoming-assignments-widget__item-date {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background-color: var(--armora-navy);
+  border-radius: var(--armora-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--armora-text-inverse);
+}
+
+.upcoming-assignments-widget__item-day {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-bold);
+  line-height: 1;
+}
+
+.upcoming-assignments-widget__item-month {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  font-weight: var(--armora-weight-semibold);
+  letter-spacing: 0.5px;
+  margin-top: var(--armora-space-xs);
+}
+
+/* Content */
+.upcoming-assignments-widget__item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.upcoming-assignments-widget__item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--armora-space-sm);
+  margin-bottom: var(--armora-space-sm);
+}
+
+.upcoming-assignments-widget__item-title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-text-primary);
+  margin: 0;
+}
+
+.upcoming-assignments-widget__item-status {
+  flex-shrink: 0;
+  padding: var(--armora-space-xs) var(--armora-space-sm);
+  border-radius: var(--armora-radius-full);
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  font-weight: var(--armora-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.upcoming-assignments-widget__item-status--success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--armora-success);
+}
+
+.upcoming-assignments-widget__item-status--warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--armora-warning);
+}
+
+.upcoming-assignments-widget__item-status--navy {
+  background-color: rgba(10, 31, 68, 0.1);
+  color: var(--armora-navy);
+}
+
+/* Details */
+.upcoming-assignments-widget__item-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--armora-space-md);
+  margin-bottom: var(--armora-space-sm);
+}
+
+.upcoming-assignments-widget__item-detail {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+}
+
+.upcoming-assignments-widget__item-icon {
+  font-size: 14px;
+  color: var(--armora-text-tertiary);
+}
+
+.upcoming-assignments-widget__item-time {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-tertiary);
+  font-weight: var(--armora-weight-medium);
+}
+
+/* Empty State */
+.upcoming-assignments-widget__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--armora-space-2xl) var(--armora-space-md);
+  text-align: center;
+}
+
+.upcoming-assignments-widget__empty-icon {
+  font-size: 48px;
+  color: var(--armora-text-tertiary);
+  margin-bottom: var(--armora-space-md);
+}
+
+.upcoming-assignments-widget__empty-text {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  color: var(--armora-text-secondary);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .upcoming-assignments-widget {
+    padding: var(--armora-space-md);
+  }
+
+  .upcoming-assignments-widget__item {
+    flex-direction: column;
+    gap: var(--armora-space-sm);
+  }
+
+  .upcoming-assignments-widget__item-date {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: var(--armora-space-sm) var(--armora-space-md);
+    gap: var(--armora-space-sm);
+  }
+
+  .upcoming-assignments-widget__item-day {
+    font-size: var(--armora-text-xl);
+  }
+
+  .upcoming-assignments-widget__item-month {
+    margin-top: 0;
+  }
+
+  .upcoming-assignments-widget__item-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

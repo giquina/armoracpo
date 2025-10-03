@@ -4,6 +4,7 @@ import { FiEdit2, FiUser, FiMail, FiPhone, FiMapPin, FiCalendar, FiAlertCircle }
 import { format } from 'date-fns';
 import { PersonalInfoSectionProps } from './types';
 import { EditProfileModal } from './EditProfileModal';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * PersonalInfoSection Component
@@ -32,7 +33,7 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({ cpo, o
       {/* Section Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--armora-space-md)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)' }}>
-          <FiUser size={20} color="var(--armora-navy)" />
+          <IconWrapper icon={FiUser} size={20} color="var(--armora-navy)"/>
           <h3>Personal Information</h3>
         </div>
       </div>
@@ -44,17 +45,17 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({ cpo, o
             Contact Details
           </h4>
           <button onClick={handleEditPersonal} className="btn-sm btn-outline-navy">
-            <FiEdit2 size={14} />
+            <IconWrapper icon={FiEdit2} size={14}/>
             Edit
           </button>
         </div>
 
         <div className="grid" style={{ gridTemplateColumns: '1fr', gap: 'var(--armora-space-md)' }}>
-          <InfoRow icon={<FiUser size={16} />} label="Full Name" value={`${cpo.first_name} ${cpo.last_name}`} />
-          <InfoRow icon={<FiMail size={16} />} label="Email" value={cpo.email} />
-          <InfoRow icon={<FiPhone size={16} />} label="Phone" value={cpo.phone} />
+          <InfoRow icon={<IconWrapper icon={FiUser} size={16}/>} label="Full Name" value={`${cpo.first_name} ${cpo.last_name}`} />
+          <InfoRow icon={<IconWrapper icon={FiMail} size={16}/>} label="Email" value={cpo.email} />
+          <InfoRow icon={<IconWrapper icon={FiPhone} size={16}/>} label="Phone" value={cpo.phone} />
           <InfoRow
-            icon={<FiCalendar size={16} />}
+            icon={<IconWrapper icon={FiCalendar} size={16}/>}
             label="Date of Birth"
             value={format(new Date(cpo.date_of_birth), 'PPP')}
           />
@@ -68,13 +69,13 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({ cpo, o
             Address
           </h4>
           <button onClick={handleEditAddress} className="btn-sm btn-outline-navy">
-            <FiEdit2 size={14} />
+            <IconWrapper icon={FiEdit2} size={14}/>
             Edit
           </button>
         </div>
 
         <InfoRow
-          icon={<FiMapPin size={16} />}
+          icon={<IconWrapper icon={FiMapPin} size={16}/>}
           label="Address"
           value={
             <>
@@ -96,13 +97,13 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({ cpo, o
             Emergency Contact
           </h4>
           <button onClick={handleEditEmergency} className="btn-sm btn-outline-navy">
-            <FiEdit2 size={14} />
+            <IconWrapper icon={FiEdit2} size={14}/>
             Edit
           </button>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', padding: 'var(--armora-space-md)', backgroundColor: '#fef3c7', borderRadius: 'var(--armora-radius-md)' }}>
-          <FiAlertCircle size={18} color="#92400e" />
+          <IconWrapper icon={FiAlertCircle} size={18} color="#92400e"/>
           <div>
             <p style={{ fontWeight: 'var(--armora-weight-semibold)', color: '#92400e' }}>
               {cpo.emergency_contact_name}

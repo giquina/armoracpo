@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FiSend, FiPaperclip, FiImage } from 'react-icons/fi';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './MessageInput.css';
 
 interface MessageInputProps {
@@ -55,7 +56,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
             aria-label="Attach file"
             disabled={disabled}
           >
-            <FiPaperclip size={20} />
+            <IconWrapper icon={FiPaperclip} size={20} />
           </button>
           <button
             type="button"
@@ -63,7 +64,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
             aria-label="Attach image"
             disabled={disabled}
           >
-            <FiImage size={20} />
+            <IconWrapper icon={FiImage} size={20} />
           </button>
         </div>
 
@@ -92,7 +93,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           disabled={!message.trim() || disabled}
           aria-label="Send message"
         >
-          <FiSend size={20} />
+          <IconWrapper icon={FiSend} size={20} />
         </button>
       </form>
     </div>

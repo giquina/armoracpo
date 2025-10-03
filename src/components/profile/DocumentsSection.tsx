@@ -5,6 +5,7 @@ import { FiFile, FiUpload, FiDownload, FiTrash2, FiCheckCircle, FiAlertTriangle 
 import { format } from 'date-fns';
 import { DocumentsSectionProps, Document } from './types';
 import { supabase } from '../../lib/supabase';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 /**
  * DocumentsSection Component
@@ -106,11 +107,11 @@ export const DocumentsSection: React.FC<DocumentsSectionProps> = ({ cpo, onUpdat
   const getDocumentIcon = (type: Document['type']) => {
     switch (type) {
       case 'dbs_check':
-        return <FiCheckCircle size={20} color="var(--armora-success)" />;
+        return <IconWrapper icon={FiCheckCircle} size={20} color="var(--armora-success)"/>;
       case 'insurance':
-        return <FiCheckCircle size={20} color="var(--armora-info)" />;
+        return <IconWrapper icon={FiCheckCircle} size={20} color="var(--armora-info)"/>;
       default:
-        return <FiFile size={20} color="var(--armora-navy)" />;
+        return <IconWrapper icon={FiFile} size={20} color="var(--armora-navy)"/>;
     }
   };
 
@@ -135,7 +136,7 @@ export const DocumentsSection: React.FC<DocumentsSectionProps> = ({ cpo, onUpdat
       {/* Section Header */}
       <div style={{ marginBottom: 'var(--armora-space-lg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-sm)', marginBottom: 'var(--armora-space-xs)' }}>
-          <FiFile size={20} color="var(--armora-navy)" />
+          <IconWrapper icon={FiFile} size={20} color="var(--armora-navy)"/>
           <h3>Documents & Certifications</h3>
         </div>
         <p style={{ fontSize: 'var(--armora-text-sm)', color: 'var(--armora-text-secondary)' }}>
@@ -161,7 +162,7 @@ export const DocumentsSection: React.FC<DocumentsSectionProps> = ({ cpo, onUpdat
         {uploading ? (
           <div className="spinner" style={{ margin: '0 auto', marginBottom: 'var(--armora-space-md)' }} />
         ) : (
-          <FiUpload size={32} color="var(--armora-navy)" style={{ marginBottom: 'var(--armora-space-md)' }} />
+          <IconWrapper icon={FiUpload} size={32} color="var(--armora-navy)" style={{ marginBottom: 'var(--armora-space-md)' }}/>
         )}
         <p style={{ fontWeight: 'var(--armora-weight-medium)', marginBottom: 'var(--armora-space-sm)' }}>
           {uploading ? 'Uploading...' : isDragActive ? 'Drop file here' : 'Drag & drop or click to upload'}
@@ -228,7 +229,7 @@ export const DocumentsSection: React.FC<DocumentsSectionProps> = ({ cpo, onUpdat
                     }}
                     aria-label="Download"
                   >
-                    <FiDownload size={16} color="var(--armora-navy)" />
+                    <IconWrapper icon={FiDownload} size={16} color="var(--armora-navy)"/>
                   </button>
                   <button
                     onClick={() => handleDelete(doc.id)}
@@ -240,7 +241,7 @@ export const DocumentsSection: React.FC<DocumentsSectionProps> = ({ cpo, onUpdat
                     }}
                     aria-label="Delete"
                   >
-                    <FiTrash2 size={16} color="var(--armora-danger)" />
+                    <IconWrapper icon={FiTrash2} size={16} color="var(--armora-danger)"/>
                   </button>
                 </div>
               </div>

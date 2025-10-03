@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaList, FaMap, FaSortAmountDown } from 'react-icons/fa';
+import { IconWrapper } from '../../utils/IconWrapper';
 import { ProtectionAssignment } from '../../lib/supabase';
 import { assignmentService } from '../../services/assignmentService';
 import { authService } from '../../services/authService';
@@ -182,7 +183,8 @@ const AvailableJobs: React.FC = () => {
           style={{ marginBottom: 'var(--armora-space-md)' }}
         >
           <div style={{ position: 'relative' }}>
-            <FaSearch
+            <IconWrapper
+              icon={FaSearch}
               style={{
                 position: 'absolute',
                 left: 'var(--armora-space-md)',
@@ -235,7 +237,7 @@ const AvailableJobs: React.FC = () => {
               }}
               onClick={() => setViewMode('list')}
             >
-              <FaList size={16} />
+              <IconWrapper icon={FaList} size={16} />
             </button>
             <button
               className={viewMode === 'map' ? 'btn-primary' : 'btn-secondary'}
@@ -247,7 +249,7 @@ const AvailableJobs: React.FC = () => {
               }}
               onClick={() => setViewMode('map')}
             >
-              <FaMap size={16} />
+              <IconWrapper icon={FaMap} size={16} />
             </button>
           </div>
 

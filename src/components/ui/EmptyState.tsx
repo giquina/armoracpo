@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconType } from 'react-icons';
 import { Button } from './Button';
+import { IconWrapper } from '../../utils/IconWrapper';
 import './EmptyState.css';
 
 export interface EmptyStateProps {
@@ -28,7 +29,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         {typeof icon === 'string' ? (
           <span style={{ fontSize: '48px' }}>{icon}</span>
         ) : (
-          React.createElement(icon)
+          <IconWrapper icon={icon} size={48} />
         )}
       </div>
       <h3 className="armora-empty-state__title">{title}</h3>

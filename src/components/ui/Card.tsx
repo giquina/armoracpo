@@ -37,13 +37,12 @@ export const Card: React.FC<CardProps> = ({
         whileHover: {
           y: -6,
           boxShadow: 'var(--armora-shadow-xl)',
-          transition: { duration: 0.2, ease: 'easeOut' }
         },
         whileTap: {
           scale: 0.98,
           y: -2,
-          transition: { duration: 0.1 }
         },
+        transition: { duration: 0.2 }
       }
     : {};
 

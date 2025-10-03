@@ -76,6 +76,42 @@ This document ensures we use proper SIA (Security Industry Authority) and close 
 
 ---
 
+## 🔗 Cross-App Feature Dependencies
+
+Some CPO features require corresponding functionality in the Armora **Client App**. This matrix shows which features need coordination between both development teams.
+
+| CPO Feature | Client App Required? | Client App Component | Priority | Notes |
+|-------------|---------------------|---------------------|----------|-------|
+| 1. Threat Assessment | ⚠️ OPTIONAL | View threat reports | P3 | Client can view but CPOs contribute |
+| 2. ASR (Advance Security Recon) | ❌ NO | - | - | CPO-only feature |
+| 3. Multi-Officer Coordination | ❌ NO | - | - | CPO-only feature |
+| 4. Secure Routes | ❌ NO | - | - | CPO-only feature |
+| 5. Principal Preferences | ✅ YES | Profile Settings | P1 | Client MUST set preferences |
+| 6. Incident Reporting | ⚠️ OPTIONAL | View incident reports | P2 | Client can view their incidents |
+| 7. Daily Occurrence Book | ❌ NO | - | - | CPO-only legal requirement |
+| 8. CPO Availability | ❌ NO | - | - | CPO-only scheduling |
+| 9. Training & Development | ❌ NO | - | - | CPO-only professional development |
+| 10. Compliance Score | ❌ NO | - | - | CPO-only gamification |
+| 11. Performance Metrics | ✅ YES | Rating & Feedback Flow | P1 | Client MUST submit ratings |
+| 12. Emergency SOS | ⚠️ OPTIONAL | Emergency notifications | P1 | Client receives alerts |
+| 13. Vehicle/Equipment Checks | ❌ NO | - | - | CPO-only pre-assignment |
+| 14. Geofencing | ⚠️ OPTIONAL | Live tracking view | P2 | Client can see CPO location |
+| 15. Secure Document Storage | ❌ NO | - | - | CPO-only document vault |
+| Assignment Messaging | ✅ YES | Chat Interface | P0 | CRITICAL - both apps need messaging |
+
+### Legend:
+- ✅ **YES** = Client app MUST implement feature
+- ⚠️ **OPTIONAL** = Client app feature enhances experience but not required
+- ❌ **NO** = CPO-only feature, no client app work needed
+
+### High Priority Coordination Needed:
+1. **Assignment Messaging** (P0) - Already implemented in both apps via `AssignmentMessage` interface
+2. **Performance Metrics** (P1) - Requires client rating/feedback flow
+3. **Principal Preferences** (P1) - Requires client profile settings
+4. **Emergency SOS** (P1) - Should notify principals during active assignments
+
+---
+
 ## 🚀 Feature Suggestions (SIA-Compliant)
 
 ### **1. Threat Assessment Module**

@@ -5,6 +5,7 @@ import { ProtectionAssignment } from '../../lib/supabase';
 import { FaMapMarkerAlt, FaPoundSign, FaClock } from 'react-icons/fa';
 import 'leaflet/dist/leaflet.css';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface JobsMapProps {
   jobs: ProtectionAssignment[];
@@ -133,7 +134,7 @@ const JobsMap: React.FC<JobsMapProps> = ({
                   </p>
 
                   <div className="flex items-start gap-xs mb-sm">
-                    <FaMapMarkerAlt color="var(--armora-danger)" size={12} style={{ marginTop: '2px' }} />
+                    <IconWrapper icon={FaMapMarkerAlt} color="var(--armora-danger)" size={12} style={{ marginTop: '2px' }}/>
                     <p className="text-sm font-medium" style={{ margin: 0 }}>
                       {job.pickup_location}
                     </p>
@@ -145,7 +146,7 @@ const JobsMap: React.FC<JobsMapProps> = ({
                         Rate
                       </p>
                       <div className="flex items-center gap-xs">
-                        <FaPoundSign color="var(--armora-success)" size={10} />
+                        <IconWrapper icon={FaPoundSign} color="var(--armora-success)" size={10}/>
                         <span className="text-sm font-bold" style={{ color: 'var(--armora-success)' }}>
                           {job.base_rate}/hr
                         </span>
@@ -156,7 +157,7 @@ const JobsMap: React.FC<JobsMapProps> = ({
                         Duration
                       </p>
                       <div className="flex items-center gap-xs">
-                        <FaClock color="var(--armora-text-secondary)" size={10} />
+                        <IconWrapper icon={FaClock} color="var(--armora-text-secondary)" size={10}/>
                         <span className="text-sm font-semibold">
                           {job.estimated_duration_hours}h
                         </span>

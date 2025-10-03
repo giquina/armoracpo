@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaPoundSign, FaClock, FaCar, FaShieldAlt, FaExclamation
 import { ProtectionAssignment } from '../../lib/supabase';
 import { format, differenceInHours } from 'date-fns';
 import '../../styles/global.css';
+import { IconWrapper } from '../../utils/IconWrapper';
 
 interface JobCardProps {
   assignment: ProtectionAssignment;
@@ -72,7 +73,7 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
             border: '1px solid rgba(239, 68, 68, 0.3)',
           }}
         >
-          <FaExclamationTriangle color="var(--armora-danger)" size={12} />
+          <IconWrapper icon={FaExclamationTriangle} color="var(--armora-danger)" size={12}/>
           <span className="text-xs font-bold" style={{ color: 'var(--armora-danger)' }}>
             URGENT
           </span>
@@ -119,7 +120,7 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
             borderRadius: 'var(--armora-radius-md)',
           }}
         >
-          <FaClock color="var(--armora-text-secondary)" size={14} />
+          <IconWrapper icon={FaClock} color="var(--armora-text-secondary)" size={14}/>
           <span className="text-sm font-medium">
             {format(new Date(assignment.scheduled_start_time), 'PPp')}
           </span>
@@ -127,7 +128,7 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
 
         {/* Location */}
         <div className="flex items-start gap-sm mb-md">
-          <FaMapMarkerAlt color="var(--armora-danger)" size={16} style={{ marginTop: '2px' }} />
+          <IconWrapper icon={FaMapMarkerAlt} color="var(--armora-danger)" size={16} style={{ marginTop: '2px' }}/>
           <div style={{ flex: 1 }}>
             <p className="text-sm font-medium" style={{ margin: 0 }}>
               {assignment.pickup_location}
@@ -155,7 +156,7 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
               Rate
             </p>
             <div className="flex items-center gap-xs">
-              <FaPoundSign color="var(--armora-success)" size={12} />
+              <IconWrapper icon={FaPoundSign} color="var(--armora-success)" size={12}/>
               <span className="text-sm font-bold" style={{ color: 'var(--armora-success)' }}>
                 {assignment.base_rate}
               </span>
@@ -177,7 +178,7 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
               Total
             </p>
             <div className="flex items-center gap-xs">
-              <FaPoundSign color="var(--armora-navy)" size={10} />
+              <IconWrapper icon={FaPoundSign} color="var(--armora-navy)" size={10}/>
               <span className="text-sm font-bold" style={{ color: 'var(--armora-navy)' }}>
                 {(assignment.base_rate * (assignment.estimated_duration_hours || 1)).toFixed(0)}
               </span>
@@ -190,13 +191,13 @@ const JobCard: React.FC<JobCardProps> = ({ assignment, onViewDetails, onAccept, 
           <div className="flex gap-sm mb-md" style={{ flexWrap: 'wrap' }}>
             {assignment.vehicle_required && (
               <span className="badge badge-info" style={{ fontSize: 'var(--armora-text-xs)' }}>
-                <FaCar size={10} style={{ marginRight: '4px' }} />
+                <IconWrapper icon={FaCar} size={10} style={{ marginRight: '4px' }}/>
                 Vehicle Required
               </span>
             )}
             {assignment.armed_protection_required && (
               <span className="badge badge-danger" style={{ fontSize: 'var(--armora-text-xs)' }}>
-                <FaShieldAlt size={10} style={{ marginRight: '4px' }} />
+                <IconWrapper icon={FaShieldAlt} size={10} style={{ marginRight: '4px' }}/>
                 Armed Protection
               </span>
             )}
