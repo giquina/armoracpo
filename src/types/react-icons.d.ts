@@ -25,4 +25,10 @@ declare module 'react-icons/fi' {
     export const FiEye: FC<SVGAttributes<SVGElement>>;
     export const FiDownload: FC<SVGAttributes<SVGElement>>;
     export const FiUpload: FC<SVGAttributes<SVGElement>>;
+    export const FiDollarSign: FC<SVGAttributes<SVGElement>>;
+    export const FiStar: FC<SVGAttributes<SVGElement>>;
+    export const FiClock: FC<SVGAttributes<SVGElement>>;
+    // Add a wildcard export to catch any other icons
+    const Icon: FC<SVGAttributes<SVGElement>>;
+    export default Icon;
 }
