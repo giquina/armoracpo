@@ -14,8 +14,10 @@
           "3000": { "label": "CRA Dev Server", "onAutoForward": "notify" }
     },
     "mounts": [
-          "type=cache,target=/home/node/.npm"
+          "type=cache,target=/home/node/.npm",
+          "source=armoracpo-node-modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
     ],
-    "postCreateCommand": "corepack enable || true && npm ci",
+    "postCreateCommand": "corepack enable || true && npm install --prefer-offline",
+    "postStartCommand": "npm install --prefer-offline",
     "remoteUser": "node"
 }
