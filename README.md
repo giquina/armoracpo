@@ -1,6 +1,33 @@
-# Getting Started with Create React App
+# Armora CPO - Close Protection Officer Operations Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A professional PWA for SIA-licensed Close Protection Officers in the UK.
+
+## 🚀 Quick Start
+
+### GitHub Codespaces (Recommended)
+
+**⚡ Startup Performance:** See [CODESPACES_OPTIMIZATION.md](./CODESPACES_OPTIMIZATION.md) for details on startup time improvements (90s → 5-15s).
+
+```bash
+# Open in Codespaces, wait for setup
+npm start
+```
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm start
+```
+
+## 📚 Documentation
+
+- [Codespaces Optimization Guide](./CODESPACES_OPTIMIZATION.md) - Fix slow startup times
+- [Quick Fix](./.github/CODESPACES_QUICK_FIX.md) - What changed and why
+- [Complete Docs](./docs/) - Architecture, deployment, testing
 
 ## Available Scripts
 
