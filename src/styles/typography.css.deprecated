@@ -1,3 +1,21 @@
+/* ============================================================================
+ * DEPRECATED: This file has been fully consolidated into armora-cpo-design-system.css
+ *
+ * DO NOT USE THIS FILE
+ * USE: /src/styles/armora-cpo-design-system.css for all typography tokens
+ *
+ * All typography tokens from this file now exist in the consolidated design system:
+ * - Font sizes: --armora-text-xs through --armora-text-4xl
+ * - Line heights: --armora-leading-tight, normal, relaxed
+ * - Font weights: --armora-weight-normal through extrabold
+ * - Letter spacing: --armora-tracking-tight through wider
+ *
+ * This file can be safely deleted as it has no remaining dependencies.
+ *
+ * READY FOR DELETION
+ * Last Updated: 2025-10-06
+ * ============================================================================ */
+
 /* ARMORA TYPOGRAPHY SYSTEM - Professional 8pt Grid Scale */
 
 :root {

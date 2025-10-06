@@ -12,6 +12,11 @@
   box-shadow: var(--armora-shadow-gold);
 }
 
+.job-card:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
 /* Header */
 .job-card-header {
   display: flex;
@@ -56,12 +61,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  min-width: 48px; /* WCAG AA touch target minimum */
+  min-height: 48px; /* WCAG AA touch target minimum */
   background: var(--armora-bg-secondary);
   border: 1px solid var(--armora-border-light);
   border-radius: var(--armora-radius-md);
-  color: var(--armora-text-secondary);
+  color: var(--armora-gray-600); /* Icon minimum for visibility - WCAG AA */
   font-size: 18px;
   cursor: pointer;
   transition: var(--armora-transition-base);
@@ -71,6 +76,11 @@
 .job-card-bookmark:hover {
   background: var(--armora-bg-tertiary);
   color: var(--armora-navy);
+}
+
+.job-card-bookmark:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
 }
 
 .job-card-bookmark.saved {
@@ -97,14 +107,14 @@
 
 .job-card-info-icon {
   font-size: 14px;
-  color: var(--armora-text-secondary);
+  color: var(--armora-gray-600); /* Icon minimum for visibility - WCAG AA */
   flex-shrink: 0;
 }
 
 .job-card-distance {
   margin-left: auto;
-  color: var(--armora-text-secondary);
-  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary); /* gray-500 for secondary info */
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
 }
 
 /* Pay Rate */
@@ -187,8 +197,8 @@
   display: flex;
   align-items: center;
   gap: var(--armora-space-sm);
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-secondary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
 }
 
 .job-card-applicants {
@@ -199,6 +209,7 @@
 
 .job-card-meta-icon {
   font-size: 14px;
+  color: var(--armora-gray-600); /* Icon minimum for visibility - WCAG AA */
 }
 
 .job-card-separator {
@@ -206,11 +217,11 @@
 }
 
 .job-card-posted {
-  color: var(--armora-text-secondary);
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
 }
 
 .job-card-deadline {
-  font-size: var(--armora-text-xs);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
   font-weight: var(--armora-weight-semibold);
   color: var(--armora-warning);
 }
@@ -222,7 +233,7 @@
   border: none;
   border-radius: var(--armora-radius-md);
   padding: var(--armora-space-md) var(--armora-space-lg);
-  color: var(--armora-navy);
+  color: var(--armora-text-inverse);
   font-size: var(--armora-text-base);
   font-weight: var(--armora-weight-bold);
   font-family: var(--armora-font-body);
@@ -234,7 +245,7 @@
 .job-card-apply-btn:hover {
   background: var(--armora-gold-light);
   transform: translateY(-2px);
-  box-shadow: var(--armora-shadow-gold);
+  box-shadow: var(--armora-shadow-md);
 }
 
 .job-card-apply-btn:active {

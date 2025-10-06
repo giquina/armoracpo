@@ -1,6 +1,6 @@
-@import './styles/design-tokens.css';
-@import './styles/variables.css';
-@import './styles/theme-overrides.css';
+/* ArmoraCPO - Minimal index.css
+ * Main design system imported via global.css in App.tsx
+ * No additional imports needed here */
 
 body {
   margin: 0;
@@ -9,8 +9,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-secondary, #f7fafc);
-  color: var(--text-primary, #1a1a2e);
 }
 
 code {

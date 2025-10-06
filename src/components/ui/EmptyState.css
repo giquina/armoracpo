@@ -10,9 +10,9 @@
 
 .armora-empty-state__icon {
   font-size: 64px;
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-400); /* Decorative icon - can use gray-400 */
   margin-bottom: var(--armora-space-lg);
-  opacity: 0.5;
+  opacity: 0.6; /* Slightly increased for better visibility */
 }
 
 .armora-empty-state__title {

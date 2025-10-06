@@ -64,6 +64,11 @@
   background-color: var(--armora-bg-secondary);
 }
 
+.recent-activity-feed__item--clickable:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
 .recent-activity-feed__item:last-child .recent-activity-feed__item-line {
   display: none;
 }
@@ -147,8 +152,8 @@
 
 .recent-activity-feed__item-time {
   font-family: var(--armora-font-body);
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-tertiary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
   font-weight: var(--armora-weight-medium);
 }
 
@@ -164,7 +169,7 @@
 
 .recent-activity-feed__empty-icon {
   font-size: 48px;
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-400); /* Icons can use gray-400 for decorative purposes */
   margin-bottom: var(--armora-space-md);
 }
 

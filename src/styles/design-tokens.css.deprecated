@@ -1,3 +1,22 @@
+/* ============================================================================
+ * DEPRECATED: This file is being phased out in favor of armora-cpo-design-system.css
+ *
+ * DO NOT ADD NEW TOKENS HERE
+ * USE: /src/styles/armora-cpo-design-system.css for all new design tokens
+ *
+ * This file remains temporarily for legacy compatibility with:
+ * - /src/index.css (edge-to-edge layout system)
+ * - Legacy mobile-first breakpoint system
+ * - Old protection request forms
+ *
+ * MIGRATION PATH:
+ * 1. Update forms to use new design system tokens
+ * 2. Remove reference from index.css
+ * 3. Delete this file once no legacy dependencies remain
+ *
+ * Last Updated: 2025-10-06
+ * ============================================================================ */
+
 /* ARMORA PROTECTION REQUEST - MOBILE-FIRST DESIGN TOKENS */
 /* Edge-to-edge mobile design system with high contrast readability */
 
@@ -41,9 +60,9 @@
   --border-dark: #a0aec0;          /* Darker border for emphasis */
 
   /* Action colors */
-  --accent-primary: #FFD700;       /* Gold accent - kept from brand */
-  --accent-hover: #e6c200;         /* Darker gold for hover states */
-  --accent-pressed: #ccac00;       /* Even darker for pressed states */
+  --accent-primary: #D4AF37;       /* Metallic gold - for earnings/achievements only */
+  --accent-hover: #e6c55c;         /* Lighter gold for hover states */
+  --accent-pressed: #b8941f;       /* Darker gold for pressed states */
 
   /* Status colors */
   --success: #10b981;              /* Green for success states */

@@ -1,3 +1,21 @@
+/* ============================================================================
+ * DEPRECATED: This file has been superseded by the flat card system in armora-cpo-design-system.css
+ *
+ * DO NOT USE THIS FILE
+ * USE: Flat card styling from /src/styles/armora-cpo-design-system.css
+ *
+ * The new design system uses:
+ * - Simpler flat cards with minimal shadows (--armora-shadow-card)
+ * - Standard border radius (--armora-radius-lg: 12px)
+ * - Consistent padding (--armora-space-md: 16px)
+ * - No complex border calculations or edge-to-edge complexity
+ *
+ * This file can be safely deleted as it has no remaining dependencies.
+ *
+ * READY FOR DELETION
+ * Last Updated: 2025-10-06
+ * ============================================================================ */
+
 /* ARMORA CARD/MODAL STANDARDIZATION SYSTEM */
 /* Based on NameCollection welcome card dimensions */
 

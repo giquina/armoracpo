@@ -52,7 +52,7 @@
   margin: 0 auto var(--armora-space-md);
   border: 2px solid var(--armora-navy);
   border-radius: var(--armora-radius-md);
-  background: white;
+  background: var(--armora-white);
   overflow: hidden;
 }
 
@@ -112,7 +112,7 @@
 
 .btn-clear:hover:not(:disabled) {
   background: var(--armora-error);
-  color: white;
+  color: var(--armora-white);
   border-color: var(--armora-error);
 }
 
@@ -150,7 +150,7 @@
   height: 40px;
   border-radius: 50%;
   background: var(--armora-success);
-  color: white;
+  color: var(--armora-white);
   display: flex;
   align-items: center;
   justify-content: center;

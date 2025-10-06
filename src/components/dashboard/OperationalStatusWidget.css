@@ -1,0 +1,383 @@
+/**
+ * Operational Status Widget Styles
+ *
+ * CPO-specific widget for managing operational status
+ * with animated indicators and quick status toggles.
+ */
+
+/* Status Indicator Dots */
+.cpo-status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--armora-radius-full);
+  display: inline-block;
+  transition: all var(--armora-transition-fast);
+}
+
+.cpo-status-indicator--operational {
+  background: var(--armora-operational);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), 0 0 10px var(--armora-operational);
+}
+
+.cpo-status-indicator--busy {
+  background: var(--armora-busy);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2), 0 0 10px var(--armora-busy);
+  animation: pulse-busy 1.5s ease-in-out infinite;
+}
+
+.cpo-status-indicator--standdown {
+  background: var(--armora-standdown);
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.2);
+  opacity: 0.6;
+}
+
+/* Status Pulse Animations */
+@keyframes pulse-operational {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), 0 0 10px var(--armora-operational);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.3), 0 0 15px var(--armora-operational);
+  }
+}
+
+@keyframes pulse-busy {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2), 0 0 10px var(--armora-busy);
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.4), 0 0 18px var(--armora-busy);
+  }
+}
+
+/* Checkmark Confirmation Animation */
+@keyframes checkmark-scale {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.status-confirm-checkmark {
+  animation: checkmark-scale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Status Control Container - Compact view for quick toggle */
+.cpo-status-control {
+  background: var(--armora-white);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-md);
+  box-shadow: var(--armora-shadow-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--armora-space-md);
+  min-height: var(--armora-touch-comfortable);
+}
+
+.cpo-status-control__current {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+  flex: 1;
+}
+
+.cpo-status-control__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cpo-status-control__text .label {
+  font-size: var(--armora-text-xs);
+  color: var(--armora-text-secondary);
+  font-weight: var(--armora-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cpo-status-control__text .status {
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-bold);
+  font-family: var(--armora-font-display);
+}
+
+.cpo-status-control__text .status.operational {
+  color: var(--armora-operational);
+}
+
+.cpo-status-control__text .status.busy {
+  color: var(--armora-busy);
+}
+
+.cpo-status-control__text .status.standdown {
+  color: var(--armora-standdown);
+}
+
+/* Status Toggle Button */
+.cpo-status-toggle {
+  min-height: var(--armora-touch-comfortable);
+  min-width: var(--armora-touch-comfortable);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  background: var(--armora-gray-200);
+  color: var(--armora-gray-700);
+  border: 2px solid var(--armora-border-light);
+  border-radius: var(--armora-radius-md);
+  font-weight: var(--armora-weight-semibold);
+  font-size: var(--armora-text-sm);
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+  white-space: nowrap;
+}
+
+.cpo-status-toggle:hover {
+  background: var(--armora-gray-300);
+  border-color: var(--armora-border-medium);
+  transform: translateY(-1px);
+}
+
+.cpo-status-toggle:active {
+  transform: translateY(0);
+}
+
+.cpo-status-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Status Button States */
+.cpo-status-toggle--operational {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--armora-operational);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.cpo-status-toggle--operational:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.cpo-status-toggle--busy {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--armora-busy);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.cpo-status-toggle--busy:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.cpo-status-toggle--standdown {
+  background: var(--armora-bg-secondary);
+  color: var(--armora-standdown);
+  border-color: var(--armora-border-medium);
+}
+
+.cpo-status-toggle--standdown:hover {
+  background: var(--armora-bg-tertiary);
+  border-color: var(--armora-border-dark);
+}
+
+/* Widget Card Enhancement */
+.operational-status-widget {
+  position: relative;
+  overflow: visible;
+}
+
+.operational-status-widget__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: var(--armora-radius-lg);
+}
+
+.operational-status-widget__glow--operational {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+}
+
+.operational-status-widget__glow--busy {
+  background: radial-gradient(circle at center, rgba(239, 68, 68, 0.3) 0%, transparent 70%);
+}
+
+/* Status Display Card */
+.operational-status-display {
+  padding: var(--armora-space-md);
+  border-radius: var(--armora-radius-lg);
+  border: 2px solid;
+  margin-bottom: var(--armora-space-md);
+  transition: all var(--armora-transition-base);
+}
+
+.operational-status-display--operational {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.operational-status-display--busy {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.operational-status-display--standdown {
+  background-color: var(--armora-bg-secondary);
+  border-color: var(--armora-border-light);
+}
+
+/* Status Label Typography */
+.operational-status-label {
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-bold);
+  font-family: var(--armora-font-display);
+  margin: 0;
+  line-height: var(--armora-leading-tight);
+}
+
+.operational-status-label--operational {
+  color: var(--armora-operational);
+}
+
+.operational-status-label--busy {
+  color: var(--armora-busy);
+}
+
+.operational-status-label--standdown {
+  color: var(--armora-standdown);
+}
+
+/* Status Description */
+.operational-status-description {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-secondary);
+  margin: 0;
+  line-height: var(--armora-leading-normal);
+}
+
+/* Assignment Lock Message */
+.operational-status-locked {
+  padding: var(--armora-space-sm);
+  background-color: rgba(239, 68, 68, 0.1);
+  border-radius: var(--armora-radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  text-align: center;
+}
+
+/* Modal Backdrop */
+.operational-status-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+/* Modal Container */
+.operational-status-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background-color: var(--armora-white);
+  border-radius: var(--armora-radius-lg);
+  box-shadow: var(--armora-shadow-card), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  padding: var(--armora-space-lg);
+  z-index: 1001;
+}
+
+/* Touch Target Enhancement */
+.operational-status-widget button,
+.operational-status-widget .cpo-status-toggle {
+  min-height: 56px; /* WCAG 2.1 Level AAA - Comfortable touch target */
+  min-width: 56px;
+}
+
+/* Focus Visible Styles for Keyboard Navigation */
+.operational-status-widget button:focus-visible,
+.operational-status-widget .cpo-status-toggle:focus-visible {
+  outline: 3px solid var(--armora-gold);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .cpo-status-indicator--operational,
+  .cpo-status-indicator--busy,
+  .cpo-status-indicator--standdown {
+    border: 2px solid currentColor;
+  }
+
+  .operational-status-display {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .cpo-status-indicator,
+  .operational-status-widget__glow,
+  .operational-status-display {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .status-confirm-checkmark {
+    animation: none;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 375px) {
+  .cpo-status-control {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--armora-space-sm);
+  }
+
+  .cpo-status-toggle {
+    width: 100%;
+  }
+
+  .operational-status-label {
+    font-size: var(--armora-text-xl);
+  }
+
+  .operational-status-modal {
+    width: 95%;
+    padding: var(--armora-space-md);
+  }
+}
+
+/* Print styles - hide animations */
+@media print {
+  .cpo-status-indicator,
+  .operational-status-widget__glow {
+    animation: none !important;
+  }
+
+  .operational-status-modal-backdrop,
+  .operational-status-modal {
+    display: none !important;
+  }
+}

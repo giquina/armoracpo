@@ -13,6 +13,12 @@ export { default as RecommendedJobs } from './RecommendedJobs';
 export { default as EarningsSummary } from './EarningsSummary';
 export { default as PerformanceInsights } from './PerformanceInsights';
 
+// Operational Status Widgets
+export { default as OperationalStatusWidget } from './OperationalStatusWidget';
+export type { OperationalStatus, OperationalStatusWidgetProps } from './OperationalStatusWidget';
+export { default as SIAVerificationBadge } from './SIAVerificationBadge';
+export type { SIAVerificationBadgeProps } from './SIAVerificationBadge';
+
 // New widget components
 export { QuickStatsCard } from './QuickStatsCard';
 export type { QuickStatsCardProps } from './QuickStatsCard';

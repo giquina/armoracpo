@@ -1,14 +1,17 @@
 import React from 'react';
 import { ProtectionOfficer } from '../../lib/supabase';
-import { FaShieldAlt, FaStar } from 'react-icons/fa';
+import { FaStar, FaCheckCircle, FaBriefcase, FaMoon } from 'react-icons/fa';
 import '../../styles/global.css';
 import { IconWrapper } from '../../utils/IconWrapper';
+import SIAVerificationBadge from './SIAVerificationBadge';
+import { OperationalStatus } from './OperationalStatusWidget';
 
 interface WelcomeHeaderProps {
   cpo: ProtectionOfficer;
+  operationalStatus?: OperationalStatus;
 }
 
-const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
+const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo, operationalStatus }) => {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good morning';
@@ -20,15 +23,45 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
     return `${cpo.first_name[0]}${cpo.last_name[0]}`.toUpperCase();
   };
 
+  const getStatusConfig = () => {
+    if (!operationalStatus) return null;
+
+    const configs = {
+      operational: {
+        icon: FaCheckCircle,
+        color: 'var(--armora-operational)',
+        label: 'Operational',
+        bgColor: 'rgba(16, 185, 129, 0.15)',
+      },
+      busy: {
+        icon: FaBriefcase,
+        color: 'var(--armora-busy)',
+        label: 'On Assignment',
+        bgColor: 'rgba(239, 68, 68, 0.15)',
+      },
+      standdown: {
+        icon: FaMoon,
+        color: 'var(--armora-standdown)',
+        label: 'Stand Down',
+        bgColor: 'rgba(107, 114, 128, 0.15)',
+      },
+    };
+
+    return configs[operationalStatus];
+  };
+
+  const statusConfig = getStatusConfig();
+
   return (
     <div
       style={{
-        background: 'linear-gradient(135deg, var(--armora-navy) 0%, var(--armora-navy-light) 100%)',
+        background: 'linear-gradient(180deg, var(--armora-navy) 0%, color-mix(in srgb, var(--armora-navy) 85%, transparent) 100%)',
         color: 'var(--armora-text-inverse)',
         padding: 'var(--armora-space-lg)',
         borderRadius: '0 0 var(--armora-radius-2xl) var(--armora-radius-2xl)',
         position: 'relative',
         overflow: 'hidden',
+        paddingTop: 'calc(var(--armora-space-lg) + var(--armora-safe-top))',
       }}
     >
       {/* Decorative background pattern */}
@@ -93,7 +126,7 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
             {cpo.first_name} {cpo.last_name}
           </h1>
 
-          {/* Rating and Verification */}
+          {/* Rating, Status, and Verification */}
           <div className="flex items-center gap-sm" style={{ flexWrap: 'wrap' }}>
             {/* Rating */}
             {cpo.rating && (
@@ -113,28 +146,44 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ cpo }) => {
               </div>
             )}
 
-            {/* Verification Badge */}
-            {cpo.verification_status === 'verified' && (
+            {/* Operational Status Badge */}
+            {statusConfig && (
               <div
                 className="flex items-center gap-xs"
                 style={{
-                  backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                  backgroundColor: statusConfig.bgColor,
                   padding: 'var(--armora-space-xs) var(--armora-space-sm)',
                   borderRadius: 'var(--armora-radius-full)',
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
                 }}
+                role="status"
+                aria-label={`Status: ${statusConfig.label}`}
               >
-                <IconWrapper icon={FaShieldAlt} color="var(--armora-success)" size={12}/>
-                <span
-                  style={{
-                    fontSize: 'var(--armora-text-xs)',
-                    fontWeight: 'var(--armora-weight-semibold)',
-                    color: 'var(--armora-text-inverse)',
-                  }}
-                >
-                  SIA VERIFIED
+                <IconWrapper icon={statusConfig.icon} color={statusConfig.color} size={14}/>
+                <span style={{
+                  fontSize: 'var(--armora-text-sm)',
+                  fontWeight: 'var(--armora-weight-semibold)',
+                  color: statusConfig.color
+                }}>
+                  {statusConfig.label}
                 </span>
+              </div>
+            )}
+
+            {/* SIA Verification Badge */}
+            {cpo.verification_status === 'verified' && (
+              <div style={{
+                backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                padding: '2px 4px',
+                borderRadius: 'var(--armora-radius-full)',
+                backdropFilter: 'blur(10px)',
+              }}>
+                <SIAVerificationBadge
+                  verified={true}
+                  size="small"
+                  showLabel={true}
+                  expiryDate={cpo.sia_license_expiry}
+                />
               </div>
             )}
           </div>

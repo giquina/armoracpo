@@ -24,24 +24,25 @@
 }
 
 /* Variants */
-/* Primary button - Gold background for maximum visibility (Option A) */
+/* Primary button - Gold background for primary CTAs */
 .armora-button--primary {
   background-color: var(--armora-gold);
-  color: var(--armora-navy);
+  color: var(--armora-text-inverse);
   box-shadow: var(--armora-shadow-md);
 }
 
 .armora-button--primary:hover:not(:disabled) {
-  background-color: #e6c200; /* Darker gold for hover */
+  background-color: var(--armora-gold-light);
   box-shadow: var(--armora-shadow-lg);
   transform: translateY(-1px);
 }
 
 .armora-button--primary:active:not(:disabled) {
-  background-color: #ccac00; /* Even darker for pressed state */
+  background-color: var(--armora-gold-dark);
   transform: translateY(0);
 }
 
+/* Gold button - Reserved for financial/achievement actions only */
 .armora-button--gold {
   background-color: var(--armora-gold);
   color: var(--armora-navy);
@@ -92,7 +93,7 @@
 }
 
 .armora-button--danger:hover:not(:disabled) {
-  background-color: #dc2626;
+  background-color: var(--armora-threat-critical);
 }
 
 .armora-button--success {
@@ -101,7 +102,30 @@
 }
 
 .armora-button--success:hover:not(:disabled) {
-  background-color: #059669;
+  background-color: var(--armora-threat-low);
+  filter: brightness(0.9);
+}
+
+/* Operational status button variants */
+.armora-button--operational {
+  background-color: var(--armora-status-operational);
+  color: var(--armora-text-inverse);
+  box-shadow: var(--armora-shadow-md);
+}
+
+.armora-button--operational:hover:not(:disabled) {
+  background-color: var(--armora-status-operational);
+  filter: brightness(0.9);
+}
+
+.armora-button--standdown {
+  background-color: var(--armora-status-standdown);
+  color: var(--armora-text-inverse);
+  box-shadow: var(--armora-shadow-md);
+}
+
+.armora-button--standdown:hover:not(:disabled) {
+  background-color: var(--armora-text-muted);
 }
 
 .armora-button--icon {

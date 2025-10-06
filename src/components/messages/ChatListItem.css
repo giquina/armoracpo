@@ -22,6 +22,11 @@
   transform: translateY(0);
 }
 
+.chat-list-item:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
 .chat-list-item--unread {
   border-left-color: var(--armora-gold);
   background-color: #fffbf0;
@@ -80,8 +85,8 @@
 }
 
 .chat-list-item__time {
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-secondary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
   flex-shrink: 0;
 }
 
@@ -106,8 +111,8 @@
 }
 
 .chat-list-item__location {
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-secondary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-secondary); /* gray-500 for 4.5:1 contrast */
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;

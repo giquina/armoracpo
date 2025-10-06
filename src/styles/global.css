@@ -1,5 +1,8 @@
 /* ArmoraCPO Design System - Mobile-first global styles */
 
+/* Import authoritative design system FIRST */
+@import './armora-cpo-design-system.css';
+
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght=600;700;800&family=Inter:wght=400;500;600&display=swap');
 
@@ -19,6 +22,11 @@
   --armora-navy-dark: #050f22;      /* Darker navy for depth */
   --armora-gold-light: #e6c55c;     /* Lighter gold for hover states */
   --armora-gold-dark: #b8941f;      /* Darker gold for active states */
+
+  /* Teal Accent Colors */
+  --armora-teal: #06B6D4;           /* Teal - Primary CTA color */
+  --armora-teal-light: #22d3ee;     /* Lighter teal for hover states */
+  --armora-teal-dark: #0891b2;      /* Darker teal for pressed states */
 
   /* Status Colors - CPO Availability */
   --armora-status-operational: #10B981;  /* Available/Operational - Green */
@@ -46,8 +54,9 @@
 
   /* Text Colors */
   --armora-text-primary: #0A1F44;    /* Primary text (navy) */
-  --armora-text-secondary: #6B7280;  /* Secondary text (gray) */
-  --armora-text-tertiary: #9CA3AF;   /* Tertiary text (light gray) */
+  --armora-text-secondary: #6B7280;  /* Secondary text (gray-500) - WCAG AA 4.5:1 contrast */
+  --armora-text-tertiary: #6B7280;   /* Tertiary text (gray-500) - Updated for WCAG AA 4.5:1 contrast */
+  --armora-text-muted: #4B5563;      /* Muted text (gray-600) - For timestamps/metadata, 7:1 contrast */
   --armora-text-inverse: #FFFFFF;    /* Text on dark backgrounds */
   --armora-text-gold: #D4AF37;       /* Gold text for emphasis */
 
@@ -129,6 +138,8 @@
 
   /* Touch target size - iOS/Android minimum 44px */
   --armora-touch-min: 44px;
+  --armora-touch-comfortable: 48px; /* Recommended for better accessibility */
+  --armora-touch-large: 56px; /* Primary actions */
 
   /* Safe area insets for notched devices */
   --armora-safe-top: env(safe-area-inset-top);
@@ -228,7 +239,7 @@ button {
 
 .btn-primary {
   background-color: var(--armora-gold);
-  color: var(--armora-navy);
+  color: var(--armora-text-inverse);
   box-shadow: var(--armora-shadow-md);
   font-weight: var(--armora-weight-bold);
 }
@@ -347,7 +358,7 @@ select:focus {
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-500); /* #6B7280 - WCAG AA 4.5:1 contrast */
 }
 
 label {
@@ -452,7 +463,7 @@ label {
 .badge-threat-high { background-color: #fee2e2; color: #991b1b; }
 .badge-threat-critical { background-color: #fecaca; color: #7f1d1d; }
 
-/* ==================== LOADING SPINNER ==================== */
+/* ==================== LOADING STATES ==================== */
 
 .spinner {
   border: 3px solid var(--armora-bg-tertiary);
@@ -469,6 +480,28 @@ label {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Skeleton loaders for content placeholders */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--armora-radius-md);
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ==================== TEXT UTILITIES ==================== */

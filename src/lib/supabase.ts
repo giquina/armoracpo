@@ -1,10 +1,8 @@
-// MOCK MODE - All Supabase functionality disabled for testing
-// This file provides mock implementations that match the real API surface
-
-console.warn('[Supabase Mock] Running in MOCK MODE - no real Supabase connections will be made')
+// Real Supabase client implementation
+import { createClient } from '@supabase/supabase-js';
 
 // ============================================================================
-// TYPE DEFINITIONS (Keep all existing TypeScript interfaces)
+// TYPE DEFINITIONS
 // ============================================================================
 
 export interface ProtectionOfficer {
@@ -124,377 +122,196 @@ export interface AssignmentMessage {
 }
 
 // ============================================================================
-// MOCK SUPABASE CLIENT
+// REAL SUPABASE CLIENT
 // ============================================================================
 
-const createMockQueryBuilder = () => ({
-  select: (query?: string) => {
-    console.log('[Mock Query] select:', query);
-    return createMockQueryBuilder();
-  },
-  insert: (data: any) => {
-    console.log('[Mock Query] insert:', data);
-    return createMockQueryBuilder();
-  },
-  update: (data: any) => {
-    console.log('[Mock Query] update:', data);
-    return createMockQueryBuilder();
-  },
-  upsert: (data: any) => {
-    console.log('[Mock Query] upsert:', data);
-    return createMockQueryBuilder();
-  },
-  delete: () => {
-    console.log('[Mock Query] delete');
-    return createMockQueryBuilder();
-  },
-  eq: (column: string, value: any) => {
-    console.log('[Mock Query] eq:', column, value);
-    return createMockQueryBuilder();
-  },
-  neq: (column: string, value: any) => {
-    console.log('[Mock Query] neq:', column, value);
-    return createMockQueryBuilder();
-  },
-  gt: (column: string, value: any) => {
-    console.log('[Mock Query] gt:', column, value);
-    return createMockQueryBuilder();
-  },
-  gte: (column: string, value: any) => {
-    console.log('[Mock Query] gte:', column, value);
-    return createMockQueryBuilder();
-  },
-  lt: (column: string, value: any) => {
-    console.log('[Mock Query] lt:', column, value);
-    return createMockQueryBuilder();
-  },
-  lte: (column: string, value: any) => {
-    console.log('[Mock Query] lte:', column, value);
-    return createMockQueryBuilder();
-  },
-  like: (column: string, pattern: string) => {
-    console.log('[Mock Query] like:', column, pattern);
-    return createMockQueryBuilder();
-  },
-  ilike: (column: string, pattern: string) => {
-    console.log('[Mock Query] ilike:', column, pattern);
-    return createMockQueryBuilder();
-  },
-  is: (column: string, value: any) => {
-    console.log('[Mock Query] is:', column, value);
-    return createMockQueryBuilder();
-  },
-  in: (column: string, values: any[]) => {
-    console.log('[Mock Query] in:', column, values);
-    return createMockQueryBuilder();
-  },
-  contains: (column: string, value: any) => {
-    console.log('[Mock Query] contains:', column, value);
-    return createMockQueryBuilder();
-  },
-  containedBy: (column: string, value: any) => {
-    console.log('[Mock Query] containedBy:', column, value);
-    return createMockQueryBuilder();
-  },
-  rangeGt: (column: string, range: string) => {
-    console.log('[Mock Query] rangeGt:', column, range);
-    return createMockQueryBuilder();
-  },
-  rangeGte: (column: string, range: string) => {
-    console.log('[Mock Query] rangeGte:', column, range);
-    return createMockQueryBuilder();
-  },
-  rangeLt: (column: string, range: string) => {
-    console.log('[Mock Query] rangeLt:', column, range);
-    return createMockQueryBuilder();
-  },
-  rangeLte: (column: string, range: string) => {
-    console.log('[Mock Query] rangeLte:', column, range);
-    return createMockQueryBuilder();
-  },
-  rangeAdjacent: (column: string, range: string) => {
-    console.log('[Mock Query] rangeAdjacent:', column, range);
-    return createMockQueryBuilder();
-  },
-  overlaps: (column: string, value: any) => {
-    console.log('[Mock Query] overlaps:', column, value);
-    return createMockQueryBuilder();
-  },
-  textSearch: (column: string, query: string, config?: any) => {
-    console.log('[Mock Query] textSearch:', column, query, config);
-    return createMockQueryBuilder();
-  },
-  match: (query: Record<string, any>) => {
-    console.log('[Mock Query] match:', query);
-    return createMockQueryBuilder();
-  },
-  not: (column: string, operator: string, value: any) => {
-    console.log('[Mock Query] not:', column, operator, value);
-    return createMockQueryBuilder();
-  },
-  or: (filters: string) => {
-    console.log('[Mock Query] or:', filters);
-    return createMockQueryBuilder();
-  },
-  filter: (column: string, operator: string, value: any) => {
-    console.log('[Mock Query] filter:', column, operator, value);
-    return createMockQueryBuilder();
-  },
-  order: (column: string, options?: any) => {
-    console.log('[Mock Query] order:', column, options);
-    return createMockQueryBuilder();
-  },
-  limit: (count: number) => {
-    console.log('[Mock Query] limit:', count);
-    return createMockQueryBuilder();
-  },
-  range: (from: number, to: number) => {
-    console.log('[Mock Query] range:', from, to);
-    return createMockQueryBuilder();
-  },
-  single: async () => {
-    console.log('[Mock Query] single - returning empty data');
-    return { data: null, error: null };
-  },
-  maybeSingle: async () => {
-    console.log('[Mock Query] maybeSingle - returning empty data');
-    return { data: null, error: null };
-  },
-  then: async (resolve: any) => {
-    console.log('[Mock Query] then - returning empty data');
-    return resolve({ data: [], error: null });
-  },
-});
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || 'http://127.0.0.1:54321';
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || '';
 
-const createMockChannel = (name: string) => ({
-  on: (event: string, options: any, callback?: any) => {
-    console.log('[Mock Channel] on:', name, event, options);
-    return createMockChannel(name);
-  },
-  subscribe: (callback?: any) => {
-    console.log('[Mock Channel] subscribe:', name);
-    return {
-      unsubscribe: () => {
-        console.log('[Mock Channel] unsubscribe:', name);
-      },
-    };
-  },
-  unsubscribe: () => {
-    console.log('[Mock Channel] unsubscribe:', name);
-  },
-});
+if (!supabaseAnonKey && !process.env.REACT_APP_SUPABASE_URL) {
+  console.warn('[Supabase] No environment variables found. Set REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY in your .env file.');
+}
 
-export const supabase = {
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true,
-
-    getUser: async () => {
-      console.log('[Mock Auth] getUser - returning null user');
-      return { data: { user: null }, error: null };
-    },
-
-    getSession: async () => {
-      console.log('[Mock Auth] getSession - returning null session');
-      return { data: { session: null }, error: null };
-    },
-
-    signUp: async (credentials: any) => {
-      console.log('[Mock Auth] signUp:', credentials.email);
-      return {
-        data: {
-          user: {
-            id: 'mock-user-id',
-            email: credentials.email,
-            created_at: new Date().toISOString(),
-          },
-          session: {
-            access_token: 'mock-access-token',
-            refresh_token: 'mock-refresh-token',
-          },
-        },
-        error: null,
-      };
-    },
-
-    signInWithPassword: async (credentials: any) => {
-      console.log('[Mock Auth] signInWithPassword:', credentials.email);
-      return {
-        data: {
-          user: {
-            id: 'mock-user-id',
-            email: credentials.email,
-          },
-          session: {
-            access_token: 'mock-access-token',
-            refresh_token: 'mock-refresh-token',
-          },
-        },
-        error: null,
-      };
-    },
-
-    signInWithOAuth: async (options: any) => {
-      console.log('[Mock Auth] signInWithOAuth:', options.provider);
-      return { data: { url: '/dashboard' }, error: null };
-    },
-
-    signOut: async () => {
-      console.log('[Mock Auth] signOut');
-      return { error: null };
-    },
-
-    onAuthStateChange: (callback: any) => {
-      console.log('[Mock Auth] onAuthStateChange - setting up listener');
-      return {
-        data: {
-          subscription: {
-            unsubscribe: () => {
-              console.log('[Mock Auth] onAuthStateChange - unsubscribed');
-            },
-          },
-        },
-      };
-    },
-
-    resetPasswordForEmail: async (email: string) => {
-      console.log('[Mock Auth] resetPasswordForEmail:', email);
-      return { data: {}, error: null };
-    },
-
-    updateUser: async (attributes: any) => {
-      console.log('[Mock Auth] updateUser:', attributes);
-      return { data: { user: { id: 'mock-user-id', ...attributes } }, error: null };
-    },
   },
-
-  from: (table: string) => {
-    console.log('[Mock] from:', table);
-    return createMockQueryBuilder();
-  },
-
-  rpc: async (fn: string, params?: any) => {
-    console.log('[Mock] rpc:', fn, params);
-    return { data: null, error: null };
-  },
-
-  channel: (name: string) => {
-    console.log('[Mock] channel:', name);
-    return createMockChannel(name);
-  },
-
-  storage: {
-    from: (bucket: string) => ({
-      upload: async (path: string, file: any) => {
-        console.log('[Mock Storage] upload:', bucket, path);
-        return { data: { path }, error: null };
-      },
-      download: async (path: string) => {
-        console.log('[Mock Storage] download:', bucket, path);
-        return { data: new Blob(), error: null };
-      },
-      remove: async (paths: string[]) => {
-        console.log('[Mock Storage] remove:', bucket, paths);
-        return { data: paths, error: null };
-      },
-      getPublicUrl: (path: string) => {
-        console.log('[Mock Storage] getPublicUrl:', bucket, path);
-        return { data: { publicUrl: `https://mock-storage.url/${bucket}/${path}` } };
-      },
-    }),
-  },
-} as any;
+});
 
 // ============================================================================
-// MOCK AUTH HELPER FUNCTIONS
+// AUTH HELPER FUNCTIONS
 // ============================================================================
 
 export const signUpWithEmail = async (email: string, password: string, metadata?: any) => {
-  console.log('[Mock] signUpWithEmail:', email, metadata);
-  return await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: metadata,
-    },
-  });
+  try {
+    return await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: metadata,
+      },
+    });
+  } catch (error) {
+    console.error('[Supabase] signUpWithEmail error:', error);
+    return { data: { user: null, session: null }, error: error as Error };
+  }
 };
 
 export const signInWithEmail = async (email: string, password: string) => {
-  console.log('[Mock] signInWithEmail:', email);
-  return await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    return await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+  } catch (error) {
+    console.error('[Supabase] signInWithEmail error:', error);
+    return { data: { user: null, session: null }, error: error as Error };
+  }
 };
 
 export const signInWithGoogle = async () => {
-  console.log('[Mock] signInWithGoogle');
-  return await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: '/dashboard',
-    },
-  });
+  try {
+    return await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`,
+      },
+    });
+  } catch (error) {
+    console.error('[Supabase] signInWithGoogle error:', error);
+    return { data: { url: null, provider: 'google' }, error: error as Error };
+  }
 };
 
 export const signOut = async () => {
-  console.log('[Mock] signOut');
-  return await supabase.auth.signOut();
+  try {
+    return await supabase.auth.signOut();
+  } catch (error) {
+    console.error('[Supabase] signOut error:', error);
+    return { error: error as Error };
+  }
 };
 
 export const getCurrentUser = async () => {
-  console.log('[Mock] getCurrentUser - returning null');
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error) throw error;
+    return user;
+  } catch (error) {
+    console.error('[Supabase] getCurrentUser error:', error);
+    return null;
+  }
 };
 
 // ============================================================================
-// MOCK PROTECTION SERVICE QUERIES
+// PROTECTION SERVICE QUERIES
 // ============================================================================
 
 export const getProtectionOfficers = async (location?: string) => {
-  console.log('[Mock] getProtectionOfficers:', location);
-  return { data: [], error: null };
+  try {
+    let query = supabase
+      .from('protection_officers')
+      .select('*')
+      .eq('is_available', true);
+
+    if (location) {
+      query = query.eq('city', location);
+    }
+
+    return await query;
+  } catch (error) {
+    console.error('[Supabase] getProtectionOfficers error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const createProtectionAssignment = async (assignmentData: any) => {
-  console.log('[Mock] createProtectionAssignment:', assignmentData);
-  return { data: { id: 'mock-assignment-id', ...assignmentData }, error: null };
+  try {
+    return await supabase
+      .from('protection_assignments')
+      .insert(assignmentData)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] createProtectionAssignment error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getProtectionAssignment = async (assignmentId: string) => {
-  console.log('[Mock] getProtectionAssignment:', assignmentId);
-  return { data: null, error: null };
+  try {
+    return await supabase
+      .from('protection_assignments')
+      .select('*')
+      .eq('id', assignmentId)
+      .single();
+  } catch (error) {
+    console.error('[Supabase] getProtectionAssignment error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const updateProtectionAssignment = async (assignmentId: string, updates: any) => {
-  console.log('[Mock] updateProtectionAssignment:', assignmentId, updates);
-  return { data: { id: assignmentId, ...updates }, error: null };
+  try {
+    return await supabase
+      .from('protection_assignments')
+      .update(updates)
+      .eq('id', assignmentId)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] updateProtectionAssignment error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getUserProfile = async (userId: string) => {
-  console.log('[Mock] getUserProfile:', userId);
-  return { data: null, error: null };
+  try {
+    return await supabase
+      .from('protection_officers')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+  } catch (error) {
+    console.error('[Supabase] getUserProfile error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const updateUserProfile = async (userId: string, updates: any) => {
-  console.log('[Mock] updateUserProfile:', userId, updates);
-  return { data: { id: userId, ...updates }, error: null };
+  try {
+    return await supabase
+      .from('protection_officers')
+      .update(updates)
+      .eq('user_id', userId)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] updateUserProfile error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getUserAssignments = async (userId: string) => {
-  console.log('[Mock] getUserAssignments:', userId);
-  return { data: [], error: null };
+  try {
+    return await supabase
+      .from('protection_assignments')
+      .select('*')
+      .eq('cpo_id', userId)
+      .order('scheduled_start_time', { ascending: false });
+  } catch (error) {
+    console.error('[Supabase] getUserAssignments error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK REAL-TIME SUBSCRIPTIONS
+// REAL-TIME SUBSCRIPTIONS
 // ============================================================================
 
 export const subscribeToAssignmentUpdates = (assignmentId: string, callback: (payload: any) => void) => {
-  console.log('[Mock] subscribeToAssignmentUpdates:', assignmentId);
   return supabase
     .channel(`assignment-${assignmentId}`)
     .on(
@@ -511,7 +328,6 @@ export const subscribeToAssignmentUpdates = (assignmentId: string, callback: (pa
 };
 
 export const subscribeToOfficerLocation = (officerId: string, callback: (payload: any) => void) => {
-  console.log('[Mock] subscribeToOfficerLocation:', officerId);
   return supabase
     .channel(`officer-location-${officerId}`)
     .on(
@@ -528,167 +344,287 @@ export const subscribeToOfficerLocation = (officerId: string, callback: (payload
 };
 
 // ============================================================================
-// MOCK EMERGENCY FUNCTIONS
+// EMERGENCY FUNCTIONS
 // ============================================================================
 
 export const activateEmergency = async (userId: string, location: any, assignmentId?: string) => {
-  console.log('[Mock] activateEmergency:', userId, location, assignmentId);
-  return {
-    data: {
-      id: 'mock-emergency-id',
-      user_id: userId,
-      assignment_id: assignmentId,
-      activation_type: 'panic_button',
-      location: location,
-      response_status: 'activated',
-      activated_at: new Date().toISOString(),
-    },
-    error: null,
-  };
+  try {
+    return await supabase
+      .from('emergency_activations')
+      .insert({
+        user_id: userId,
+        assignment_id: assignmentId,
+        activation_type: 'panic_button',
+        location: location,
+        response_status: 'activated',
+        activated_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] activateEmergency error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const deactivateEmergency = async (emergencyId: string) => {
-  console.log('[Mock] deactivateEmergency:', emergencyId);
-  return {
-    data: {
-      id: emergencyId,
-      response_status: 'resolved',
-      resolved_at: new Date().toISOString(),
-    },
-    error: null,
-  };
+  try {
+    return await supabase
+      .from('emergency_activations')
+      .update({
+        response_status: 'resolved',
+        resolved_at: new Date().toISOString(),
+      })
+      .eq('id', emergencyId)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] deactivateEmergency error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK PAYMENT OPERATIONS
+// PAYMENT OPERATIONS
 // ============================================================================
 
 export const createPaymentTransaction = async (transactionData: any) => {
-  console.log('[Mock] createPaymentTransaction:', transactionData);
-  return { data: { id: 'mock-payment-id', ...transactionData }, error: null };
+  try {
+    return await supabase
+      .from('payment_records')
+      .insert(transactionData)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] createPaymentTransaction error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const updatePaymentStatus = async (transactionId: string, status: string, metadata?: any) => {
-  console.log('[Mock] updatePaymentStatus:', transactionId, status, metadata);
-  return {
-    data: {
-      id: transactionId,
-      payment_status: status,
-      payment_metadata: metadata,
-      updated_at: new Date().toISOString(),
-    },
-    error: null,
-  };
+  try {
+    return await supabase
+      .from('payment_records')
+      .update({
+        payment_status: status,
+        payment_metadata: metadata,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', transactionId)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] updatePaymentStatus error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK QUESTIONNAIRE FUNCTIONS
+// QUESTIONNAIRE FUNCTIONS
 // ============================================================================
 
 export const saveQuestionnaireResponse = async (userId: string, responses: any) => {
-  console.log('[Mock] saveQuestionnaireResponse:', userId, responses);
-  return {
-    data: {
-      user_id: userId,
-      responses: responses,
-      completed: true,
-      completed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    error: null,
-  };
+  try {
+    return await supabase
+      .from('questionnaire_responses')
+      .upsert({
+        user_id: userId,
+        responses: responses,
+        completed: true,
+        completed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] saveQuestionnaireResponse error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getQuestionnaireResponse = async (userId: string) => {
-  console.log('[Mock] getQuestionnaireResponse:', userId);
-  return { data: null, error: null };
+  try {
+    return await supabase
+      .from('questionnaire_responses')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+  } catch (error) {
+    console.error('[Supabase] getQuestionnaireResponse error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK REVIEW FUNCTIONS
+// REVIEW FUNCTIONS
 // ============================================================================
 
 export const createProtectionReview = async (reviewData: any) => {
-  console.log('[Mock] createProtectionReview:', reviewData);
-  return { data: { id: 'mock-review-id', ...reviewData }, error: null };
+  try {
+    return await supabase
+      .from('protection_reviews')
+      .insert(reviewData)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] createProtectionReview error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getOfficerReviews = async (officerId: string) => {
-  console.log('[Mock] getOfficerReviews:', officerId);
-  return { data: [], error: null };
+  try {
+    return await supabase
+      .from('protection_reviews')
+      .select('*')
+      .eq('officer_id', officerId)
+      .order('created_at', { ascending: false });
+  } catch (error) {
+    console.error('[Supabase] getOfficerReviews error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK VENUE PROTECTION FUNCTIONS
+// VENUE PROTECTION FUNCTIONS
 // ============================================================================
 
 export const createVenueProtectionContract = async (contractData: any) => {
-  console.log('[Mock] createVenueProtectionContract:', contractData);
-  return { data: { id: 'mock-contract-id', ...contractData }, error: null };
+  try {
+    return await supabase
+      .from('venue_protection_contracts')
+      .insert(contractData)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] createVenueProtectionContract error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getVenueProtectionContracts = async (userId: string) => {
-  console.log('[Mock] getVenueProtectionContracts:', userId);
-  return { data: [], error: null };
+  try {
+    return await supabase
+      .from('venue_protection_contracts')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+  } catch (error) {
+    console.error('[Supabase] getVenueProtectionContracts error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK ANALYTICS FUNCTIONS
+// ANALYTICS FUNCTIONS
 // ============================================================================
 
 export const getAssignmentAnalytics = async (userId: string, startDate?: string, endDate?: string) => {
-  console.log('[Mock] getAssignmentAnalytics:', userId, startDate, endDate);
-  return { data: [], error: null };
+  try {
+    let query = supabase
+      .from('protection_assignments')
+      .select('*')
+      .eq('cpo_id', userId);
+
+    if (startDate) {
+      query = query.gte('scheduled_start_time', startDate);
+    }
+    if (endDate) {
+      query = query.lte('scheduled_start_time', endDate);
+    }
+
+    return await query;
+  } catch (error) {
+    console.error('[Supabase] getAssignmentAnalytics error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK SAFE ASSIGNMENT FUND FUNCTIONS
+// SAFE ASSIGNMENT FUND FUNCTIONS
 // ============================================================================
 
 export const recordSafeAssignmentFundContribution = async (contributionData: any) => {
-  console.log('[Mock] recordSafeAssignmentFundContribution:', contributionData);
-  return { data: { id: 'mock-contribution-id', ...contributionData }, error: null };
+  try {
+    return await supabase
+      .from('safe_assignment_fund_contributions')
+      .insert(contributionData)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] recordSafeAssignmentFundContribution error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export const getSafeAssignmentFundStats = async () => {
-  console.log('[Mock] getSafeAssignmentFundStats');
-  return { data: null, error: null };
+  try {
+    return await supabase
+      .from('safe_assignment_fund_stats')
+      .select('*')
+      .single();
+  } catch (error) {
+    console.error('[Supabase] getSafeAssignmentFundStats error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK SIA LICENSE VERIFICATION
+// SIA LICENSE VERIFICATION
 // ============================================================================
 
 export const verifySIALicense = async (licenseNumber: string) => {
-  console.log('[Mock] verifySIALicense:', licenseNumber);
-  return { data: null, error: null };
+  try {
+    return await supabase.rpc('verify_sia_license', { license_number: licenseNumber });
+  } catch (error) {
+    console.error('[Supabase] verifySIALicense error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 // ============================================================================
-// MOCK OFFICER AVAILABILITY MANAGEMENT
+// OFFICER AVAILABILITY MANAGEMENT
 // ============================================================================
 
 export const updateOfficerAvailability = async (officerId: string, status: string, location?: any) => {
-  console.log('[Mock] updateOfficerAvailability:', officerId, status, location);
-  const updates: any = {
-    availability_status: status,
-    updated_at: new Date().toISOString(),
-  };
+  try {
+    const updates: any = {
+      availability_status: status,
+      updated_at: new Date().toISOString(),
+    };
 
-  if (location) {
-    updates.current_location = location;
+    if (location) {
+      updates.current_location = location;
+    }
+
+    return await supabase
+      .from('protection_officers')
+      .update(updates)
+      .eq('id', officerId)
+      .select()
+      .single();
+  } catch (error) {
+    console.error('[Supabase] updateOfficerAvailability error:', error);
+    return { data: null, error: error as Error };
   }
-
-  return { data: { id: officerId, ...updates }, error: null };
 };
 
 // ============================================================================
-// MOCK NEARBY OFFICERS SEARCH
+// NEARBY OFFICERS SEARCH
 // ============================================================================
 
 export const findNearbyOfficers = async (lat: number, lng: number, radiusKm: number = 10, protectionLevel?: string) => {
-  console.log('[Mock] findNearbyOfficers:', lat, lng, radiusKm, protectionLevel);
-  return { data: [], error: null };
+  try {
+    const params: any = { lat, lng, radius_km: radiusKm };
+    if (protectionLevel) {
+      params.protection_level = protectionLevel;
+    }
+
+    return await supabase.rpc('find_nearby_officers', params);
+  } catch (error) {
+    console.error('[Supabase] findNearbyOfficers error:', error);
+    return { data: null, error: error as Error };
+  }
 };
 
 export default supabase;

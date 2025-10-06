@@ -10,9 +10,14 @@
 
 /* Header */
 .messages-header {
-  background-color: var(--armora-navy);
+  background: linear-gradient(180deg,
+    var(--armora-navy) 0%,
+    color-mix(in srgb, var(--armora-navy) 85%, transparent) 100%
+  );
   color: var(--armora-text-inverse);
   padding: var(--armora-space-lg);
+  padding-top: calc(var(--armora-space-lg) + var(--armora-safe-top));
+  border-radius: 0 0 var(--armora-radius-2xl) var(--armora-radius-2xl);
 }
 
 .messages-header__top {
@@ -27,6 +32,7 @@
   font-weight: var(--armora-weight-extrabold);
   font-family: var(--armora-font-display);
   margin: 0;
+  color: var(--armora-white) !important; /* Force white text on navy background */
 }
 
 .messages-header__refresh {
@@ -54,6 +60,7 @@
 
 .messages-header__subtitle {
   font-size: var(--armora-text-sm);
+  color: var(--armora-white) !important; /* Force white text */
   opacity: 0.9;
   margin: 0;
 }
@@ -126,6 +133,46 @@
   display: flex;
   flex-direction: column;
   gap: var(--armora-space-sm);
+}
+
+/* Tabs */
+.messages-tabs {
+  display: flex;
+  background-color: var(--armora-bg-primary);
+  border-bottom: 1px solid var(--armora-border-light);
+  padding: 0 var(--armora-space-md);
+  gap: var(--armora-space-md);
+}
+
+.messages-tabs__button {
+  flex: 1;
+  min-height: 48px;
+  padding: var(--armora-space-md);
+  border: none;
+  background: transparent;
+  color: var(--armora-text-secondary);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-medium);
+  font-family: var(--armora-font-body);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--armora-transition-fast);
+  border-bottom: 3px solid transparent;
+}
+
+.messages-tabs__button:hover {
+  color: var(--armora-text-primary);
+  background-color: var(--armora-bg-secondary);
+}
+
+.messages-tabs__button--active {
+  color: var(--armora-navy);
+  font-weight: var(--armora-weight-semibold);
+  border-bottom-color: var(--armora-gold);
+}
+
+.messages-tabs__button:active {
+  transform: scale(0.98);
 }
 
 /* Spinning animation for refresh */

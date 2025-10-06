@@ -5,6 +5,7 @@ import { authService } from '../../services/authService';
 import { assignmentService } from '../../services/assignmentService';
 import WelcomeHeader from '../../components/dashboard/WelcomeHeader';
 import AvailabilityToggle from '../../components/dashboard/AvailabilityToggle';
+import OperationalStatusWidget, { OperationalStatus } from '../../components/dashboard/OperationalStatusWidget';
 import EarningsSummary from '../../components/dashboard/EarningsSummary';
 import QuickStatsWidget from '../../components/dashboard/QuickStatsWidget';
 import ActiveAssignmentCard from '../../components/dashboard/ActiveAssignmentCard';
@@ -16,6 +17,8 @@ import '../../styles/global.css';
 const Dashboard: React.FC = () => {
   const [cpo, setCpo] = useState<ProtectionOfficer | null>(null);
   const [activeAssignment, setActiveAssignment] = useState<ProtectionAssignment | null>(null);
+  const [operationalStatus, setOperationalStatus] = useState<OperationalStatus>('standdown');
+  const [lastStatusChange, setLastStatusChange] = useState<Date>(new Date());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,6 +43,15 @@ const Dashboard: React.FC = () => {
       // Get active assignment
       const active = await assignmentService.getActiveAssignment(currentUser.cpo.id);
       setActiveAssignment(active);
+
+      // Set operational status based on assignment
+      if (active) {
+        setOperationalStatus('busy');
+      } else if (currentUser.cpo.is_available) {
+        setOperationalStatus('operational');
+      } else {
+        setOperationalStatus('standdown');
+      }
     } catch (err: any) {
       console.error('Error loading dashboard:', err);
       setError(err.message || 'Failed to load dashboard data');
@@ -54,9 +66,35 @@ const Dashboard: React.FC = () => {
     try {
       const updatedCpo = await authService.updateAvailability(cpo.id, !cpo.is_available);
       setCpo(updatedCpo);
+
+      // Update operational status when availability changes
+      if (!activeAssignment) {
+        setOperationalStatus(updatedCpo.is_available ? 'operational' : 'standdown');
+      }
     } catch (err: any) {
       console.error('Error updating availability:', err);
       alert('Failed to update availability. Please try again.');
+    }
+  };
+
+  const handleStatusChange = async (newStatus: OperationalStatus) => {
+    if (!cpo || activeAssignment) return; // Don't allow status change if on assignment
+
+    try {
+      // Update availability based on status
+      const shouldBeAvailable = newStatus === 'operational';
+      if (cpo.is_available !== shouldBeAvailable) {
+        const updatedCpo = await authService.updateAvailability(cpo.id, shouldBeAvailable);
+        setCpo(updatedCpo);
+      }
+      setOperationalStatus(newStatus);
+      setLastStatusChange(new Date());
+
+      // TODO: Persist status change timestamp to Supabase cpo_profiles table
+      // This would enable real-time sync across devices
+    } catch (err: any) {
+      console.error('Error updating operational status:', err);
+      alert('Failed to update status. Please try again.');
     }
   };
 
@@ -127,15 +165,32 @@ const Dashboard: React.FC = () => {
       }}
     >
       {/* Welcome Header */}
-      <WelcomeHeader cpo={cpo} />
+      <WelcomeHeader cpo={cpo} operationalStatus={operationalStatus} />
 
       {/* Main Content */}
       <div className="container" style={{ paddingTop: 'var(--armora-space-lg)' }}>
-        {/* Availability Toggle */}
+        {/* Operational Status Widget - Prominent Position */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          style={{ marginBottom: 'var(--armora-space-md)' }}
+        >
+          <OperationalStatusWidget
+            currentStatus={operationalStatus}
+            onStatusChange={handleStatusChange}
+            hasActiveAssignment={!!activeAssignment}
+            siaVerified={cpo.verification_status === 'verified'}
+            lastStatusChange={lastStatusChange}
+            assignmentContext={activeAssignment ? `Assignment: ${activeAssignment.job_title}` : undefined}
+          />
+        </motion.div>
+
+        {/* Availability Toggle - Keep for backward compatibility */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
           style={{ marginBottom: 'var(--armora-space-md)' }}
         >
           <AvailabilityToggle

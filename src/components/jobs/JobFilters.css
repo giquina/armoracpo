@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  min-width: 44px; /* WCAG AA touch target minimum */
+  min-height: 44px; /* WCAG AA touch target minimum */
   background: transparent;
   border: none;
   border-radius: var(--armora-radius-md);
@@ -43,6 +43,11 @@
 
 .job-filters-close:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+.job-filters-close:focus-visible {
+  outline: 2px solid var(--armora-gold);
+  outline-offset: 2px;
 }
 
 /* Content */
@@ -92,7 +97,7 @@
 }
 
 .filter-input::placeholder {
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-500); /* #6B7280 - WCAG AA 4.5:1 contrast */
 }
 
 /* Location Input */
@@ -251,6 +256,11 @@
   border-color: var(--armora-gold);
   color: var(--armora-navy);
   font-weight: var(--armora-weight-bold);
+}
+
+.filter-chip:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
 }
 
 /* Footer */

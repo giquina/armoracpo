@@ -27,7 +27,7 @@
   height: 200px;
   border: 2px solid var(--armora-border-light);
   border-radius: var(--armora-radius-md);
-  background: white;
+  background: var(--armora-white);
   cursor: crosshair;
   touch-action: none;
 }

@@ -104,7 +104,7 @@
 .step-indicator.completed .step-number {
   background: var(--armora-success);
   border-color: var(--armora-success);
-  color: white;
+  color: var(--armora-white);
 }
 
 .step-label {
@@ -121,7 +121,7 @@
 
 /* Form Steps */
 .form-step {
-  background: white;
+  background: var(--armora-white);
   padding: var(--armora-space-xl);
   border-radius: var(--armora-radius-lg);
   box-shadow: var(--armora-shadow-sm);
@@ -222,7 +222,7 @@
   padding: var(--armora-space-lg);
   border: 2px solid var(--armora-border);
   border-radius: var(--armora-radius-md);
-  background: white;
+  background: var(--armora-white);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
@@ -266,7 +266,7 @@
   padding: var(--armora-space-lg);
   border: 2px solid var(--armora-border);
   border-radius: var(--armora-radius-md);
-  background: white;
+  background: var(--armora-white);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
@@ -355,7 +355,7 @@
   padding: var(--armora-space-sm) var(--armora-space-lg);
   border: 2px solid var(--armora-border);
   border-radius: var(--armora-radius-md);
-  background: white;
+  background: var(--armora-white);
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: var(--armora-weight-medium);
@@ -424,7 +424,7 @@
 
 .btn-icon-danger:hover {
   background: var(--armora-error);
-  color: white;
+  color: var(--armora-white);
 }
 
 .text-muted {
@@ -594,7 +594,7 @@
 
 .btn-secondary {
   background: var(--armora-navy);
-  color: white;
+  color: var(--armora-white);
 }
 
 .btn-secondary:hover {
@@ -609,7 +609,7 @@
 
 .btn-outline:hover {
   background: var(--armora-navy);
-  color: white;
+  color: var(--armora-white);
 }
 
 .btn-sm {

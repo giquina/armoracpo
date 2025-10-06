@@ -1,13 +1,32 @@
+/* ============================================================================
+ * DEPRECATED: This file is being phased out in favor of armora-cpo-design-system.css
+ *
+ * DO NOT ADD NEW VARIABLES HERE
+ * USE: /src/styles/armora-cpo-design-system.css for all new design tokens
+ *
+ * This file remains temporarily for legacy compatibility with:
+ * - /src/styles/globals.css (dark theme, booking flow)
+ * - Legacy gold color (#FFD700 vs new #D4AF37) - NOW UNIFIED TO #D4AF37
+ * - Old toolbar/z-index system
+ *
+ * MIGRATION PATH:
+ * 1. Update components to use new design system tokens
+ * 2. Remove references from globals.css and index.css
+ * 3. Delete this file once no legacy dependencies remain
+ *
+ * Last Updated: 2025-10-06
+ * ============================================================================ */
+
 /* ARMORA SECURITY TRANSPORT - DESIGN SYSTEM VARIABLES */
 
 :root {
   /* PRIMARY BRAND COLORS */
   --armora-dark: #1a1a2e;       /* Premium dark navy - professional security aesthetic */
-  --armora-gold: #FFD700;       /* Premium gold - VIP luxury positioning - BRIGHTENED */
+  --armora-gold: #D4AF37;       /* Metallic gold - earnings/achievements only */
   --armora-light: #e0e0e0;      /* Light text - high contrast readability */
   --armora-midnight: #16213e;   /* Deep midnight navy for gradients/backgrounds */
   /* Border tokens */
-  --armora-gold-alpha: rgba(255, 215, 0, 0.45);
+  --armora-gold-alpha: rgba(212, 175, 55, 0.45);
   /* Unified solid gold line used across sections/buttons */
   --armora-gold-dotted: 1px solid var(--armora-gold-alpha);
   
@@ -91,7 +110,7 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
-  --shadow-gold: 0 4px 16px rgba(255, 215, 0, 0.3);
+  --shadow-gold: 0 4px 16px rgba(212, 175, 55, 0.3);
   
   /* MOBILE-FIRST BREAKPOINTS */
   --mobile-max: 767px;

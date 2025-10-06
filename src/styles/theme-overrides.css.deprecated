@@ -34,24 +34,24 @@ nav[class*="navigation"] {
   padding: var(--space-2, 8px) var(--space-4, 16px);
 }
 
-/* Active navigation items - use gold accent */
+/* Active navigation items - use TEAL for active states (not gold) */
 .bottom-nav-item.active,
 .nav-item.active,
 [aria-current="page"] {
-  color: var(--accent-primary, #FFD700) !important;
+  color: var(--armora-teal, #06B6D4) !important;
 }
 
 .bottom-nav-item.active svg,
 .nav-item.active svg {
-  color: var(--accent-primary, #FFD700);
-  fill: var(--accent-primary, #FFD700);
+  color: var(--armora-teal, #06B6D4);
+  fill: var(--armora-teal, #06B6D4);
 }
 
 /* Navigation hover states */
 .bottom-nav-item:hover,
 .nav-item:hover {
-  color: var(--accent-hover, #e6c200);
-  background-color: rgba(255, 215, 0, 0.1);
+  color: var(--armora-teal-dark, #0891b2);
+  background-color: rgba(6, 182, 212, 0.1);
   border-radius: var(--radius-md, 8px);
 }
 
@@ -75,8 +75,8 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--accent-primary, #FFD700);
-  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  border-color: var(--armora-teal, #06B6D4);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
 /* Form labels - better spacing */
@@ -156,7 +156,7 @@ h1.title {
 }
 
 .logo-icon {
-  color: var(--accent-primary, #FFD700);
+  color: var(--armora-gold, #D4AF37);
   font-size: var(--text-2xl, 24px);
 }
 
@@ -164,7 +164,7 @@ h1.title {
 
 /* Text color utilities */
 .text-gold {
-  color: var(--accent-primary, #FFD700);
+  color: var(--armora-gold, #D4AF37);
 }
 
 .text-navy {

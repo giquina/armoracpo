@@ -13,12 +13,17 @@
   align-items: center;
   gap: var(--armora-space-md);
   padding: var(--armora-space-md);
-  background-color: var(--armora-navy);
+  padding-top: calc(var(--armora-space-md) + var(--armora-safe-top));
+  background: linear-gradient(180deg,
+    var(--armora-navy) 0%,
+    color-mix(in srgb, var(--armora-navy) 85%, transparent) 100%
+  );
   color: var(--armora-text-inverse);
-  border-bottom: 1px solid var(--armora-border-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
   z-index: var(--armora-z-header);
+  border-radius: 0 0 var(--armora-radius-2xl) var(--armora-radius-2xl);
 }
 
 .message-chat__back {

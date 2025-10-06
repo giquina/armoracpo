@@ -60,6 +60,11 @@
   transform: translateX(4px);
 }
 
+.upcoming-assignments-widget__item:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
 /* Date Badge */
 .upcoming-assignments-widget__item-date {
   flex-shrink: 0;
@@ -156,13 +161,13 @@
 
 .upcoming-assignments-widget__item-icon {
   font-size: 14px;
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-600); /* Icon minimum for visibility - WCAG AA */
 }
 
 .upcoming-assignments-widget__item-time {
   font-family: var(--armora-font-body);
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-tertiary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
   font-weight: var(--armora-weight-medium);
 }
 
@@ -178,7 +183,7 @@
 
 .upcoming-assignments-widget__empty-icon {
   font-size: 48px;
-  color: var(--armora-text-tertiary);
+  color: var(--armora-gray-400); /* Decorative icon can use gray-400 */
   margin-bottom: var(--armora-space-md);
 }
 

@@ -1,0 +1,399 @@
+/*
+ * ARMORA CPO DESIGN SYSTEM
+ * Single source of truth for CPO mobile application
+ * Last updated: 2025-10-06
+ *
+ * This consolidated design system replaces:
+ * - variables.css
+ * - design-tokens.css
+ * - typography.css
+ * - card-standards.css
+ */
+
+:root {
+  /* ========================================
+     BRAND COLORS - CPO Professional Palette
+     ======================================== */
+
+  /* Primary Brand (Navy - Trust & Authority) */
+  --armora-navy: #0A1F44;
+  --armora-navy-light: #1a3a5f;
+  --armora-navy-dark: #050f22;
+
+  /* Accent (Gold - Premium & Achievement) */
+  --armora-gold: #D4AF37; /* Official Armora brand color */
+  --armora-gold-light: #e6c55c;
+  --armora-gold-dark: #b8941f;
+
+  /* REMOVED: Teal is NOT part of Armora brand - use Gold for CTAs */
+  /* Legacy support: Map teal to gold for backwards compatibility */
+  --armora-teal: #D4AF37; /* DEPRECATED: Use --armora-gold instead */
+  --armora-teal-light: #e6c55c; /* DEPRECATED: Use --armora-gold-light instead */
+  --armora-teal-dark: #b8941f; /* DEPRECATED: Use --armora-gold-dark instead */
+
+  /* CPO Operational Status Colors */
+  --armora-operational: #10B981; /* Green - Available/On Duty */
+  --armora-busy: #EF4444; /* Red - On Assignment */
+  --armora-standdown: #6B7280; /* Gray - Off Duty */
+
+  /* Threat Level Indicators (Critical for CPO Safety) */
+  --armora-threat-low: #10B981;
+  --armora-threat-medium: #F59E0B;
+  --armora-threat-high: #EF4444;
+  --armora-threat-critical: #DC2626;
+
+  /* Semantic Colors */
+  --armora-success: #10B981;
+  --armora-warning: #F59E0B;
+  --armora-danger: #EF4444;
+  --armora-info: #0A1F44; /* Navy - NO BLUE in Armora brand */
+
+  /* Neutrals - Grayscale System */
+  --armora-white: #FFFFFF;
+  --armora-gray-50: #F9FAFB;
+  --armora-gray-100: #F3F4F6;
+  --armora-gray-200: #E5E7EB;
+  --armora-gray-300: #D1D5DB;
+  --armora-gray-400: #9CA3AF;
+  --armora-gray-500: #6B7280;
+  --armora-gray-600: #4B5563;
+  --armora-gray-700: #374151;
+  --armora-gray-800: #1F2937;
+  --armora-gray-900: #111827;
+
+  /* Background Colors */
+  --armora-bg-primary: #FFFFFF;
+  --armora-bg-secondary: #F8F9FA;
+  --armora-bg-tertiary: #E5E7EB;
+  --armora-bg-navy: #0A1F44;
+  --armora-bg-dark: #1F2937;
+
+  /* Text Colors */
+  --armora-text-primary: #0A1F44;
+  --armora-text-secondary: #6B7280; /* gray-500 - WCAG AA 4.5:1 contrast */
+  --armora-text-tertiary: #6B7280; /* gray-500 - Updated for WCAG AA compliance */
+  --armora-text-muted: #4B5563; /* gray-600 - For timestamps/meta, 7:1 contrast */
+  --armora-text-inverse: #FFFFFF;
+  --armora-text-gold: #D4AF37;
+
+  /* Border Colors */
+  --armora-border-light: #E5E7EB;
+  --armora-border-medium: #D1D5DB;
+  --armora-border-dark: #9CA3AF;
+  --armora-border-navy: #0A1F44;
+  --armora-border-gold: #D4AF37;
+
+  /* ========================================
+     TYPOGRAPHY - CPO Optimized for Mobile
+     ======================================== */
+
+  /* Fonts */
+  --armora-font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --armora-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Font Sizes (8px Grid) - SINGLE SCALE */
+  --armora-text-xs: 12px;
+  --armora-text-sm: 14px;
+  --armora-text-base: 16px;
+  --armora-text-lg: 18px;
+  --armora-text-xl: 20px;
+  --armora-text-2xl: 24px;
+  --armora-text-3xl: 32px;
+  --armora-text-4xl: 48px;
+
+  /* Weights */
+  --armora-weight-normal: 400;
+  --armora-weight-medium: 500;
+  --armora-weight-semibold: 600;
+  --armora-weight-bold: 700;
+  --armora-weight-extrabold: 800;
+
+  /* Line Heights */
+  --armora-leading-tight: 1.2;
+  --armora-leading-normal: 1.5;
+  --armora-leading-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --armora-tracking-tight: -0.02em;
+  --armora-tracking-normal: 0;
+  --armora-tracking-wide: 0.02em;
+  --armora-tracking-wider: 0.05em;
+
+  /* ========================================
+     SPACING - 8px Grid System
+     ======================================== */
+
+  --armora-space-xs: 4px;
+  --armora-space-sm: 8px;
+  --armora-space-md: 16px;
+  --armora-space-lg: 24px;
+  --armora-space-xl: 32px;
+  --armora-space-2xl: 48px;
+  --armora-space-3xl: 64px;
+
+  /* ========================================
+     LAYOUT - CPO Mobile Optimized
+     ======================================== */
+
+  /* Border Radius */
+  --armora-radius-sm: 6px;
+  --armora-radius-md: 8px;
+  --armora-radius-lg: 12px;
+  --armora-radius-xl: 16px;
+  --armora-radius-2xl: 24px;
+  --armora-radius-full: 9999px;
+
+  /* Shadows (Reduced - Flat Design) */
+  --armora-shadow-sm: 0 1px 2px rgba(10, 31, 68, 0.05);
+  --armora-shadow-md: 0 2px 4px rgba(10, 31, 68, 0.08);
+  --armora-shadow-lg: 0 4px 8px rgba(10, 31, 68, 0.10);
+  --armora-shadow-card: 0 1px 3px rgba(10, 31, 68, 0.06); /* PRIMARY card shadow */
+  --armora-shadow-gold: 0 4px 12px 0 rgba(212, 175, 55, 0.2);
+
+  /* Touch Targets (Critical for CPOs in field) */
+  --armora-touch-min: 44px; /* iOS/Android minimum */
+  --armora-touch-comfortable: 48px; /* Recommended */
+  --armora-touch-large: 56px; /* Primary actions */
+
+  /* Z-Index Layers */
+  --armora-z-base: 0;
+  --armora-z-sticky: 10;
+  --armora-z-dropdown: 50;
+  --armora-z-header: 90;
+  --armora-z-nav: 100;
+  --armora-z-modal: 1000;
+  --armora-z-toast: 1100;
+
+  /* Safe Area Insets for notched devices */
+  --armora-safe-top: env(safe-area-inset-top);
+  --armora-safe-bottom: env(safe-area-inset-bottom);
+  --armora-safe-left: env(safe-area-inset-left);
+  --armora-safe-right: env(safe-area-inset-right);
+
+  /* ========================================
+     TRANSITIONS & ANIMATIONS
+     ======================================== */
+
+  --armora-transition-fast: 150ms ease-in-out;
+  --armora-transition-base: 250ms ease-in-out;
+  --armora-transition-slow: 350ms ease-in-out;
+
+  /* Easing Functions */
+  --armora-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --armora-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --armora-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   DESIGN SYSTEM USAGE GUIDELINES
+   ======================================== */
+
+/*
+BRAND COLORS USAGE:
+- Navy (#0A1F44): Headers, primary text, borders
+- Gold (#D4AF37): Achievement badges, earnings, premium features
+- Teal (#06B6D4): Primary CTAs, active states, action buttons
+
+CPO STATUS COLORS:
+- Operational (#10B981): Available for assignments
+- Busy (#EF4444): Currently on assignment
+- Stand Down (#6B7280): Off duty
+
+THREAT LEVELS:
+- Low (#10B981): Green
+- Medium (#F59E0B): Amber
+- High (#EF4444): Red
+- Critical (#DC2626): Deep Red
+
+TYPOGRAPHY SCALE:
+- Page Title: --armora-text-3xl (32px)
+- Section Heading: --armora-text-2xl (24px)
+- Subsection: --armora-text-xl (20px)
+- Emphasized Body: --armora-text-lg (18px)
+- Body Text: --armora-text-base (16px)
+- Labels: --armora-text-sm (14px)
+- Captions/Badges: --armora-text-xs (12px)
+
+SPACING (8px Grid):
+- Micro: 4px (--armora-space-xs)
+- Small: 8px (--armora-space-sm)
+- Medium: 16px (--armora-space-md)
+- Large: 24px (--armora-space-lg)
+- Extra Large: 32px (--armora-space-xl)
+- 2X Large: 48px (--armora-space-2xl)
+- 3X Large: 64px (--armora-space-3xl)
+
+TOUCH TARGETS:
+- Minimum: 44px (iOS/Android standard)
+- Comfortable: 48px (recommended for CPO field use)
+- Large: 56px (primary actions like "Accept Assignment")
+
+SHADOWS:
+- Use sparingly for flat, modern design
+- Card shadow: --armora-shadow-card (primary for all cards)
+- Avoid heavy shadows and nested containers
+
+RESPONSIVE:
+- Mobile-first approach
+- Use safe area insets for notched devices
+- Ensure touch targets meet minimum sizes
+- Test in field conditions (bright light, gloves, etc.)
+*/
+
+/* ========================================
+   HEADER COMPONENTS - Lighter Navy Design
+   ======================================== */
+
+/* Primary Header - Gradient Fade */
+.cpo-header {
+  background: linear-gradient(180deg,
+    var(--armora-navy) 0%,
+    color-mix(in srgb, var(--armora-navy) 85%, transparent) 100%
+  );
+  color: var(--armora-text-inverse);
+  padding: var(--armora-space-lg) var(--armora-space-md);
+  padding-top: calc(var(--armora-space-lg) + var(--armora-safe-top));
+  border-radius: 0 0 var(--armora-radius-2xl) var(--armora-radius-2xl);
+  position: relative;
+}
+
+/* Header with Transparent Overlay (Alternative) */
+.cpo-header--transparent {
+  background: rgba(10, 31, 68, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--armora-text-inverse);
+  padding: var(--armora-space-lg) var(--armora-space-md);
+  padding-top: calc(var(--armora-space-lg) + var(--armora-safe-top));
+  border-radius: 0 0 var(--armora-radius-2xl) var(--armora-radius-2xl);
+}
+
+/* Header Title */
+.cpo-header__title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-2xl);
+  font-weight: var(--armora-weight-extrabold);
+  color: var(--armora-text-inverse);
+  margin: 0 0 var(--armora-space-xs) 0;
+  line-height: var(--armora-leading-tight);
+}
+
+/* Header Subtitle */
+.cpo-header__subtitle {
+  font-size: var(--armora-text-sm);
+  color: var(--armora-text-inverse);
+  opacity: 0.9;
+  margin: 0;
+  line-height: var(--armora-leading-normal);
+}
+
+/* Header with Extra Large Padding (for Avatar Headers) */
+.cpo-header--xl {
+  padding: var(--armora-space-xl) var(--armora-space-md);
+  padding-top: calc(var(--armora-space-xl) + var(--armora-safe-top));
+}
+
+/* ========================================
+   CPO STATUS CONTROL COMPONENTS
+   ======================================== */
+
+/* Status Control Container */
+.cpo-status-control {
+  background: var(--armora-white);
+  border-radius: var(--armora-radius-lg);
+  padding: var(--armora-space-md);
+  box-shadow: var(--armora-shadow-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cpo-status-control__current {
+  display: flex;
+  align-items: center;
+  gap: var(--armora-space-sm);
+}
+
+.cpo-status-control__toggle {
+  min-height: var(--armora-touch-comfortable);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  background: var(--armora-gray-200);
+  color: var(--armora-gray-700);
+  border: none;
+  border-radius: var(--armora-radius-md);
+  font-weight: var(--armora-weight-semibold);
+  font-size: var(--armora-text-sm);
+  cursor: pointer;
+  transition: all var(--armora-transition-fast);
+}
+
+.cpo-status-control__toggle:hover {
+  background: var(--armora-gray-300);
+}
+
+.cpo-status-control__toggle:active {
+  transform: scale(0.98);
+}
+
+/* Status Indicators */
+.cpo-status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--armora-radius-full);
+  display: inline-block;
+  margin-right: var(--armora-space-sm);
+}
+
+.cpo-status-indicator--operational {
+  background: var(--armora-operational); /* #10B981 */
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  animation: pulse-operational 2s ease-in-out infinite;
+}
+
+.cpo-status-indicator--busy {
+  background: var(--armora-busy); /* #EF4444 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  animation: pulse-busy 1.5s ease-in-out infinite;
+}
+
+.cpo-status-indicator--standdown {
+  background: var(--armora-standdown); /* #6B7280 */
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.2);
+}
+
+@keyframes pulse-operational {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-busy {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* SIA Verification Badge */
+.cpo-sia-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+  padding: 4px 10px;
+  background-color: rgba(16, 185, 129, 0.1);
+  border-radius: var(--armora-radius-full);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  transition: all var(--armora-transition-fast);
+}
+
+.cpo-sia-badge:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.cpo-sia-badge--small {
+  padding: 3px 8px;
+  font-size: 10px;
+}
+
+.cpo-sia-badge--large {
+  padding: 6px 12px;
+  font-size: var(--armora-text-sm);
+}

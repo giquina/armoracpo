@@ -1,0 +1,312 @@
+/**
+ * SIA Verification Badge Component Styles
+ *
+ * CPO-specific badge for displaying SIA verification status
+ * with support for compact and prominent variants.
+ * Includes WCAG AA compliant colors for all states.
+ */
+
+/* Base Badge Styles */
+.cpo-sia-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--armora-space-xs);
+  padding: 4px 10px;
+  background-color: rgba(16, 185, 129, 0.1);
+  border-radius: var(--armora-radius-full);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  transition: all var(--armora-transition-fast);
+  cursor: default;
+}
+
+.cpo-sia-badge:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Status Variant Styles */
+
+/* Verified - Green/Teal */
+.cpo-sia-badge--verified {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.cpo-sia-badge--verified:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Expiring Soon - Warning Yellow/Amber */
+.cpo-sia-badge--expiring-soon {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.cpo-sia-badge--expiring-soon:hover {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.cpo-sia-badge--expiring-soon .cpo-sia-badge__label {
+  color: var(--armora-warning);
+}
+
+/* Expired - Danger Red */
+.cpo-sia-badge--expired {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.cpo-sia-badge--expired:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.cpo-sia-badge--expired .cpo-sia-badge__label {
+  color: var(--armora-danger);
+}
+
+/* Pending - Info Blue */
+.cpo-sia-badge--pending {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.cpo-sia-badge--pending:hover {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.cpo-sia-badge--pending .cpo-sia-badge__label {
+  color: var(--armora-info);
+}
+
+/* Unverified - Gray */
+.cpo-sia-badge--unverified {
+  background-color: rgba(107, 114, 128, 0.1);
+  border-color: rgba(107, 114, 128, 0.3);
+}
+
+.cpo-sia-badge--unverified:hover {
+  background-color: rgba(107, 114, 128, 0.15);
+  border-color: rgba(107, 114, 128, 0.4);
+}
+
+.cpo-sia-badge--unverified .cpo-sia-badge__label {
+  color: var(--armora-gray-600);
+}
+
+/* Badge Label */
+.cpo-sia-badge__label {
+  font-size: var(--armora-text-xs);
+  font-weight: var(--armora-weight-semibold);
+  color: var(--armora-success);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Size Variants */
+.cpo-sia-badge--small {
+  padding: 3px 8px;
+  gap: 3px;
+}
+
+.cpo-sia-badge--small .cpo-sia-badge__label {
+  font-size: 10px;
+}
+
+.cpo-sia-badge--medium {
+  padding: 4px 10px;
+  gap: var(--armora-space-xs);
+}
+
+.cpo-sia-badge--large {
+  padding: 6px 12px;
+  gap: 6px;
+}
+
+.cpo-sia-badge--large .cpo-sia-badge__label {
+  font-size: var(--armora-text-sm);
+}
+
+/* Prominent Variant - Gold Accent with Details */
+.cpo-sia-badge--prominent {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 2px solid var(--armora-gold);
+  padding: var(--armora-space-sm) var(--armora-space-md);
+  gap: var(--armora-space-sm);
+  border-radius: var(--armora-radius-lg);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
+  min-height: var(--armora-touch-min);
+}
+
+.cpo-sia-badge--prominent:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+  border-color: var(--armora-gold-light);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+/* Prominent Variant - Expiring Soon (Warning) */
+.cpo-sia-badge--prominent.cpo-sia-badge--expiring-soon {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(212, 175, 55, 0.08) 100%);
+  border-color: var(--armora-warning);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--expiring-soon:hover {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(212, 175, 55, 0.12) 100%);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+/* Prominent Variant - Expired (Danger) */
+.cpo-sia-badge--prominent.cpo-sia-badge--expired {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.08) 100%);
+  border-color: var(--armora-danger);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--expired:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(220, 38, 38, 0.12) 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--expired .cpo-sia-badge__icon {
+  background: linear-gradient(135deg, var(--armora-danger) 0%, #dc2626 100%);
+}
+
+/* Prominent Variant - Pending (Info) */
+.cpo-sia-badge--prominent.cpo-sia-badge--pending {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(96, 165, 250, 0.08) 100%);
+  border-color: var(--armora-info);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--pending:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(96, 165, 250, 0.12) 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Prominent Badge Icon */
+.cpo-sia-badge__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--armora-gold) 0%, var(--armora-gold-light) 100%);
+  border-radius: var(--armora-radius-full);
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+}
+
+/* Prominent Badge Content */
+.cpo-sia-badge__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cpo-sia-badge__title {
+  font-size: var(--armora-text-xs);
+  font-weight: var(--armora-weight-bold);
+  color: var(--armora-navy);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.cpo-sia-badge__license,
+.cpo-sia-badge__expiry {
+  font-size: 11px;
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-secondary);
+  line-height: 1.3;
+}
+
+/* Warning Text - Highlighted in prominent badges */
+.cpo-sia-badge__warning {
+  color: var(--armora-warning);
+  font-weight: var(--armora-weight-bold);
+}
+
+/* Prominent Badge Status Indicator */
+.cpo-sia-badge__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: var(--armora-radius-full);
+}
+
+/* Size adjustments for prominent variant */
+.cpo-sia-badge--prominent.cpo-sia-badge--small .cpo-sia-badge__icon {
+  width: 28px;
+  height: 28px;
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--small .cpo-sia-badge__title {
+  font-size: 10px;
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--small .cpo-sia-badge__license,
+.cpo-sia-badge--prominent.cpo-sia-badge--small .cpo-sia-badge__expiry {
+  font-size: 9px;
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--large .cpo-sia-badge__icon {
+  width: 44px;
+  height: 44px;
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--large .cpo-sia-badge__title {
+  font-size: var(--armora-text-sm);
+}
+
+.cpo-sia-badge--prominent.cpo-sia-badge--large .cpo-sia-badge__license,
+.cpo-sia-badge--prominent.cpo-sia-badge--large .cpo-sia-badge__expiry {
+  font-size: var(--armora-text-xs);
+}
+
+/* Accessibility - Ensure touch targets on prominent variant */
+.cpo-sia-badge--prominent {
+  position: relative;
+}
+
+/* Animation for status checkmark */
+@keyframes checkPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.cpo-sia-badge__status {
+  animation: checkPulse 2s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 375px) {
+  .cpo-sia-badge--prominent {
+    padding: var(--armora-space-xs) var(--armora-space-sm);
+  }
+
+  .cpo-sia-badge__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .cpo-sia-badge__title {
+    font-size: 11px;
+  }
+
+  .cpo-sia-badge__license,
+  .cpo-sia-badge__expiry {
+    font-size: 10px;
+  }
+}

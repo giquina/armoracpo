@@ -97,6 +97,11 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.incident-item:focus-visible {
+  outline: 2px solid var(--armora-navy);
+  outline-offset: 2px;
+}
+
 .incident-left {
   display: flex;
   align-items: flex-start;
@@ -135,8 +140,8 @@
 }
 
 .incident-meta {
-  font-size: var(--armora-text-xs);
-  color: var(--armora-text-tertiary);
+  font-size: var(--armora-text-sm); /* 14px minimum for WCAG AA */
+  color: var(--armora-text-muted); /* gray-600 for 7:1 contrast */
 }
 
 .incident-right {
@@ -165,10 +170,10 @@
 
 @media (max-width: 768px) {
   .incident-summary {
-    font-size: var(--armora-text-xs);
+    font-size: var(--armora-text-sm); /* Maintain 14px minimum for WCAG AA */
   }
 
   .incident-meta {
-    font-size: 10px;
+    font-size: var(--armora-text-sm); /* 14px minimum - WCAG AA compliance */
   }
 }

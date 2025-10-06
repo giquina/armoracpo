@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiEdit2, FiStar, FiCheckCircle } from 'react-icons/fi';
+import { FiEdit2, FiStar } from 'react-icons/fi';
 import { ProfileHeaderProps } from './types';
 import { IconWrapper } from '../../utils/IconWrapper';
+import SIAVerificationBadge from '../dashboard/SIAVerificationBadge';
 
 /**
  * ProfileHeader Component
@@ -25,11 +26,13 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cpo, onEditAvatar 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       style={{
-        background: 'linear-gradient(135deg, var(--armora-navy) 0%, var(--armora-navy-light) 100%)',
+        background: 'linear-gradient(180deg, var(--armora-navy) 0%, color-mix(in srgb, var(--armora-navy) 85%, transparent) 100%)',
         color: 'var(--armora-text-inverse)',
         padding: 'var(--armora-space-xl) var(--armora-space-md)',
+        paddingTop: 'calc(var(--armora-space-xl) + var(--armora-safe-top))',
         textAlign: 'center',
         position: 'relative',
+        borderRadius: '0 0 var(--armora-radius-2xl) var(--armora-radius-2xl)',
       }}
     >
       {/* Avatar with Edit Button */}
@@ -94,35 +97,31 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cpo, onEditAvatar 
         Close Protection Officer
       </p>
 
-      {/* SIA License Number */}
-      <div className="badge badge-gold" style={{ marginBottom: 'var(--armora-space-md)' }}>
-        SIA: {cpo.sia_license_number}
-      </div>
+      {/* SIA Verification Badge - Prominent Variant */}
+      {cpo.verification_status === 'verified' && cpo.sia_license_number && (
+        <div style={{ marginBottom: 'var(--armora-space-md)', display: 'flex', justifyContent: 'center' }}>
+          <SIAVerificationBadge
+            verified={true}
+            size="large"
+            showLabel={true}
+            licenseNumber={cpo.sia_license_number}
+            expiryDate={cpo.sia_license_expiry}
+            variant="prominent"
+          />
+        </div>
+      )}
 
-      {/* Rating and Verification */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--armora-space-lg)' }}>
-        {/* Rating */}
-        {cpo.rating && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-xs)' }}>
-            <div style={{ display: 'flex', gap: '2px' }}>
-              {renderStars(cpo.rating)}
-            </div>
-            <span style={{ fontSize: 'var(--armora-text-sm)', fontWeight: 'var(--armora-weight-semibold)' }}>
-              {cpo.rating.toFixed(1)}
-            </span>
+      {/* Rating */}
+      {cpo.rating && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--armora-space-xs)', marginBottom: 'var(--armora-space-sm)' }}>
+          <div style={{ display: 'flex', gap: '2px' }}>
+            {renderStars(cpo.rating)}
           </div>
-        )}
-
-        {/* Verification Badge */}
-        {cpo.verification_status === 'verified' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--armora-space-xs)' }}>
-            <IconWrapper icon={FiCheckCircle} size={18} color="var(--armora-gold)"/>
-            <span style={{ fontSize: 'var(--armora-text-sm)', fontWeight: 'var(--armora-weight-medium)' }}>
-              Verified
-            </span>
-          </div>
-        )}
-      </div>
+          <span style={{ fontSize: 'var(--armora-text-sm)', fontWeight: 'var(--armora-weight-semibold)' }}>
+            {cpo.rating.toFixed(1)}
+          </span>
+        </div>
+      )}
 
       {/* Total Assignments */}
       {cpo.total_assignments !== undefined && (

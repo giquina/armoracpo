@@ -4,7 +4,7 @@
 
 .dob-screen {
   min-height: 100vh;
-  background: var(--color-bg-secondary, #f8f9fa);
+  background: var(--armora-bg-secondary, #f8f9fa);
   padding: 1rem;
   padding-bottom: 80px; /* Account for bottom navigation */
 }
@@ -21,12 +21,12 @@
 }
 
 .dob-loading p {
-  color: var(--color-gray);
+  color: var(--armora-gray-500);
   font-size: 1rem;
 }
 
 .dob-error {
-  background: var(--color-white);
+  background: var(--armora-white);
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem auto;
@@ -35,7 +35,7 @@
 }
 
 .dob-error p {
-  color: var(--color-red);
+  color: var(--armora-danger);
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -47,10 +47,15 @@
   align-items: flex-start;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  background: var(--color-white);
+  background: linear-gradient(180deg,
+    var(--armora-navy, #0A1F44) 0%,
+    color-mix(in srgb, var(--armora-navy, #0A1F44) 85%, transparent) 100%
+  );
   padding: 1.5rem;
-  border-radius: 12px;
+  padding-top: calc(1.5rem + var(--armora-safe-top, 0px));
+  border-radius: 0 0 var(--armora-radius-2xl, 24px) var(--armora-radius-2xl, 24px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: var(--armora-text-inverse, #FFFFFF);
 }
 
 .dob-header-content {
@@ -60,13 +65,13 @@
 .dob-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--armora-text-inverse, #FFFFFF);
   margin: 0 0 0.25rem 0;
 }
 
 .dob-subtitle {
   font-size: 0.875rem;
-  color: var(--color-gray);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
 }
 
@@ -76,7 +81,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
-  background: var(--color-white);
+  background: var(--armora-white);
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -91,7 +96,7 @@
 .dob-filter-label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-navy);
+  color: var(--armora-navy);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -104,9 +109,9 @@
 .dob-filter-btn {
   flex: 1;
   padding: 0.5rem 1rem;
-  border: 2px solid var(--color-border-light);
-  background: var(--color-white);
-  color: var(--color-navy);
+  border: 2px solid var(--armora-border-light);
+  background: var(--armora-white);
+  color: var(--armora-navy);
   border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -115,29 +120,29 @@
 }
 
 .dob-filter-btn:hover {
-  border-color: var(--color-gold);
+  border-color: var(--armora-gold);
 }
 
 .dob-filter-btn.active {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: var(--color-navy);
+  background: var(--armora-gold);
+  border-color: var(--armora-gold);
+  color: var(--armora-navy);
 }
 
 .dob-filter-select {
   padding: 0.5rem;
-  border: 2px solid var(--color-border-light);
+  border: 2px solid var(--armora-border-light);
   border-radius: 6px;
   font-size: 0.875rem;
-  background: var(--color-white);
-  color: var(--color-navy);
+  background: var(--armora-white);
+  color: var(--armora-navy);
   cursor: pointer;
   transition: border-color 0.2s ease;
 }
 
 .dob-filter-select:focus {
   outline: none;
-  border-color: var(--color-gold);
+  border-color: var(--armora-gold);
 }
 
 .dob-search-group {
@@ -147,7 +152,7 @@
 .dob-search-input {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid var(--color-border-light);
+  border: 2px solid var(--armora-border-light);
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
@@ -155,7 +160,7 @@
 
 .dob-search-input:focus {
   outline: none;
-  border-color: var(--color-gold);
+  border-color: var(--armora-gold);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
@@ -168,7 +173,7 @@
 
 /* Date Groups */
 .dob-date-group {
-  background: var(--color-white);
+  background: var(--armora-white);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -179,8 +184,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-dark) 100%);
-  color: var(--color-gold);
+  background: linear-gradient(180deg,
+    var(--armora-navy, #0A1F44) 0%,
+    color-mix(in srgb, var(--armora-navy, #0A1F44) 85%, transparent) 100%
+  );
+  color: var(--armora-gold, #D4AF37);
+  border-radius: var(--armora-radius-lg, 12px) var(--armora-radius-lg, 12px) 0 0;
 }
 
 .dob-date-title {
@@ -203,7 +212,7 @@
 /* Entry Card */
 .dob-entry-card {
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--armora-border-light);
   transition: background 0.2s ease;
 }
 
@@ -241,7 +250,7 @@
 .dob-event-type {
   font-weight: 700;
   font-size: 0.875rem;
-  color: var(--color-navy);
+  color: var(--armora-navy);
 }
 
 .dob-immutable-badge {
@@ -250,7 +259,7 @@
   gap: 0.25rem;
   padding: 0.125rem 0.5rem;
   background: rgba(212, 175, 55, 0.1);
-  color: var(--color-gold);
+  color: var(--armora-gold);
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -258,7 +267,7 @@
 
 .dob-entry-time {
   font-size: 0.875rem;
-  color: var(--color-gray);
+  color: var(--armora-gray-500);
   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
 }
 
@@ -279,19 +288,19 @@
 
 .dob-type-badge.auto {
   background: rgba(0, 123, 255, 0.1);
-  color: var(--color-blue, #007bff);
+  color: var(--armora-info, #007bff);
 }
 
 .dob-type-badge.manual {
   background: rgba(40, 167, 69, 0.1);
-  color: var(--color-green, #28a745);
+  color: var(--armora-success, #28a745);
 }
 
 .dob-assignment-ref {
   display: inline-block;
   padding: 0.5rem 1rem;
   background: rgba(212, 175, 55, 0.1);
-  color: var(--color-navy);
+  color: var(--armora-navy);
   border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -300,7 +309,7 @@
 }
 
 .dob-entry-description {
-  color: var(--color-navy);
+  color: var(--armora-navy);
   font-size: 0.9375rem;
   line-height: 1.6;
   margin-bottom: 0.75rem;
@@ -310,7 +319,7 @@
 
 .dob-gps-info {
   font-size: 0.75rem;
-  color: var(--color-gray);
+  color: var(--armora-gray-500);
   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.02);
@@ -378,13 +387,13 @@
   width: 40px;
   height: 40px;
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top-color: var(--color-navy);
+  border-top-color: var(--armora-navy);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
 .spinner-gold {
-  border-top-color: var(--color-gold);
+  border-top-color: var(--armora-gold);
 }
 
 @keyframes spin {
@@ -409,7 +418,7 @@
   .dob-title,
   .dob-event-type,
   .dob-entry-description {
-    color: var(--color-white);
+    color: var(--armora-white);
   }
 
   .dob-subtitle,
@@ -423,7 +432,7 @@
   .dob-search-input {
     background: var(--color-dark-bg, #121212);
     border-color: var(--color-dark-border, #333);
-    color: var(--color-white);
+    color: var(--armora-white);
   }
 
   .dob-entry-card {

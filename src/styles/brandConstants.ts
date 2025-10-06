@@ -27,14 +27,14 @@ export const ARMORA_BRAND = {
     }
   },
 
-  // COLORS - Exact values from splash screen CSS
+  // COLORS - Updated to use metallic gold for brand consistency
   colors: {
     gold: {
-      primary: '#FFD700',    // --primary-gold from logo CSS
-      secondary: '#FFA500',  // --secondary-gold
-      accent: '#FF8C00',     // --accent-gold
-      gradient: 'linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FF8C00)',
-      gradientAnimated: 'linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FF8C00)',
+      primary: '#D4AF37',    // Metallic gold - earnings/achievements only
+      secondary: '#e6c55c',  // Light gold for hover
+      accent: '#b8941f',     // Dark gold for active
+      gradient: 'linear-gradient(45deg, #D4AF37, #e6c55c, #D4AF37, #b8941f)',
+      gradientAnimated: 'linear-gradient(45deg, #D4AF37, #e6c55c, #D4AF37, #b8941f)',
     },
     navy: {
       primary: '#1a1a2e',   // --dark-navy
@@ -43,17 +43,17 @@ export const ARMORA_BRAND = {
     },
     background: {
       immersive: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%)',
-      gradientLight: 'radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%)',
+      gradientLight: 'radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 40%)',
       card: 'linear-gradient(135deg, #1a1a2e 0%, #1e1e3a 100%)'
     },
     text: {
-      goldPrimary: 'rgba(255, 215, 0, 0.9)',
-      goldSecondary: 'rgba(255, 215, 0, 0.8)',
+      goldPrimary: 'rgba(212, 175, 55, 0.9)',
+      goldSecondary: 'rgba(212, 175, 55, 0.8)',
       white: 'rgba(255, 255, 255, 0.9)',
       muted: 'rgba(255, 255, 255, 0.7)'
     },
     effects: {
-      glow: 'rgba(255, 215, 0, 0.8)',
+      glow: 'rgba(212, 175, 55, 0.8)',
       shadow: 'rgba(0, 0, 0, 0.3)',
       glassMorphism: 'rgba(255, 255, 255, 0.1)'
     }
@@ -80,10 +80,10 @@ export const ARMORA_BRAND = {
     }
   },
 
-  // TEXT EFFECTS - Matching splash screen animations
+  // TEXT EFFECTS - Updated with metallic gold
   textEffects: {
     goldGradient: {
-      background: 'linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FF8C00)',
+      background: 'linear-gradient(45deg, #D4AF37, #e6c55c, #D4AF37, #b8941f)',
       backgroundSize: '300% 300%',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
@@ -91,10 +91,10 @@ export const ARMORA_BRAND = {
       animation: 'goldWave 4s ease-in-out infinite'
     },
     dropShadow: {
-      filter: 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.8))'
+      filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.8))'
     },
     textGlow: {
-      textShadow: '0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.4)'
+      textShadow: '0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.4)'
     }
   },
 
