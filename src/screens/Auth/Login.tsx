@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseEnabled } from '../../lib/supabase';
 import { requestNotificationPermission } from '../../lib/firebase';
 import '../../styles/global.css';
 
@@ -167,6 +167,13 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
+      // If Supabase is disabled, bypass login and go to dashboard
+      if (!isSupabaseEnabled) {
+        console.log('[Login] Supabase disabled - bypassing authentication');
+        navigate('/dashboard', { replace: true });
+        return;
+      }
+
       // Sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -225,6 +232,21 @@ const Login: React.FC = () => {
         <div className="container" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: 'var(--armora-space-2xl)', padding: 'var(--armora-space-md)' }}>
           <div className="card" style={{ marginBottom: 'var(--armora-space-lg)', padding: 'var(--armora-space-xl)' }}>
             <h2 style={{ marginBottom: 'var(--armora-space-md)', fontWeight: 'var(--armora-weight-bold)' }}>Sign In</h2>
+
+            {!isSupabaseEnabled && (
+              <div style={{
+                padding: 'var(--armora-space-md)',
+                backgroundColor: '#dbeafe',
+                color: '#1e40af',
+                borderRadius: 'var(--armora-radius-md)',
+                marginBottom: 'var(--armora-space-md)',
+                fontSize: 'var(--armora-text-sm)',
+                fontWeight: 'var(--armora-weight-medium)',
+                border: '1px solid #93c5fd'
+              }}>
+                <strong>Demo Mode:</strong> Supabase backend is disabled. Click "Sign In" to explore the app interface without authentication.
+              </div>
+            )}
 
             {error && (
               <div style={{

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
-import { supabase } from './lib/supabase';
+import { supabase, isSupabaseEnabled } from './lib/supabase';
 import { initializeNotifications } from './services/notificationService';
 import { PageTransition } from './components/animations/PageTransition';
 
@@ -48,6 +48,14 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   const checkAuth = async () => {
     try {
+      // If Supabase is disabled, bypass authentication
+      if (!isSupabaseEnabled) {
+        console.log('[App] Supabase disabled - bypassing authentication');
+        setAuthenticated(true);
+        setLoading(false);
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       setAuthenticated(!!user);
 
@@ -68,9 +76,9 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     }
   };
 
-  // Allow dev mode bypass
-  if (isDevMode()) {
-    console.log('[App] Dev mode active - bypassing authentication');
+  // Allow dev mode bypass OR Supabase disabled
+  if (isDevMode() || !isSupabaseEnabled) {
+    console.log('[App] Dev mode active or Supabase disabled - bypassing authentication');
     return <>{children}</>;
   }
 

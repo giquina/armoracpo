@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage, Messaging } from 'firebase/messaging';
-import { supabase } from './supabase';
+import { supabase, isSupabaseEnabled } from './supabase';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,23 +11,37 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+// Check if Firebase config is complete
+const isFirebaseEnabled = !!(
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.projectId &&
+  firebaseConfig.appId
+);
 
+let app: any = null;
 let messaging: Messaging | null = null;
 
-// Initialize messaging only in supported browsers
-try {
-  if ('Notification' in window && 'serviceWorker' in navigator) {
-    messaging = getMessaging(app);
+// Initialize Firebase only if config is available
+if (isFirebaseEnabled) {
+  try {
+    app = initializeApp(firebaseConfig);
+    
+    // Initialize messaging only in supported browsers
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      messaging = getMessaging(app);
+    }
+  } catch (error) {
+    console.warn('Firebase initialization failed:', error);
   }
-} catch (error) {
-  console.warn('Firebase messaging not supported:', error);
+} else {
+  console.log('Firebase disabled - missing configuration');
 }
 
 export const requestNotificationPermission = async (userId: string): Promise<string | null> => {
   try {
-    if (!messaging) {
-      console.warn('Messaging not initialized');
+    if (!messaging || !isSupabaseEnabled) {
+      console.warn('Messaging or Supabase not initialized - skipping notifications');
       return null;
     }
 

@@ -4,24 +4,70 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env.local file.')
-}
+// Mock Supabase client for development without backend
+const createMockSupabaseClient = (): any => {
+  const mockChain = {
+    select: () => mockChain,
+    insert: () => mockChain,
+    update: () => mockChain,
+    delete: () => mockChain,
+    upsert: () => mockChain,
+    eq: () => mockChain,
+    neq: () => mockChain,
+    gt: () => mockChain,
+    lt: () => mockChain,
+    gte: () => mockChain,
+    lte: () => mockChain,
+    like: () => mockChain,
+    ilike: () => mockChain,
+    is: () => mockChain,
+    in: () => mockChain,
+    contains: () => mockChain,
+    containedBy: () => mockChain,
+    order: () => mockChain,
+    limit: () => mockChain,
+    range: () => mockChain,
+    single: async () => ({ data: null, error: null }),
+    maybeSingle: async () => ({ data: null, error: null }),
+    then: async (resolve: any) => resolve({ data: [], error: null, count: 0 }),
+  };
 
-// Create Supabase client with auth persistence
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-  },
-  global: {
-    headers: {
-      'x-application-name': 'armora-protection-service',
+  return {
+    auth: {
+      getUser: async () => ({ data: { user: null }, error: null }),
+      signInWithPassword: async () => ({ data: { user: null, session: null }, error: null }),
+      signUp: async () => ({ data: { user: null, session: null }, error: null }),
+      signOut: async () => ({ error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
     },
-  },
-})
+    from: () => mockChain,
+    channel: () => ({
+      on: () => ({ on: () => ({ subscribe: () => ({ unsubscribe: () => {} }) }) }),
+      subscribe: () => ({ unsubscribe: () => {} }),
+    }),
+    removeChannel: () => {},
+  };
+};
+
+// Create Supabase client or mock if env vars are missing
+export const supabase = (!supabaseUrl || !supabaseAnonKey) 
+  ? createMockSupabaseClient()
+  : createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+        storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      },
+      global: {
+        headers: {
+          'x-application-name': 'armora-protection-service',
+        },
+      },
+    });
+
+// Flag to check if running with real Supabase or mock
+export const isSupabaseEnabled = !!(supabaseUrl && supabaseAnonKey);
 
 // CPO-specific types for the CPO app
 export interface ProtectionOfficer {
