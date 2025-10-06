@@ -75,6 +75,7 @@ export interface ProtectionAssignment {
   number_of_cpos_required: number;
   created_at: string;
   updated_at: string;
+    job_title?: string;
 }
 
 export interface PaymentRecord {
