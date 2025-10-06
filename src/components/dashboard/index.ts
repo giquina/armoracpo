@@ -5,10 +5,10 @@
  */
 
 // Existing components
-export { WelcomeHeader } from './WelcomeHeader';
-export { AvailabilityToggle } from './AvailabilityToggle';
-export { ActiveAssignmentCard } from './ActiveAssignmentCard';
-export { QuickStatsWidget } from './QuickStatsWidget';
+export { default as WelcomeHeader } from './WelcomeHeader';
+export { default as AvailabilityToggle } from './AvailabilityToggle';
+export { default as ActiveAssignmentCard } from './ActiveAssignmentCard';
+export { default as QuickStatsWidget } from './QuickStatsWidget';
 export { RecommendedJobs } from './RecommendedJobs';
 export { EarningsSummary } from './EarningsSummary';
 export { PerformanceInsights } from './PerformanceInsights';
@@ -30,4 +30,4 @@ export { PerformanceMetricsCard } from './PerformanceMetricsCard';
 export type { PerformanceMetricsCardProps } from './PerformanceMetricsCard';
 
 // Demo component
-export { DashboardWidgetsDemo } from './DashboardWidgetsDemo';
+// Demo component removed during cleanup
