@@ -14,7 +14,7 @@ export interface ErrorDisplayProps {
   /** Optional error code for debugging and support reference */
   errorCode?: string;
   /** List of actionable suggestions to help the user resolve the issue */
-  suggestions: string[];
+  suggestions: readonly string[];
   /** Whether to show the "Contact Support" link (default: true) */
   showContactSupport?: boolean;
   /** Whether to show the "Retry" button (default: false) */
