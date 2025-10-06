@@ -1,17 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import {
-  supabase,
-  ProtectionOfficer,
-  signUpWithEmail,
-  signInWithEmail,
-  signInWithGoogle,
-  getUserProfile,
-  updateUserProfile,
-  saveQuestionnaireResponse,
-} from '../lib/supabase';
-import { authService } from '../services/auth.service';
-import type { ProfileData } from '../services/auth.service';
+import { ProtectionOfficer } from '../lib/supabase';
+import { mockAuthService } from '../services/mockAuth.service';
 
 // Legacy Profile interface for backward compatibility
 interface Profile {
@@ -84,51 +74,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch user profile using new auth service
+  // Fetch user profile using mock auth service
   const fetchProfile = async (userId: string) => {
     try {
-      // Load basic profile
-      const { profile: basicProfile, error: profileError } = await authService.getCurrentUserProfile();
-      if (profileError) throw profileError;
+      // Get mock user and CPO profile
+      const { user: mockUser, cpo: mockCPO } = await mockAuthService.getCurrentUser();
 
-      // Convert ProfileData to legacy Profile format
-      if (basicProfile) {
-        setProfile({
-          id: basicProfile.id,
-          email: basicProfile.email,
-          full_name: basicProfile.full_name,
-          phone_number: basicProfile.phone,
-        });
+      // Set legacy profile format
+      setProfile({
+        id: mockUser.id,
+        email: mockUser.email,
+        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
+        phone_number: mockCPO.phone,
+      });
 
-        // If user is a CPO, load CPO profile
-        if (basicProfile.user_type === 'cpo') {
-          const { profile: cpoData, error: cpoError } = await authService.getCPOProfile(userId);
-          if (cpoError) {
-            console.warn('Error fetching CPO profile:', cpoError);
-          } else {
-            setCpoProfile(cpoData);
-          }
-        }
-      }
+      // Set CPO profile
+      setCpoProfile(mockCPO);
     } catch (err: any) {
-      console.error('Error fetching profile:', err);
+      console.error('Error fetching mock profile:', err);
       setError(err.message);
     }
   };
 
-  // Initialize auth state
+  // Initialize auth state with mock auto-login
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        console.log('[MOCK AUTH] Auto-logging in mock user...');
 
-        if (session) {
-          setSession(session);
-          setUser(session.user);
-          await fetchProfile(session.user.id);
-        }
+        // Auto-login with mock service
+        const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.getCurrentUser();
+
+        // Set mock session and user immediately
+        setSession(mockSession as any);
+        setUser(mockUser as any);
+
+        // Set profiles
+        setProfile({
+          id: mockUser.id,
+          email: mockUser.email,
+          full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
+          phone_number: mockCPO.phone,
+        });
+        setCpoProfile(mockCPO);
+
+        console.log('[MOCK AUTH] Auto-login complete:', mockUser.email);
       } catch (err: any) {
-        console.error('Auth initialization error:', err);
+        console.error('Mock auth initialization error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -137,8 +129,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     initAuth();
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    // Listen for auth changes (mock)
+    const { data: { subscription } } = mockAuthService.onAuthStateChange(async (event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
 
@@ -152,13 +144,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Handle auth events
       switch (event) {
         case 'SIGNED_IN':
-          console.log('User signed in');
+          console.log('[MOCK AUTH] User signed in');
           break;
         case 'SIGNED_OUT':
-          console.log('User signed out');
+          console.log('[MOCK AUTH] User signed out');
           break;
         case 'USER_UPDATED':
-          console.log('User updated');
+          console.log('[MOCK AUTH] User updated');
           break;
       }
     });
@@ -168,28 +160,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  // Sign up with email
+  // Sign up with email (mock)
   const signUp = async (email: string, password: string, fullName?: string) => {
     setError(null);
     setLoading(true);
 
     try {
-      const { data, error } = await signUpWithEmail(email, password, {
-        full_name: fullName,
-      });
+      const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.signup(
+        email,
+        password,
+        { full_name: fullName }
+      );
 
-      if (error) throw error;
-
-      // Profile will be created automatically by database trigger
       // Update local state
-      if (data.user) {
-        setUser(data.user);
-        if (data.session) {
-          setSession(data.session);
-        }
-      }
+      setUser(mockUser as any);
+      setSession(mockSession as any);
+      setProfile({
+        id: mockUser.id,
+        email: mockUser.email,
+        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
+        phone_number: mockCPO.phone,
+      });
+      setCpoProfile(mockCPO);
+
+      console.log('[MOCK AUTH] Signup complete:', mockUser.email);
     } catch (err: any) {
-      console.error('Sign up error:', err);
+      console.error('Mock sign up error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -197,25 +193,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign in with email
+  // Sign in with email (mock)
   const signIn = async (email: string, password: string) => {
     setError(null);
     setLoading(true);
 
     try {
-      const { data, error } = await signInWithEmail(email, password);
+      const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.login(
+        email,
+        password
+      );
 
-      if (error) throw error;
+      // Update local state
+      setUser(mockUser as any);
+      setSession(mockSession as any);
+      setProfile({
+        id: mockUser.id,
+        email: mockUser.email,
+        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
+        phone_number: mockCPO.phone,
+      });
+      setCpoProfile(mockCPO);
 
-      if (data.user) {
-        setUser(data.user);
-        if (data.session) {
-          setSession(data.session);
-        }
-        await fetchProfile(data.user.id);
-      }
+      console.log('[MOCK AUTH] Login complete:', mockUser.email);
     } catch (err: any) {
-      console.error('Sign in error:', err);
+      console.error('Mock sign in error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -223,17 +225,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign in with Google
+  // Sign in with Google (mock - not supported)
   const handleSignInWithGoogle = async () => {
     setError(null);
     setLoading(true);
 
     try {
-      const { error } = await signInWithGoogle();
-      if (error) throw error;
-      // User state will be updated by onAuthStateChange listener
+      console.log('[MOCK AUTH] Google sign-in not supported in mock mode');
+      throw new Error('Google sign-in not supported in mock mode');
     } catch (err: any) {
-      console.error('Google sign in error:', err);
+      console.error('Mock Google sign in error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -241,14 +242,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign out
+  // Sign out (mock)
   const handleSignOut = async () => {
     setError(null);
     setLoading(true);
 
     try {
-      const { error } = await authService.signOut();
-      if (error) throw error;
+      await mockAuthService.logout();
 
       // Clear local state
       setUser(null);
@@ -260,8 +260,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('armoraUser');
       localStorage.removeItem('armoraQuestionnaireResponses');
       localStorage.removeItem('armoraBookingData');
+
+      console.log('[MOCK AUTH] Logout complete');
     } catch (err: any) {
-      console.error('Sign out error:', err);
+      console.error('Mock sign out error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -269,7 +271,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Update profile
+  // Update profile (mock)
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) {
       throw new Error('No user logged in');
@@ -279,13 +281,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      const { data, error } = await updateUserProfile(user.id, updates);
+      // Update mock CPO profile
+      const updatedCPO = await mockAuthService.updateProfile(user.id, updates as any);
 
-      if (error) throw error;
+      // Update local state
+      setProfile({
+        ...profile!,
+        ...updates,
+      });
+      setCpoProfile(updatedCPO);
 
-      setProfile(data);
+      console.log('[MOCK AUTH] Profile update complete');
     } catch (err: any) {
-      console.error('Profile update error:', err);
+      console.error('Mock profile update error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -299,7 +307,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await fetchProfile(user.id);
   };
 
-  // Save questionnaire responses
+  // Save questionnaire responses (mock)
   const saveQuestionnaire = async (responses: any) => {
     if (!user) {
       throw new Error('No user logged in');
@@ -309,16 +317,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      const { error } = await saveQuestionnaireResponse(user.id, responses);
-
-      if (error) throw error;
+      console.log('[MOCK AUTH] Saving questionnaire responses:', responses);
 
       // Update profile to mark questionnaire as completed
       await updateProfile({
         sia_verification_status: 'pending', // Trigger verification process
       });
+
+      console.log('[MOCK AUTH] Questionnaire saved');
     } catch (err: any) {
-      console.error('Questionnaire save error:', err);
+      console.error('Mock questionnaire save error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -326,12 +334,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Acknowledge Martyn's Law
+  // Acknowledge Martyn's Law (mock)
   const acknowledgeMartynsLaw = async () => {
     if (!user) {
       throw new Error('No user logged in');
     }
 
+    console.log('[MOCK AUTH] Acknowledging Martyns Law');
     await updateProfile({
       martyns_law_acknowledged: true,
     });

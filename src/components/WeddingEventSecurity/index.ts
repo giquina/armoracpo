@@ -1,1 +1,0 @@
-export { WeddingEventSecurity } from './WeddingEventSecurity';

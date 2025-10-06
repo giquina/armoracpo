@@ -1,6 +1,7 @@
 {
     "name": "Armoracpo Development",
-    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+      "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+    "remoteUser": "node",
     "customizations": {
           "vscode": {
                   "extensions": [
@@ -9,13 +10,11 @@
                   ]
           }
     },
-    "forwardPorts": [3000],
+    "forwardPorts": [3000, 3001],
     "portsAttributes": {
-          "3000": { "label": "CRA Dev Server", "onAutoForward": "notify" }
+          "3000": { "label": "CRA Dev Server", "onAutoForward": "notify" },
+          "3001": { "label": "CRA Dev Server (alt)", "onAutoForward": "notify" }
     },
-    "mounts": [
-          "type=cache,target=/home/node/.npm"
-    ],
-    "postCreateCommand": "corepack enable || true && npm ci",
-    "remoteUser": "node"
+    
+    "postCreateCommand": "corepack enable || true && npm ci"
 }
