@@ -400,7 +400,7 @@ const IncidentReportDetail: React.FC = () => {
                   <div className="media-type">{media.type.toUpperCase()}</div>
                   <div className="media-filename">{media.filename}</div>
                   <div className="media-meta">
-                    <small>Captured: {formatDatemedia.metadata.capturedAt()}</small>
+                    <small>Captured: {formatDate(media.metadata.capturedAt)}</small>
                     <small>GPS: {media.gpsCoordinates.latitude.toFixed(4)}, {media.gpsCoordinates.longitude.toFixed(4)}</small>
                   </div>
                   {media.description && <p className="media-description">{media.description}</p>}
