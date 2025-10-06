@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { IconType } from 'react-icons';
 import { Button } from './Button';
 import { IconWrapper } from '../../utils/IconWrapper';
@@ -8,7 +8,7 @@ export interface EmptyStateProps {
   icon: IconType | string;
   title: string;
   description: string;
-  action?: string;
+  action?: string | ReactNode;
   onAction?: () => void;
   className?: string;
 }

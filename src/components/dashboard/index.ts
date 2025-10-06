@@ -9,9 +9,9 @@ export { default as WelcomeHeader } from './WelcomeHeader';
 export { default as AvailabilityToggle } from './AvailabilityToggle';
 export { default as ActiveAssignmentCard } from './ActiveAssignmentCard';
 export { default as QuickStatsWidget } from './QuickStatsWidget';
-export { RecommendedJobs } from './RecommendedJobs';
-export { EarningsSummary } from './EarningsSummary';
-export { PerformanceInsights } from './PerformanceInsights';
+export { default as RecommendedJobs } from './RecommendedJobs';
+export { default as EarningsSummary } from './EarningsSummary';
+export { default as PerformanceInsights } from './PerformanceInsights';
 
 // New widget components
 export { QuickStatsCard } from './QuickStatsCard';
