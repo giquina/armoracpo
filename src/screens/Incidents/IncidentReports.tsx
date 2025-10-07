@@ -12,6 +12,7 @@ import { incidentService } from '../../services/incidentService';
 import { downloadIncidentReportPDF } from '../../services/incidentPDFService';
 import { supabase } from '../../lib/supabase';
 import './IncidentReports.css';
+import DevPanel from '../components/dev/DevPanel';
 
 const IncidentReports: React.FC = () => {
   const navigate = useNavigate();
@@ -229,6 +230,8 @@ const IncidentReports: React.FC = () => {
         <div className="header-content">
           <h1 className="header-title">Incident Reports</h1>
           <p className="header-subtitle">Document and track security incidents</p>
+        <DevPanel />
+
         </div>
         <button className="btn-create" onClick={() => navigate('/incidents/new')}>
           + New Report

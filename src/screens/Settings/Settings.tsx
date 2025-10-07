@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase, ProtectionOfficer } from '../../lib/supabase';
 import '../../styles/global.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ const Settings: React.FC = () => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+        <div className="spinner"><DevPanel />
+</div>
       </div>
     );
   }

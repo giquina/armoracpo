@@ -7,6 +7,7 @@ import { DOBEntryForm } from '../../components/dob/DOBEntryForm';
 import { Button } from '../../components/ui/Button';
 import { EmptyState } from '../../components/ui/EmptyState';
 import './DailyOccurrenceBook.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 const DailyOccurrenceBook: React.FC = () => {
   const [cpoId, setCpoId] = useState<string | null>(null);
@@ -178,6 +179,8 @@ const DailyOccurrenceBook: React.FC = () => {
         <div className="dob-loading">
           <div className="spinner spinner-gold" />
           <p>Loading Daily Occurrence Book...</p>
+        <DevPanel />
+
         </div>
       </div>
     );

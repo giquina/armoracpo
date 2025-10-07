@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase, ProtectionAssignment } from '../../lib/supabase';
 import { format } from 'date-fns';
 import '../../styles/global.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 const ActiveJob: React.FC = () => {
   const navigate = useNavigate();
@@ -79,7 +80,8 @@ const ActiveJob: React.FC = () => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+        <div className="spinner"><DevPanel />
+</div>
       </div>
     );
   }

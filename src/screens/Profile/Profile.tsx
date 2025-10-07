@@ -16,6 +16,7 @@ import { SecuritySettingsSection } from '../../components/profile/SecuritySettin
 import { BankDetailsSection } from '../../components/profile/BankDetailsSection';
 
 import '../../styles/global.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 /**
  * Profile Screen
@@ -92,7 +93,8 @@ const Profile: React.FC = () => {
           gap: 'var(--armora-space-md)',
         }}
       >
-        <div className="spinner"></div>
+        <div className="spinner"><DevPanel />
+</div>
         <p style={{ color: 'var(--armora-text-secondary)' }}>Loading profile...</p>
       </div>
     );

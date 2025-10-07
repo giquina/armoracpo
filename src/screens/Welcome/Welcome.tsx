@@ -253,7 +253,7 @@ export const Welcome: React.FC = () => {
       </div>
 
       {/* Dev Panel for Navigation */}
-      {process.env.NODE_ENV === 'development' && <DevPanel />}
+      <DevPanel />
     </div>
   );
 };

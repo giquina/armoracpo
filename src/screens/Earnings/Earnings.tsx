@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase, PaymentRecord } from '../../lib/supabase';
 import { format } from 'date-fns';
 import '../../styles/global.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 interface EarningsData {
   totalEarnings: number;
@@ -74,7 +75,8 @@ const Earnings: React.FC = () => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <div className="spinner"></div>
+        <div className="spinner"><DevPanel />
+</div>
       </div>
     );
   }

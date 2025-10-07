@@ -6,6 +6,7 @@ import JobFilters from '../../components/jobs/JobFilters';
 import BrowseJobCard from '../../components/jobs/BrowseJobCard';
 import JobDetailsModal from '../../components/jobs/JobDetailsModal';
 import './Jobs.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 // Mock job data
 const MOCK_JOBS = [
@@ -449,6 +450,8 @@ const Jobs: React.FC = () => {
             </button>
           );
         })}
+      <DevPanel />
+
       </div>
 
       {/* Tab Content */}

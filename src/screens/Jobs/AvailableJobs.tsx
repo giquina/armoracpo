@@ -10,6 +10,7 @@ import FilterPanel, { JobFilters } from '../../components/jobs/FilterPanel';
 import JobsMap from '../../components/jobs/JobsMap';
 import JobDetailModal from '../../components/jobs/JobDetailModal';
 import '../../styles/global.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 type ViewMode = 'list' | 'map';
 type SortOption = 'distance' | 'rate' | 'date' | 'urgency';
@@ -144,6 +145,8 @@ const AvailableJobs: React.FC = () => {
         }}
       >
         <div className="spinner spinner-gold" />
+      <DevPanel />
+
       </div>
     );
   }

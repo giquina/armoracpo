@@ -8,6 +8,7 @@ import { ChatBubble, TypingIndicator, QuickReplyTemplates, MessageInput } from '
 import { LoadingSpinner, Card } from '../../components/ui';
 import '../../styles/global.css';
 import './MessageChat.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 const MessageChat: React.FC = () => {
   const { assignmentId } = useParams<{ assignmentId: string }>();
@@ -151,6 +152,8 @@ const MessageChat: React.FC = () => {
     return (
       <div className="message-chat">
         <LoadingSpinner size="lg" />
+      <DevPanel />
+
       </div>
     );
   }

@@ -153,7 +153,7 @@ const Splash: React.FC<SplashProps> = ({ onComplete, duration = 2500 }) => {
       </AnimatePresence>
 
       {/* Dev Panel for Navigation */}
-      {process.env.NODE_ENV === 'development' && <DevPanel />}
+      <DevPanel />
     </>
   );
 };

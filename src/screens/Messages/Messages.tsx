@@ -8,6 +8,7 @@ import { ChatListItem } from '../../components/messages';
 import { EmptyState, LoadingSpinner } from '../../components/ui';
 import '../../styles/global.css';
 import './Messages.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 interface Conversation {
   assignment: ProtectionAssignment;
@@ -123,6 +124,8 @@ const Messages: React.FC = () => {
     return (
       <div className="messages-screen">
         <LoadingSpinner size="lg" />
+      <DevPanel />
+
       </div>
     );
   }

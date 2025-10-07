@@ -10,6 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { IconWrapper } from '../../utils/IconWrapper';
 import { authService, type SignUpData } from '../../services/auth.service';
 import './Signup.css';
+import DevPanel from '../../components/dev/DevPanel';
 
 // Form data interface
 interface SignupFormData {
@@ -400,6 +401,8 @@ const Signup: React.FC = () => {
         <div className="armora-signup__header">
           <h1 className="armora-signup__title">Join ArmoraCPO</h1>
           <p className="armora-signup__subtitle">SIA Licensed Close Protection Officer Registration</p>
+        <DevPanel />
+
         </div>
 
         {/* Stepper */}
