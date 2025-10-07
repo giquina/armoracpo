@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // DevPanel for quick navigation during development
+// NOTE: This component uses window.location for navigation to avoid React Router dependency
 export const DevPanel: React.FC = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const screens = [
@@ -27,7 +26,8 @@ export const DevPanel: React.FC = () => {
   const handleNavigate = (path: string) => {
     sessionStorage.setItem('devMode', 'true'); // Enable dev mode bypass
     sessionStorage.setItem('hasSeenWelcome', 'true'); // Skip welcome on future loads
-    navigate(path);
+    // Use window.location for navigation to avoid React Router dependency
+    window.location.href = path;
     setIsOpen(false);
   };
 

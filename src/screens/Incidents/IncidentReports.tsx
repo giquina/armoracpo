@@ -12,7 +12,7 @@ import { incidentService } from '../../services/incidentService';
 import { downloadIncidentReportPDF } from '../../services/incidentPDFService';
 import { supabase } from '../../lib/supabase';
 import './IncidentReports.css';
-import DevPanel from '../components/dev/DevPanel';
+import DevPanel from '../../components/dev/DevPanel';
 
 const IncidentReports: React.FC = () => {
   const navigate = useNavigate();

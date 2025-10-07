@@ -13,7 +13,7 @@ import RecommendedJobs from '../../components/dashboard/RecommendedJobs';
 import PerformanceInsights from '../../components/dashboard/PerformanceInsights';
 import RecentIncidentsWidget from '../../components/dashboard/RecentIncidentsWidget';
 import '../../styles/global.css';
-import DevPanel from '../components/dev/DevPanel';
+import DevPanel from '../../components/dev/DevPanel';
 
 const Dashboard: React.FC = () => {
   const [cpo, setCpo] = useState<ProtectionOfficer | null>(null);
