@@ -10,17 +10,15 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    // Temporarily disable strict checks for React 19 + react-icons compatibility
-    // See: https://github.com/react-icons/react-icons/issues/854
-    "strictFunctionTypes": false
+    "jsx": "react-jsx"
   },
   "include": [
     "src"

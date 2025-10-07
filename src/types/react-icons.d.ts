@@ -7,7 +7,7 @@ declare module 'react-icons/*' {
     title?: string;
   }
 
-  export type IconType = (props: IconBaseProps) => React.JSX.Element;
+  export type IconType = (props: IconBaseProps) => JSX.Element;
 
   export const IconContext: React.Context<{
     color?: string;

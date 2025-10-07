@@ -7,6 +7,8 @@ import { initializeNotifications } from './services/notificationService';
 import { PageTransition } from './components/animations/PageTransition';
 
 // Screens
+import Splash from './screens/Splash';
+import Welcome from './screens/Welcome';
 import Login from './screens/Auth/Login';
 import Signup from './screens/Auth/Signup';
 import Dashboard from './screens/Dashboard/Dashboard';
@@ -108,6 +110,14 @@ const AnimatedRoutes: React.FC = () => {
           element={
             <PageTransition variant="fade">
               <Login />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/welcome"
+          element={
+            <PageTransition variant="fade">
+              <Welcome />
             </PageTransition>
           }
         />
@@ -310,6 +320,43 @@ const AnimatedRoutes: React.FC = () => {
 };
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    checkInitialAuth();
+  }, []);
+
+  const checkInitialAuth = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      setIsAuthenticated(!!user);
+    } catch (error) {
+      setIsAuthenticated(false);
+    } finally {
+      setIsCheckingAuth(false);
+    }
+  };
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+
+  // Show splash screen first
+  if (showSplash) {
+    return <Splash onComplete={handleSplashComplete} />;
+  }
+
+  // Check if this is first-time user (hasn't seen welcome)
+  const hasSeenWelcome = localStorage.getItem('hasSeenWelcome') === 'true';
+  const shouldShowWelcome = !isCheckingAuth && !isAuthenticated && !hasSeenWelcome;
+
+  // Show welcome for first-time users
+  if (shouldShowWelcome) {
+    return <Welcome />;
+  }
+
   return (
     <Router>
       <AnimatedRoutes />

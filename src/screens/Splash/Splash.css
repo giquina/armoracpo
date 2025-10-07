@@ -1,0 +1,249 @@
+/* ArmoraCPO Splash Screen Styles */
+
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  overflow: hidden;
+  z-index: 9999;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Navy gradient background */
+.splash-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--armora-navy-dark) 0%,
+    var(--armora-navy) 40%,
+    #1a2f52 60%,
+    var(--armora-navy-light) 100%
+  );
+  z-index: -1;
+}
+
+/* Main content container */
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--armora-space-xl);
+  padding: var(--armora-space-xl);
+  width: 100%;
+  max-width: 500px;
+  padding-top: calc(var(--armora-space-xl) + var(--armora-safe-top));
+  padding-bottom: calc(var(--armora-space-xl) + var(--armora-safe-bottom));
+}
+
+/* Shield logo container */
+.splash-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-shield {
+  font-size: 120px;
+  line-height: 1;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Wordmark section */
+.splash-wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--armora-space-sm);
+}
+
+.splash-title {
+  font-family: var(--armora-font-display);
+  font-size: var(--armora-text-4xl);
+  font-weight: var(--armora-weight-extrabold);
+  color: var(--armora-gold);
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Tagline section */
+.splash-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(var(--armora-space-sm) * -1);
+}
+
+.splash-tagline-text {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-base);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-inverse);
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.03em;
+  opacity: 0.9;
+}
+
+/* Loading indicator */
+.splash-loader {
+  width: 100%;
+  max-width: 200px;
+  margin-top: var(--armora-space-lg);
+}
+
+.splash-loader-bar {
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--armora-radius-full);
+  overflow: hidden;
+}
+
+.splash-loader-progress {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--armora-gold) 0%,
+    var(--armora-gold-light) 50%,
+    var(--armora-gold) 100%
+  );
+  border-radius: var(--armora-radius-full);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Skip hint */
+.splash-skip-hint {
+  position: absolute;
+  bottom: calc(var(--armora-space-2xl) + var(--armora-safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.splash-skip-text {
+  font-family: var(--armora-font-body);
+  font-size: var(--armora-text-sm);
+  font-weight: var(--armora-weight-medium);
+  color: var(--armora-text-inverse);
+  margin: 0;
+  text-align: center;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 640px) {
+  .splash-shield {
+    font-size: 100px;
+  }
+
+  .splash-title {
+    font-size: var(--armora-text-3xl);
+  }
+
+  .splash-tagline-text {
+    font-size: var(--armora-text-sm);
+  }
+
+  .splash-content {
+    gap: var(--armora-space-lg);
+    padding: var(--armora-space-lg);
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+  .splash-shield {
+    font-size: 80px;
+  }
+
+  .splash-title {
+    font-size: var(--armora-text-2xl);
+  }
+
+  .splash-tagline-text {
+    font-size: var(--armora-text-xs);
+  }
+}
+
+/* Landscape mode adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  .splash-shield {
+    font-size: 60px;
+  }
+
+  .splash-title {
+    font-size: var(--armora-text-2xl);
+  }
+
+  .splash-tagline-text {
+    font-size: var(--armora-text-xs);
+  }
+
+  .splash-content {
+    gap: var(--armora-space-sm);
+    padding: var(--armora-space-md);
+  }
+
+  .splash-loader {
+    margin-top: var(--armora-space-sm);
+  }
+
+  .splash-skip-hint {
+    bottom: calc(var(--armora-space-md) + var(--armora-safe-bottom));
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .splash-tagline-text {
+    opacity: 1;
+  }
+
+  .splash-skip-text {
+    opacity: 0.8;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .splash-shield,
+  .splash-title {
+    animation: none !important;
+  }
+}
+
+/* Safe area support for devices with notches */
+@supports (padding: max(0px)) {
+  .splash-content {
+    padding-top: max(var(--armora-space-xl), var(--armora-safe-top));
+    padding-bottom: max(var(--armora-space-xl), var(--armora-safe-bottom));
+    padding-left: max(var(--armora-space-xl), var(--armora-safe-left));
+    padding-right: max(var(--armora-space-xl), var(--armora-safe-right));
+  }
+
+  .splash-skip-hint {
+    bottom: max(var(--armora-space-2xl), calc(var(--armora-space-md) + var(--armora-safe-bottom)));
+  }
+}
