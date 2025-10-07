@@ -14,6 +14,7 @@ import {
 import { Button } from '../../components/ui/Button';
 import { FeatureCard } from '../../components/onboarding/FeatureCard';
 import { PageIndicator } from '../../components/onboarding/PageIndicator';
+import { DevPanel } from '../../components/dev/DevPanel';
 import './Welcome.css';
 
 interface WelcomePageData {
@@ -250,6 +251,9 @@ export const Welcome: React.FC = () => {
           </Button>
         </motion.div>
       </div>
+
+      {/* Dev Panel for Navigation */}
+      {process.env.NODE_ENV === 'development' && <DevPanel />}
     </div>
   );
 };

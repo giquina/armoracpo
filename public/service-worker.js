@@ -5,17 +5,43 @@
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
 
-// Initialize Firebase
-firebase.initializeApp({
-  apiKey: "AIzaSyDBpJL8uN2s6HN4qcWnR0vCwZVU5w3g5YE",
-  authDomain: "armora-protection.firebaseapp.com",
-  projectId: "armora-protection",
-  storageBucket: "armora-protection.firebasestorage.app",
-  messagingSenderId: "785567849849",
-  appId: "1:785567849849:web:1e8a4e3f2e0b9c8d4f5e6a"
-});
+// Initialize Firebase with environment-based config
+// Config will be injected by the build process or passed via message
+let firebaseInitialized = false;
+let messaging = null;
 
-const messaging = firebase.messaging();
+// Fallback: Initialize with production config
+// NOTE: These values are safe to expose as they are client-side Firebase config
+// Security is enforced through Firebase Security Rules
+try {
+  firebase.initializeApp({
+    apiKey: "AIzaSyDBpJL8uN2s6HN4qcWnR0vCwZVU5w3g5YE",
+    authDomain: "armora-protection.firebaseapp.com",
+    projectId: "armora-protection",
+    storageBucket: "armora-protection.firebasestorage.app",
+    messagingSenderId: "785567849849",
+    appId: "1:785567849849:web:1e8a4e3f2e0b9c8d4f5e6a"
+  });
+  messaging = firebase.messaging();
+  firebaseInitialized = true;
+  console.log('[Service Worker] Firebase initialized successfully');
+} catch (error) {
+  console.error('[Service Worker] Firebase initialization failed:', error);
+}
+
+// Listen for config message from main thread (for dynamic configuration)
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'FIREBASE_CONFIG' && !firebaseInitialized) {
+    try {
+      firebase.initializeApp(event.data.config);
+      messaging = firebase.messaging();
+      firebaseInitialized = true;
+      console.log('[Service Worker] Firebase re-initialized with dynamic config');
+    } catch (error) {
+      console.error('[Service Worker] Firebase dynamic initialization failed:', error);
+    }
+  }
+});
 
 // Cache configuration
 const CACHE_NAME = 'armora-cpo-v1';
@@ -122,27 +148,31 @@ self.addEventListener('fetch', (event) => {
 });
 
 // Handle background FCM messages
-messaging.onBackgroundMessage((payload) => {
-  console.log('[Service Worker] Received background message:', payload);
+if (messaging) {
+  messaging.onBackgroundMessage((payload) => {
+    console.log('[Service Worker] Received background message:', payload);
 
-  const notificationTitle = payload.notification?.title || 'Armora CPO';
-  const notificationOptions = {
-    body: payload.notification?.body || 'New notification',
-    icon: '/logo192.png',
-    badge: '/favicon.ico',
-    tag: payload.data?.assignmentId || 'armora-notification',
-    data: {
-      url: payload.data?.url || '/',
-      assignmentId: payload.data?.assignmentId,
-      type: payload.data?.type
-    },
-    requireInteraction: payload.data?.requireInteraction === 'true',
-    vibrate: [200, 100, 200],
-    actions: payload.data?.actions ? JSON.parse(payload.data.actions) : []
-  };
+    const notificationTitle = payload.notification?.title || 'Armora CPO';
+    const notificationOptions = {
+      body: payload.notification?.body || 'New notification',
+      icon: '/logo192.png',
+      badge: '/favicon.ico',
+      tag: payload.data?.assignmentId || 'armora-notification',
+      data: {
+        url: payload.data?.url || '/',
+        assignmentId: payload.data?.assignmentId,
+        type: payload.data?.type
+      },
+      requireInteraction: payload.data?.requireInteraction === 'true',
+      vibrate: [200, 100, 200],
+      actions: payload.data?.actions ? JSON.parse(payload.data.actions) : []
+    };
 
-  return self.registration.showNotification(notificationTitle, notificationOptions);
-});
+    return self.registration.showNotification(notificationTitle, notificationOptions);
+  });
+} else {
+  console.error('[Service Worker] Messaging not initialized, cannot handle background messages');
+}
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { ProtectionOfficer } from '../lib/supabase';
-import { mockAuthService } from '../services/mockAuth.service';
+import { supabase, ProtectionOfficer } from '../lib/supabase';
+import { authService } from '../services/authService';
 
 // Legacy Profile interface for backward compatibility
 interface Profile {
@@ -74,53 +74,73 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch user profile using mock auth service
+  // Fetch user profile using real auth service
   const fetchProfile = async (userId: string) => {
     try {
-      // Get mock user and CPO profile
-      const { user: mockUser, cpo: mockCPO } = await mockAuthService.getCurrentUser();
+      // Get CPO profile from Supabase
+      const cpoProfile = await authService.getCPOProfile(userId);
 
-      // Set legacy profile format
+      // Get current user from Supabase auth
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('No authenticated user');
+
+      // Set legacy profile format for backward compatibility
       setProfile({
-        id: mockUser.id,
-        email: mockUser.email,
-        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
-        phone_number: mockCPO.phone,
+        id: user.id,
+        email: user.email || '',
+        full_name: `${cpoProfile.first_name} ${cpoProfile.last_name}`,
+        phone_number: cpoProfile.phone,
       });
 
       // Set CPO profile
-      setCpoProfile(mockCPO);
+      setCpoProfile(cpoProfile);
     } catch (err: any) {
-      console.error('Error fetching mock profile:', err);
+      console.error('Error fetching profile:', err);
       setError(err.message);
     }
   };
 
-  // Initialize auth state with mock auto-login
+  // Initialize auth state with real Supabase Auth
   useEffect(() => {
     const initAuth = async () => {
       try {
-        console.log('[MOCK AUTH] Auto-logging in mock user...');
+        console.log('[Supabase Auth] Initializing authentication...');
 
-        // Auto-login with mock service
-        const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.getCurrentUser();
+        // Get current session from Supabase
+        const { data: { session } } = await supabase.auth.getSession();
 
-        // Set mock session and user immediately
-        setSession(mockSession as any);
-        setUser(mockUser as any);
+        if (session?.user) {
+          setSession(session);
+          setUser(session.user);
 
-        // Set profiles
-        setProfile({
-          id: mockUser.id,
-          email: mockUser.email,
-          full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
-          phone_number: mockCPO.phone,
-        });
-        setCpoProfile(mockCPO);
+          // Fetch CPO profile
+          try {
+            const cpoProfile = await authService.getCPOProfile(session.user.id);
 
-        console.log('[MOCK AUTH] Auto-login complete:', mockUser.email);
+            // Set legacy profile format for backward compatibility
+            setProfile({
+              id: session.user.id,
+              email: session.user.email || '',
+              full_name: `${cpoProfile.first_name} ${cpoProfile.last_name}`,
+              phone_number: cpoProfile.phone,
+            });
+            setCpoProfile(cpoProfile);
+
+            console.log('[Supabase Auth] Session restored:', session.user.email);
+          } catch (profileErr: any) {
+            console.error('[Supabase Auth] Error fetching CPO profile:', profileErr);
+            // If profile fetch fails, sign out
+            await supabase.auth.signOut();
+            setSession(null);
+            setUser(null);
+            setProfile(null);
+            setCpoProfile(null);
+          }
+        } else {
+          console.log('[Supabase Auth] No active session');
+        }
       } catch (err: any) {
-        console.error('Mock auth initialization error:', err);
+        console.error('[Supabase Auth] Initialization error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -129,8 +149,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     initAuth();
 
-    // Listen for auth changes (mock)
-    const { data: { subscription } } = mockAuthService.onAuthStateChange(async (event, session) => {
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('[Supabase Auth] Auth state changed:', event);
+
       setSession(session);
       setUser(session?.user ?? null);
 
@@ -144,13 +166,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Handle auth events
       switch (event) {
         case 'SIGNED_IN':
-          console.log('[MOCK AUTH] User signed in');
+          console.log('[Supabase Auth] User signed in');
           break;
         case 'SIGNED_OUT':
-          console.log('[MOCK AUTH] User signed out');
+          console.log('[Supabase Auth] User signed out');
+          break;
+        case 'TOKEN_REFRESHED':
+          console.log('[Supabase Auth] Token refreshed');
           break;
         case 'USER_UPDATED':
-          console.log('[MOCK AUTH] User updated');
+          console.log('[Supabase Auth] User updated');
           break;
       }
     });
@@ -160,32 +185,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  // Sign up with email (mock)
+  // Sign up with email (real Supabase Auth)
   const signUp = async (email: string, password: string, fullName?: string) => {
     setError(null);
     setLoading(true);
 
     try {
-      const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.signup(
+      // Sign up with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
-        { full_name: fullName }
-      );
-
-      // Update local state
-      setUser(mockUser as any);
-      setSession(mockSession as any);
-      setProfile({
-        id: mockUser.id,
-        email: mockUser.email,
-        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
-        phone_number: mockCPO.phone,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
       });
-      setCpoProfile(mockCPO);
 
-      console.log('[MOCK AUTH] Signup complete:', mockUser.email);
+      if (authError) throw authError;
+      if (!authData.user) throw new Error('No user returned from sign up');
+
+      console.log('[Supabase Auth] Signup complete:', authData.user.email);
+
+      // Note: The user will need to verify their email and create a CPO profile
+      // Auth state will be updated via onAuthStateChange listener
     } catch (err: any) {
-      console.error('Mock sign up error:', err);
+      console.error('[Supabase Auth] Sign up error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -193,31 +218,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign in with email (mock)
+  // Sign in with email (real Supabase Auth)
   const signIn = async (email: string, password: string) => {
     setError(null);
     setLoading(true);
 
     try {
-      const { user: mockUser, cpo: mockCPO, session: mockSession } = await mockAuthService.login(
-        email,
-        password
-      );
+      // Use authService which handles verification check and FCM token
+      const { user, cpo } = await authService.login(email, password);
 
       // Update local state
-      setUser(mockUser as any);
-      setSession(mockSession as any);
-      setProfile({
-        id: mockUser.id,
-        email: mockUser.email,
-        full_name: `${mockCPO.first_name} ${mockCPO.last_name}`,
-        phone_number: mockCPO.phone,
-      });
-      setCpoProfile(mockCPO);
+      setUser(user);
 
-      console.log('[MOCK AUTH] Login complete:', mockUser.email);
+      // Get session from Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+
+      // Set profiles
+      setProfile({
+        id: user.id,
+        email: user.email || '',
+        full_name: `${cpo.first_name} ${cpo.last_name}`,
+        phone_number: cpo.phone,
+      });
+      setCpoProfile(cpo);
+
+      console.log('[Supabase Auth] Login complete:', user.email);
     } catch (err: any) {
-      console.error('Mock sign in error:', err);
+      console.error('[Supabase Auth] Sign in error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -225,16 +253,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign in with Google (mock - not supported)
+  // Sign in with Google (real Supabase Auth)
   const handleSignInWithGoogle = async () => {
     setError(null);
     setLoading(true);
 
     try {
-      console.log('[MOCK AUTH] Google sign-in not supported in mock mode');
-      throw new Error('Google sign-in not supported in mock mode');
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+
+      if (error) throw error;
+
+      console.log('[Supabase Auth] Google sign-in initiated');
+      // Note: Auth state will be updated via onAuthStateChange listener after redirect
     } catch (err: any) {
-      console.error('Mock Google sign in error:', err);
+      console.error('[Supabase Auth] Google sign in error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -242,13 +279,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Sign out (mock)
+  // Sign out (real Supabase Auth)
   const handleSignOut = async () => {
     setError(null);
     setLoading(true);
 
     try {
-      await mockAuthService.logout();
+      await authService.logout();
 
       // Clear local state
       setUser(null);
@@ -261,9 +298,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('armoraQuestionnaireResponses');
       localStorage.removeItem('armoraBookingData');
 
-      console.log('[MOCK AUTH] Logout complete');
+      console.log('[Supabase Auth] Logout complete');
     } catch (err: any) {
-      console.error('Mock sign out error:', err);
+      console.error('[Supabase Auth] Sign out error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -271,9 +308,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Update profile (mock)
+  // Update profile (real Supabase)
   const updateProfile = async (updates: Partial<Profile>) => {
-    if (!user) {
+    if (!user || !cpoProfile) {
       throw new Error('No user logged in');
     }
 
@@ -281,8 +318,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      // Update mock CPO profile
-      const updatedCPO = await mockAuthService.updateProfile(user.id, updates as any);
+      // Map legacy Profile updates to ProtectionOfficer fields
+      const cpoUpdates: Partial<ProtectionOfficer> = {};
+
+      if (updates.full_name) {
+        const [firstName, ...lastNameParts] = updates.full_name.split(' ');
+        cpoUpdates.first_name = firstName;
+        cpoUpdates.last_name = lastNameParts.join(' ');
+      }
+      if (updates.phone_number) cpoUpdates.phone = updates.phone_number;
+
+      // Update CPO profile using authService
+      const updatedCPO = await authService.updateProfileByUserId(user.id, cpoUpdates);
 
       // Update local state
       setProfile({
@@ -291,9 +338,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       setCpoProfile(updatedCPO);
 
-      console.log('[MOCK AUTH] Profile update complete');
+      console.log('[Supabase Auth] Profile update complete');
     } catch (err: any) {
-      console.error('Mock profile update error:', err);
+      console.error('[Supabase Auth] Profile update error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -307,7 +354,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await fetchProfile(user.id);
   };
 
-  // Save questionnaire responses (mock)
+  // Save questionnaire responses (legacy - not used in CPO app)
   const saveQuestionnaire = async (responses: any) => {
     if (!user) {
       throw new Error('No user logged in');
@@ -317,16 +364,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
 
     try {
-      console.log('[MOCK AUTH] Saving questionnaire responses:', responses);
+      console.log('[Supabase Auth] Saving questionnaire responses:', responses);
 
-      // Update profile to mark questionnaire as completed
-      await updateProfile({
-        sia_verification_status: 'pending', // Trigger verification process
-      });
-
-      console.log('[MOCK AUTH] Questionnaire saved');
+      // This is a legacy method from the principal app
+      // For CPO app, questionnaire data would be stored differently
+      // For now, just log it
+      console.log('[Supabase Auth] Questionnaire saved (no-op for CPO app)');
     } catch (err: any) {
-      console.error('Mock questionnaire save error:', err);
+      console.error('[Supabase Auth] Questionnaire save error:', err);
       setError(err.message);
       throw err;
     } finally {
@@ -334,16 +379,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Acknowledge Martyn's Law (mock)
+  // Acknowledge Martyn's Law (legacy - not used in CPO app)
   const acknowledgeMartynsLaw = async () => {
     if (!user) {
       throw new Error('No user logged in');
     }
 
-    console.log('[MOCK AUTH] Acknowledging Martyns Law');
-    await updateProfile({
-      martyns_law_acknowledged: true,
-    });
+    console.log('[Supabase Auth] Acknowledging Martyns Law (no-op for CPO app)');
+    // This is a legacy method from the principal app
+    // CPO app doesn't use this functionality
   };
 
   const value: AuthContextType = {

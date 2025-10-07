@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DevPanel } from '../../components/dev/DevPanel';
 import './Splash.css';
 
 interface SplashProps {
@@ -32,9 +33,10 @@ const Splash: React.FC<SplashProps> = ({ onComplete, duration = 2500 }) => {
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
+    <>
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
           className="splash-screen"
           onClick={handleSkip}
           initial={{ opacity: 0 }}
@@ -147,8 +149,12 @@ const Splash: React.FC<SplashProps> = ({ onComplete, duration = 2500 }) => {
             <p className="splash-skip-text">Tap to skip</p>
           </motion.div>
         </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+
+      {/* Dev Panel for Navigation */}
+      {process.env.NODE_ENV === 'development' && <DevPanel />}
+    </>
   );
 };
 

@@ -58,17 +58,12 @@ export async function requestNotificationPermission(): Promise<string | null> {
 export async function storeFCMToken(userId: string, token: string): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from('cpo_fcm_tokens')
-      .upsert(
-        {
-          cpo_id: userId,
-          fcm_token: token,
-          updated_at: new Date().toISOString()
-        },
-        {
-          onConflict: 'cpo_id'
-        }
-      );
+      .from('protection_officers')
+      .update({
+        fcm_token: token,
+        updated_at: new Date().toISOString()
+      })
+      .eq('user_id', userId);
 
     if (error) throw error;
 
