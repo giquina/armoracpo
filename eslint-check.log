@@ -1,0 +1,145 @@
+
+/workspaces/armoracpo/src/components/animations/PullToRefresh.tsx
+  85:6  warning  React Hook useEffect has missing dependencies: 'handleTouchEnd', 'handleTouchMove', and 'handleTouchStart'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/components/common/Logo.tsx
+  67:11  warning  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/common/__tests__/LoadingScreen.test.tsx
+   8:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+   8:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+   9:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+   9:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  19:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  19:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  24:18  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  24:28  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  24:28  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+
+/workspaces/armoracpo/src/components/common/__tests__/Logo.test.tsx
+   8:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+   8:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  14:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  14:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  20:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  20:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  25:17  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  25:27  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  25:27  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  32:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  32:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+
+/workspaces/armoracpo/src/components/dashboard/PerformanceMetricsCard.tsx
+  39:12  error  'FiStarh' is not defined  react/jsx-no-undef
+
+/workspaces/armoracpo/src/components/dashboard/RecentIncidentsWidget.tsx
+   5:10  warning  'supabase' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  19:6   warning  React Hook useEffect has a missing dependency: 'loadRecentIncidents'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/components/errors/ErrorDisplayDemo.tsx
+  25:10  warning  'Button' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/errors/__tests__/ErrorDisplay.test.tsx
+  200:56  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  200:56  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  267:30  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  267:40  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  267:40  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  306:14  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  306:24  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  321:14  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  321:24  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  338:14  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  338:24  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+
+/workspaces/armoracpo/src/components/incidents/IncidentReportForm.tsx
+    7:3  warning  'IncidentStatus' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+   11:3  warning  'IncidentPrincipalDetails' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+  143:6  warning  React Hook useEffect has a missing dependency: 'coordinates.latitude'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  152:6  warning  React Hook useEffect has a missing dependency: 'handleSaveDraft'. Either include it or remove the dependency array       react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/components/jobs/JobDetailsModal.tsx
+  2:46  warning  'FiDollarSign' is defined but never used   @typescript-eslint/no-unused-vars
+  4:8   warning  'BrowseJobCard' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/jobs/JobsMap.tsx
+  21:10  warning  'selectedJobId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/layout/BottomNav.tsx
+  3:48  warning  'FiDollarSign' is defined but never used  @typescript-eslint/no-unused-vars
+  4:46  warning  'FaDollarSign' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/profile/DocumentsSection.tsx
+  4:65  warning  'FiAlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/components/ui/__tests__/Card.test.tsx
+  14:22  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+  19:22  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+  31:22  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+  36:22  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+  58:22  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+
+/workspaces/armoracpo/src/components/ui/__tests__/FormInput.test.tsx
+  63:36  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+  63:36  error  Avoid direct Node access. Prefer using the methods from Testing Library  testing-library/no-node-access
+
+/workspaces/armoracpo/src/components/ui/__tests__/Modal.test.tsx
+  53:21  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  53:31  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  53:31  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  56:7   error  Avoid calling `expect` conditionally`                                                                jest/no-conditional-expect
+
+/workspaces/armoracpo/src/components/ui/__tests__/StatusBadge.test.tsx
+  27:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  32:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  32:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+  37:12  error  Avoid using container methods. Prefer using the methods from Testing Library, such as "getByRole()"  testing-library/no-container
+  37:22  error  Avoid direct Node access. Prefer using the methods from Testing Library                              testing-library/no-node-access
+
+/workspaces/armoracpo/src/contexts/AppContext.tsx
+  248:6  warning  React Hook useCallback has a missing dependency: 'state.user'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/contexts/AuthContext.tsx
+  262:15  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/hooks/useDOBAutoLogging.ts
+  127:5  warning  React Hook useCallback has a missing dependency: 'checkLocationChange'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Auth/Signup.tsx
+  395:6  warning  React Hook useEffect has a missing dependency: 'handleStepChange'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/DOB/DailyOccurrenceBook.tsx
+   5:20  warning  'DOBFilters' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  23:27  warning  'setEventTypeFilter' is assigned a value but never used                                                               @typescript-eslint/no-unused-vars
+  28:6   warning  React Hook useEffect has a missing dependency: 'loadCPOAndEntries'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  32:6   warning  React Hook useEffect has a missing dependency: 'applyFilters'. Either include it or remove the dependency array       react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Incidents/IncidentReportDetail.tsx
+  28:6  warning  React Hook useEffect has a missing dependency: 'loadReport'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Incidents/IncidentReports.tsx
+  12:10  warning  'downloadIncidentReportPDF' is defined but never used                                                           @typescript-eslint/no-unused-vars
+  29:6   warning  React Hook useEffect has a missing dependency: 'loadReports'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Jobs/AvailableJobs.tsx
+   3:35  warning  'FaSortAmountDown' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  44:6   warning  React Hook useEffect has a missing dependency: 'applyFiltersAndSort'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Splash/Splash.tsx
+  20:6  warning  React Hook useEffect has a missing dependency: 'handleComplete'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspaces/armoracpo/src/screens/Welcome/Welcome.tsx
+  100:7  warning  'SWIPE_THRESHOLD' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/services/dobService.ts
+    2:32  warning  'DOBEventType' is defined but never used      @typescript-eslint/no-unused-vars
+  201:13  warning  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/utils/progressiveDisclosure.ts
+  4:51  warning  'IRiskAssessment' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspaces/armoracpo/src/utils/riskCalculator.ts
+  4:10  warning  'IThreatIndicatorData' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 82 problems (48 errors, 34 warnings)
+

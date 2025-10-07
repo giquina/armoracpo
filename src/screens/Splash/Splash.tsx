@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DevPanel } from '../../components/dev/DevPanel';
+import DevPanel from '../../components/dev/DevPanel';
 import './Splash.css';
 
 interface SplashProps {

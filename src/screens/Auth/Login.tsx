@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { supabase } from '../../lib/supabase';
 import { requestNotificationPermission } from '../../lib/firebase';
-import { DevPanel } from '../../components/dev/DevPanel';
+import DevPanel from '../../components/dev/DevPanel';
 import './Login.css';
 import '../../styles/global.css';
 

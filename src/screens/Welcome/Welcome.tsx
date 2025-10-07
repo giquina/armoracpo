@@ -14,7 +14,7 @@ import {
 import { Button } from '../../components/ui/Button';
 import { FeatureCard } from '../../components/onboarding/FeatureCard';
 import { PageIndicator } from '../../components/onboarding/PageIndicator';
-import { DevPanel } from '../../components/dev/DevPanel';
+import DevPanel from '../../components/dev/DevPanel';
 import './Welcome.css';
 
 interface WelcomePageData {

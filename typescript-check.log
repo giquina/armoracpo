@@ -1,0 +1,133 @@
+src/screens/Auth/Login.tsx(122,46): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(141,57): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(164,57): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(196,52): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(212,17): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(226,57): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Auth/Login.tsx(243,51): error TS2322: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { duration: number; ease: number[]; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { duration: number; ease: number[]; }; }' is not assignable to type '{ transition?: Transition<any>; transitionEnd?: ResolvedValues; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: number[]; }' is not assignable to type 'Transition<any>'.
+              Type '{ duration: number; ease: number[]; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: number[]; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'number[]' is not assignable to type 'Easing | Easing[]'.
+                      Type 'number[]' is not assignable to type 'EasingFunction | Easing[]'.
+                        Type 'number[]' is not assignable to type 'Easing[]'.
+                          Type 'number' is not assignable to type 'Easing'.
+src/screens/Incidents/IncidentReportDetail.tsx(406,26): error TS2339: Property 'description' does not exist on type 'IncidentMediaAttachment'.
+src/screens/Incidents/IncidentReportDetail.tsx(406,81): error TS2339: Property 'description' does not exist on type 'IncidentMediaAttachment'.
+src/screens/Messages/Messages.tsx(208,21): error TS2353: Object literal may only specify known properties, and 'label' does not exist in type 'ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<...>'.
+src/services/incidentPDFService.ts(513,31): error TS2339: Property 'responseTime' does not exist on type 'IncidentLawEnforcementDetails'.
+src/services/incidentPDFService.ts(514,63): error TS2339: Property 'responseTime' does not exist on type 'IncidentLawEnforcementDetails'.
+src/services/incidentPDFService.ts(543,22): error TS2339: Property 'capturedAt' does not exist on type 'IncidentMediaAttachment'.
+src/services/incidentPDFService.ts(544,16): error TS2339: Property 'gpsCoordinates' does not exist on type 'IncidentMediaAttachment'.
+src/services/incidentPDFService.ts(544,61): error TS2339: Property 'gpsCoordinates' does not exist on type 'IncidentMediaAttachment'.
+src/services/incidentPDFService.ts(545,13): error TS2339: Property 'description' does not exist on type 'IncidentMediaAttachment'.
+src/services/incidentPDFService.ts(618,34): error TS2339: Property 'signerRole' does not exist on type 'IncidentSignature'.
+src/services/incidentPDFService.ts(618,59): error TS2339: Property 'signerName' does not exist on type 'IncidentSignature'.
+src/services/incidentPDFService.ts(715,24): error TS2350: Only a void function can be called with the 'new' keyword.
+src/services/incidentService.ts(270,13): error TS2322: Type 'string' is not assignable to type '{ userId: string; userName: string; role: string; }'.
+src/services/mockAssignment.service.ts(87,16): error TS2339: Property 'actual_start' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(105,16): error TS2339: Property 'actual_end' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(109,20): error TS2339: Property 'actual_start' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(109,47): error TS2339: Property 'actual_end' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(110,42): error TS2339: Property 'actual_end' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(110,86): error TS2339: Property 'actual_start' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(111,18): error TS2339: Property 'final_cost' does not exist on type 'ProtectionAssignment'.
+src/services/mockAssignment.service.ts(111,61): error TS2339: Property 'hourly_rate' does not exist on type 'ProtectionAssignment'.
+src/services/mockData.ts(15,5): error TS2820: Type '"Executive Protection"' is not assignable to type '"close_protection" | "event_security" | "residential_security" | "executive_protection" | "transport_security"'. Did you mean '"executive_protection"'?
+src/services/mockData.ts(17,5): error TS2322: Type '{ address: string; latitude: number; longitude: number; }' is not assignable to type 'string'.
+src/services/mockData.ts(22,5): error TS2322: Type '{ address: string; latitude: number; longitude: number; }' is not assignable to type 'string'.
+src/services/mockData.ts(45,5): error TS2820: Type '"Event Security"' is not assignable to type '"close_protection" | "event_security" | "residential_security" | "executive_protection" | "transport_security"'. Did you mean '"event_security"'?
+src/services/mockData.ts(47,5): error TS2322: Type '{ address: string; latitude: number; longitude: number; }' is not assignable to type 'string'.
+src/services/mockData.ts(71,5): error TS2820: Type '"Residential Security"' is not assignable to type '"close_protection" | "event_security" | "residential_security" | "executive_protection" | "transport_security"'. Did you mean '"residential_security"'?
+src/services/mockData.ts(73,5): error TS2322: Type '{ address: string; latitude: number; longitude: number; }' is not assignable to type 'string'.
+src/services/mockData.ts(130,5): error TS2322: Type '"client"' is not assignable to type '"principal" | "cpo"'.
+src/services/mockData.ts(140,5): error TS2353: Object literal may only specify known properties, and 'message_text' does not exist in type 'AssignmentMessage'.
+src/services/mockData.ts(148,5): error TS2322: Type '"client"' is not assignable to type '"principal" | "cpo"'.
+src/services/mockMessage.service.ts(35,7): error TS2322: Type '"cpo" | "client"' is not assignable to type '"principal" | "cpo"'.
+  Type '"client"' is not assignable to type '"principal" | "cpo"'.
+src/services/mockMessage.service.ts(53,15): error TS2339: Property 'read_at' does not exist on type 'AssignmentMessage'.
+src/services/mockMessage.service.ts(77,79): error TS2339: Property 'read_at' does not exist on type 'AssignmentMessage'.
