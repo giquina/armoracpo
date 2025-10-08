@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DevPanel } from '../../components/dev/DevPanel';
 import './Splash.css';
@@ -11,22 +11,22 @@ interface SplashProps {
 const Splash: React.FC<SplashProps> = ({ onComplete, duration = 2500 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleComplete();
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, [duration]);
-
-  const handleComplete = () => {
+  const handleComplete = useCallback(() => {
     setIsVisible(false);
     setTimeout(() => {
       if (onComplete) {
         onComplete();
       }
     }, 500);
-  };
+  }, [onComplete]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleComplete();
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [duration, handleComplete]);
 
   const handleSkip = () => {
     handleComplete();

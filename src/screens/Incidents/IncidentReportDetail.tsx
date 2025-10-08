@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IncidentReport } from '../../types';
 import { incidentService } from '../../services/incidentService';
@@ -14,20 +14,9 @@ const IncidentReportDetail: React.FC = () => {
   const [exporting, setExporting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      loadReport();
+  const loadReport = useCallback(async () => {
+    if (!id) return;
 
-      // Subscribe to real-time updates
-      const unsubscribe = incidentService.subscribeToIncidentReportUpdates(id, (updatedReport) => {
-        setReport(updatedReport);
-      });
-
-      return () => unsubscribe();
-    }
-  }, [id]);
-
-  const loadReport = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -42,7 +31,7 @@ const IncidentReportDetail: React.FC = () => {
 
       if (!cpoData) throw new Error('CPO profile not found');
 
-      const reportData = await incidentService.getIncidentReport(id!, cpoData.id);
+      const reportData = await incidentService.getIncidentReport(id, cpoData.id);
       setReport(reportData);
     } catch (err: any) {
       setError(err.message || 'Failed to load incident report');
@@ -50,7 +39,20 @@ const IncidentReportDetail: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      loadReport();
+
+      // Subscribe to real-time updates
+      const unsubscribe = incidentService.subscribeToIncidentReportUpdates(id, (updatedReport) => {
+        setReport(updatedReport);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [id, loadReport]);
 
   const handleExportPDF = async () => {
     if (!report) return;

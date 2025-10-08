@@ -18,7 +18,6 @@ const JobsMap: React.FC<JobsMapProps> = ({
   currentLocation = { lat: 51.5074, lng: -0.1278 }, // Default to London
   onJobSelect,
 }) => {
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   // Create custom icons based on threat level
   const createThreatIcon = (threatLevel: string) => {
@@ -114,7 +113,6 @@ const JobsMap: React.FC<JobsMapProps> = ({
               icon={icon}
               eventHandlers={{
                 click: () => {
-                  setSelectedJobId(job.id);
                   onJobSelect(job.id);
                 },
               }}

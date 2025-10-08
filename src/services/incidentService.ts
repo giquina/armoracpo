@@ -250,25 +250,47 @@ export class IncidentService {
         data: { publicUrl },
       } = supabase.storage.from('incident-reports').getPublicUrl(filePath);
 
+      // Get CPO details for chain of custody
+      const { data: cpo } = await supabase
+        .from('protection_officers')
+        .select('first_name, last_name')
+        .eq('id', cpoId)
+        .single();
+
+      const cpoName = cpo ? `${cpo.first_name} ${cpo.last_name}` : 'Unknown CPO';
+
       // Create media attachment record
       const mediaAttachment: IncidentMediaAttachment = {
         id: `media-${Date.now()}`,
         type: file.type.startsWith('image/') ? 'photo' : 'video',
         url: publicUrl,
         filename: file.name,
-        filesize: file.size,
-        capturedAt: new Date().toISOString(),
-        gpsCoordinates,
+        fileSize: file.size,
+        mimeType: file.type,
+        gpsData: {
+          latitude: gpsCoordinates.latitude,
+          longitude: gpsCoordinates.longitude,
+          accuracy: gpsCoordinates.accuracy,
+          timestamp: new Date().toISOString(),
+        },
+        metadata: {
+          capturedAt: new Date().toISOString(),
+          capturedBy: cpoId,
+          deviceInfo: navigator.userAgent,
+          fileHash: '', // In production, calculate file hash
+        },
         description,
-        uploadedBy: cpoId,
-        uploadedAt: new Date().toISOString(),
-        hash: '', // In production, calculate file hash
         chainOfCustody: [
           {
+            id: `custody-${Date.now()}`,
             action: 'uploaded',
             timestamp: new Date().toISOString(),
-            performedBy: cpoId,
-            location: gpsCoordinates,
+            performedBy: {
+              userId: cpoId,
+              userName: cpoName,
+              role: 'CPO',
+            },
+            details: 'Media uploaded to incident report',
           },
         ],
       };

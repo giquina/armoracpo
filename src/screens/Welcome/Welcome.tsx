@@ -97,7 +97,6 @@ const WELCOME_PAGES: WelcomePageData[] = [
   },
 ];
 
-const SWIPE_THRESHOLD = 50;
 const SWIPE_CONFIDENCE_THRESHOLD = 10000;
 
 const swipeConfidencePower = (offset: number, velocity: number) => {

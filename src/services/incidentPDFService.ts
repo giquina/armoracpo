@@ -712,7 +712,8 @@ export class IncidentPDFService {
     const watermarkText = level === 'restricted' ? 'RESTRICTED' : 'CONFIDENTIAL';
 
     this.doc.saveGraphicsState();
-    this.doc.setGState(new this.doc.GState({ opacity: 0.1 }));
+    // Use setGState without 'new' keyword - pass object directly
+    this.doc.setGState({ opacity: 0.1 } as any);
     this.doc.setFontSize(60);
     this.doc.setTextColor(255, 0, 0);
     this.doc.setFont('helvetica', 'bold');

@@ -23,7 +23,7 @@ class MockMessageService {
   async sendMessage(
     assignmentId: string,
     senderId: string,
-    senderType: 'cpo' | 'client',
+    senderType: 'cpo' | 'principal',
     messageText: string
   ): Promise<AssignmentMessage> {
     console.log('[MOCK MESSAGE] Send message:', messageText);
@@ -33,8 +33,8 @@ class MockMessageService {
       assignment_id: assignmentId,
       sender_id: senderId,
       sender_type: senderType,
-      message_text: messageText,
-      read_at: null,
+      message: messageText,
+      read: false,
       created_at: new Date().toISOString(),
     };
 
@@ -50,7 +50,7 @@ class MockMessageService {
 
     const message = this.messages.find((m) => m.id === messageId);
     if (message) {
-      message.read_at = new Date().toISOString();
+      message.read = true;
     }
   }
 
@@ -74,7 +74,7 @@ class MockMessageService {
     console.log('[MOCK MESSAGE] Get unread count for:', assignmentId, userId);
 
     return this.messages.filter(
-      (m) => m.assignment_id === assignmentId && m.sender_id !== userId && !m.read_at
+      (m) => m.assignment_id === assignmentId && m.sender_id !== userId && !m.read
     ).length;
   }
 

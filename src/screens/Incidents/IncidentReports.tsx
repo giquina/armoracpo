@@ -9,7 +9,6 @@ import {
   IncidentStatistics,
 } from '../../types';
 import { incidentService } from '../../services/incidentService';
-import { downloadIncidentReportPDF } from '../../services/incidentPDFService';
 import { supabase } from '../../lib/supabase';
 import './IncidentReports.css';
 import DevPanel from '../../components/dev/DevPanel';
@@ -26,6 +25,7 @@ const IncidentReports: React.FC = () => {
 
   useEffect(() => {
     loadReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadReports = async () => {

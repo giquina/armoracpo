@@ -84,7 +84,7 @@ class MockAssignmentService {
     }
 
     assignment.status = 'active';
-    assignment.actual_start = new Date().toISOString();
+    assignment.actual_start_time = new Date().toISOString();
     assignment.updated_at = new Date().toISOString();
 
     return { ...assignment };
@@ -102,14 +102,8 @@ class MockAssignmentService {
     }
 
     assignment.status = 'completed';
-    assignment.actual_end = new Date().toISOString();
+    assignment.actual_end_time = new Date().toISOString();
     assignment.updated_at = new Date().toISOString();
-
-    // Calculate final cost
-    if (assignment.actual_start && assignment.actual_end) {
-      const hours = (new Date(assignment.actual_end).getTime() - new Date(assignment.actual_start).getTime()) / (1000 * 60 * 60);
-      assignment.final_cost = Math.round(hours * assignment.hourly_rate * 100) / 100;
-    }
 
     return { ...assignment };
   }

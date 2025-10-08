@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { DOBEntry, DOBFilters, DOBEventType } from '../types';
+import { DOBEntry, DOBFilters } from '../types';
 
 /**
  * Daily Occurrence Book (DOB) Service

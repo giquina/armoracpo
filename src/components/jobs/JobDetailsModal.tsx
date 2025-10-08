@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { FiX, FiMapPin, FiCalendar, FiClock, FiDollarSign, FiBookmark, FiAlertCircle, FiCheckCircle, FiUser, FiStar, FiBriefcase, FiMessageSquare } from 'react-icons/fi';
+import { FiX, FiMapPin, FiCalendar, FiClock, FiBookmark, FiAlertCircle, FiCheckCircle, FiUser, FiStar, FiBriefcase, FiMessageSquare } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import BrowseJobCard from './BrowseJobCard';
 import './JobDetailsModal.css';
 
 interface JobDetailsModalProps {

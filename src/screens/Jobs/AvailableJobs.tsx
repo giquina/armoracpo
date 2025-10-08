@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaList, FaMap, FaSortAmountDown } from 'react-icons/fa';
+import { FaSearch, FaList, FaMap } from 'react-icons/fa';
 import { IconWrapper } from '../../utils/IconWrapper';
 import { ProtectionAssignment } from '../../lib/supabase';
 import { assignmentService } from '../../services/assignmentService';
@@ -34,15 +34,6 @@ const AvailableJobs: React.FC = () => {
     threatLevels: [],
   });
 
-  useEffect(() => {
-    loadCurrentUser();
-    loadAvailableAssignments();
-  }, []);
-
-  useEffect(() => {
-    applyFiltersAndSort();
-  }, [assignments, filters, searchQuery, sortBy]);
-
   const loadCurrentUser = async () => {
     try {
       const currentUser = await authService.getCurrentUser();
@@ -66,7 +57,7 @@ const AvailableJobs: React.FC = () => {
     }
   };
 
-  const applyFiltersAndSort = () => {
+  const applyFiltersAndSort = useCallback(() => {
     let filtered = [...assignments];
 
     // Search filter
@@ -108,7 +99,16 @@ const AvailableJobs: React.FC = () => {
     });
 
     setFilteredAssignments(filtered);
-  };
+  }, [assignments, filters, searchQuery, sortBy]);
+
+  useEffect(() => {
+    loadCurrentUser();
+    loadAvailableAssignments();
+  }, []);
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [applyFiltersAndSort]);
 
   const handleAcceptJob = async (assignmentId: string) => {
     if (!cpoId) {

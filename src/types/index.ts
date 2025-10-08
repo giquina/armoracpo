@@ -1250,6 +1250,12 @@ export interface IncidentMediaAttachment {
   fileSize: number;
   mimeType: string;
   duration?: number; // For video/audio in seconds
+  description?: string; // Optional description added by CPO
+  capturedAt?: string; // Legacy field - use metadata.capturedAt instead
+  gpsCoordinates?: { // Legacy field - use gpsData instead
+    latitude: number;
+    longitude: number;
+  };
   gpsData: {
     latitude: number;
     longitude: number;
@@ -1292,6 +1298,8 @@ export interface IncidentChainOfCustodyEntry {
 export interface IncidentSignature {
   id: string;
   signatureData: string; // Base64 encoded signature image
+  signerName?: string; // Legacy field - use signedBy.userName instead
+  signerRole?: string; // Legacy field - use signedBy.role instead
   signedBy: {
     userId: string;
     userName: string;
@@ -1335,6 +1343,7 @@ export interface IncidentLawEnforcementDetails {
   officerBadgeNumber?: string;
   crimeReferenceNumber?: string; // Crime reference number
   reportingOfficerPhone?: string;
+  responseTime?: number; // Response time in minutes
   arrestsMade: boolean;
   arrestDetails?: string;
   evidenceCollected: string[];

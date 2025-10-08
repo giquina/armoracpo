@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaCheck, FaEye, FaEyeSlash, FaPlus, FaTimes } from 'react-icons/fa';
@@ -386,13 +386,13 @@ const Signup: React.FC = () => {
 
   const [direction, setDirection] = useState(0);
 
-  const handleStepChange = (newStep: number) => {
+  const handleStepChange = useCallback((newStep: number) => {
     setDirection(newStep > currentStep ? 1 : -1);
-  };
+  }, [currentStep]);
 
   useEffect(() => {
     handleStepChange(currentStep);
-  }, [currentStep]);
+  }, [currentStep, handleStepChange]);
 
   return (
     <div className="armora-signup">

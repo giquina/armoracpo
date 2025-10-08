@@ -202,14 +202,8 @@ const Messages: React.FC = () => {
                 ? 'Once you accept an assignment, you can communicate with your principal here.'
                 : 'Completed and cancelled assignments will appear here.'
             }
-            action={
-              !searchQuery && activeTab === 'active'
-                ? {
-                    label: 'Browse Available Assignments',
-                    onClick: () => navigate('/jobs')
-                  }
-                : undefined
-            }
+            action={!searchQuery && activeTab === 'active' ? 'Browse Available Assignments' : undefined}
+            onAction={!searchQuery && activeTab === 'active' ? () => navigate('/jobs') : undefined}
           />
         ) : (
           displayedConversations.map((conversation) => (

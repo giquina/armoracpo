@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FiHome, FiBriefcase, FiMessageSquare, FiDollarSign, FiUser, FiAlertTriangle } from 'react-icons/fi';
-import { FaHome, FaBriefcase, FaCommentDots, FaDollarSign, FaUser, FaExclamationTriangle } from 'react-icons/fa';
+import { FiHome, FiBriefcase, FiMessageSquare, FiUser, FiAlertTriangle } from 'react-icons/fi';
+import { FaHome, FaBriefcase, FaCommentDots, FaUser, FaExclamationTriangle } from 'react-icons/fa';
 import { IconWrapper } from '../../utils/IconWrapper';
 import { supabase } from '../../lib/supabase';
 import { messageService } from '../../services/messageService';

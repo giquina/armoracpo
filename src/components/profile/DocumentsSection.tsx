@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import { FiFile, FiUpload, FiDownload, FiTrash2, FiCheckCircle, FiAlertTriangle } from 'react-icons/fi';
+import { FiFile, FiUpload, FiDownload, FiTrash2, FiCheckCircle } from 'react-icons/fi';
 import { format } from 'date-fns';
 import { DocumentsSectionProps, Document } from './types';
 import { supabase } from '../../lib/supabase';

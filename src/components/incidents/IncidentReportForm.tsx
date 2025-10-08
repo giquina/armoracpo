@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   IncidentReport,
   IncidentClassification,
   IncidentSeverity,
-  IncidentStatus,
   IncidentWitness,
   IncidentImmediateAction,
   IncidentEnvironmentalConditions,
-  IncidentPrincipalDetails,
   IncidentLawEnforcementDetails,
 } from '../../types';
 import './IncidentReportForm.css';
@@ -142,23 +140,7 @@ export const IncidentReportForm: React.FC<IncidentReportFormProps> = ({
     }
   }, []);
 
-  // Auto-save draft every 30 seconds
-  useEffect(() => {
-    const autoSaveInterval = setInterval(() => {
-      handleSaveDraft();
-    }, 30000);
-
-    return () => clearInterval(autoSaveInterval);
-  }, [
-    classification,
-    severity,
-    incidentDateTime,
-    address,
-    summary,
-    detailedNarrative,
-  ]);
-
-  const handleSaveDraft = async () => {
+  const handleSaveDraft = useCallback(async () => {
     if (!summary) return; // Don't save empty drafts
 
     setAutoSaving(true);
@@ -195,7 +177,44 @@ export const IncidentReportForm: React.FC<IncidentReportFormProps> = ({
     } finally {
       setAutoSaving(false);
     }
-  };
+  }, [
+    summary,
+    classification,
+    severity,
+    incidentDateTime,
+    address,
+    city,
+    postcode,
+    coordinates,
+    venue,
+    venueType,
+    detailedNarrative,
+    triggerFactors,
+    outcome,
+    principalInjuryStatus,
+    principalInjuryDescription,
+    medicalAttentionRequired,
+    medicalAttentionDetails,
+    environmentalConditions,
+    immediateActions,
+    witnesses,
+    lawEnforcementReported,
+    lawEnforcementDetails,
+    equipmentUsed,
+    equipmentFailures,
+    lessonsLearned,
+    protocolRecommendations,
+    onSaveDraft,
+  ]);
+
+  // Auto-save draft every 30 seconds
+  useEffect(() => {
+    const autoSaveInterval = setInterval(() => {
+      handleSaveDraft();
+    }, 30000);
+
+    return () => clearInterval(autoSaveInterval);
+  }, [handleSaveDraft]);
 
   const addImmediateAction = () => {
     const newAction: IncidentImmediateAction = {

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IncidentReportSummary, IncidentSeverity } from '../../types';
 import { incidentService } from '../../services/incidentService';
-import { supabase } from '../../lib/supabase';
 import './RecentIncidentsWidget.css';
 
 interface RecentIncidentsWidgetProps {
@@ -14,11 +13,7 @@ const RecentIncidentsWidget: React.FC<RecentIncidentsWidgetProps> = ({ cpoId }) 
   const [incidents, setIncidents] = useState<IncidentReportSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadRecentIncidents();
-  }, [cpoId]);
-
-  const loadRecentIncidents = async () => {
+  const loadRecentIncidents = useCallback(async () => {
     try {
       const reports = await incidentService.getIncidentReports(cpoId, {});
       setIncidents(reports.slice(0, 3)); // Show only 3 most recent
@@ -27,7 +22,11 @@ const RecentIncidentsWidget: React.FC<RecentIncidentsWidgetProps> = ({ cpoId }) 
     } finally {
       setLoading(false);
     }
-  };
+  }, [cpoId]);
+
+  useEffect(() => {
+    loadRecentIncidents();
+  }, [loadRecentIncidents]);
 
   const getSeverityColor = (severity: IncidentSeverity): string => {
     const colors: Record<IncidentSeverity, string> = {

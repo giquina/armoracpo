@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { dobService } from '../../services/dobService';
 import { authService } from '../../services/authService';
-import { DOBEntry, DOBFilters, DOBEventType } from '../../types';
+import { DOBEntry, DOBEventType } from '../../types';
 import { DOBEntryForm } from '../../components/dob/DOBEntryForm';
 import { Button } from '../../components/ui/Button';
 import { EmptyState } from '../../components/ui/EmptyState';
@@ -20,18 +20,18 @@ const DailyOccurrenceBook: React.FC = () => {
   // Filters
   const [dateFilter, setDateFilter] = useState<'today' | 'week' | 'month' | 'all'>('week');
   const [entryTypeFilter, setEntryTypeFilter] = useState<'all' | 'auto' | 'manual'>('all');
-  const [eventTypeFilter, setEventTypeFilter] = useState<DOBEventType | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    loadCPOAndEntries();
+  const loadEntries = useCallback(async (id: string) => {
+    try {
+      const allEntries = await dobService.getDOBEntries(id);
+      setEntries(allEntries);
+    } catch (err: any) {
+      throw new Error(err.message || 'Failed to load DOB entries');
+    }
   }, []);
 
-  useEffect(() => {
-    applyFilters();
-  }, [entries, dateFilter, entryTypeFilter, eventTypeFilter, searchQuery]);
-
-  const loadCPOAndEntries = async () => {
+  const loadCPOAndEntries = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -50,16 +50,7 @@ const DailyOccurrenceBook: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const loadEntries = async (id: string) => {
-    try {
-      const allEntries = await dobService.getDOBEntries(id);
-      setEntries(allEntries);
-    } catch (err: any) {
-      throw new Error(err.message || 'Failed to load DOB entries');
-    }
-  };
+  }, [loadEntries]);
 
   const applyFilters = useCallback(() => {
     let filtered = [...entries];
@@ -91,11 +82,6 @@ const DailyOccurrenceBook: React.FC = () => {
       filtered = filtered.filter(entry => entry.entryType === entryTypeFilter);
     }
 
-    // Event type filter
-    if (eventTypeFilter !== 'all') {
-      filtered = filtered.filter(entry => entry.eventType === eventTypeFilter);
-    }
-
     // Search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -106,7 +92,15 @@ const DailyOccurrenceBook: React.FC = () => {
     }
 
     setFilteredEntries(filtered);
-  }, [entries, dateFilter, entryTypeFilter, eventTypeFilter, searchQuery]);
+  }, [entries, dateFilter, entryTypeFilter, searchQuery]);
+
+  useEffect(() => {
+    loadCPOAndEntries();
+  }, [loadCPOAndEntries]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
 
   const handleEntrySuccess = async () => {
     if (cpoId) {
