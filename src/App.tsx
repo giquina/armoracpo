@@ -30,11 +30,11 @@ const IncidentReportDetail = lazy(() => import('./screens/Incidents/IncidentRepo
 const NewIncidentReport = lazy(() => import('./screens/Incidents/NewIncidentReport'));
 const DailyOccurrenceBook = lazy(() => import('./screens/DOB/DailyOccurrenceBook'));
 
-// Lazy load components
-const BottomNav = lazy(() => import('./components/layout/BottomNav'));
-
 // Styles
 import './styles/global.css';
+
+// Lazy load components
+const BottomNav = lazy(() => import('./components/layout/BottomNav'));
 
 // Dev mode bypass flag (set via sessionStorage when using DevPanel)
 const isDevMode = () => {
