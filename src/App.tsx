@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { supabase } from './lib/supabase';
 import { initializeNotifications } from './services/notificationService';
 import { PageTransition } from './components/animations/PageTransition';
-import { LoadingScreen } from './components/common/LoadingScreen';
+import { LoadingScreen, OfflineIndicator } from './components/common';
 
 // Eager load critical screens for initial render
 import Splash from './screens/Splash';
@@ -362,6 +362,7 @@ function App() {
 
   return (
     <Router>
+      <OfflineIndicator />
       <AnimatedRoutes />
       <Analytics />
     </Router>

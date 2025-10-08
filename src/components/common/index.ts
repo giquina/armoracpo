@@ -7,3 +7,4 @@
 export { Logo } from './Logo';
 export { LoadingScreen } from './LoadingScreen';
 export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as OfflineIndicator } from './OfflineIndicator';
