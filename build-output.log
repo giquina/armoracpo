@@ -1,0 +1,10 @@
+Creating an optimized production build...
+Compiled with the following type errors (you may want to check these before deploying your app):
+
+[eslint] 
+src/App.tsx
+  Line 37:1:  Import in body of module; reorder to top  import/first
+
+Search for the keywords to learn more about each error.
+
+

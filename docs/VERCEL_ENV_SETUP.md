@@ -90,14 +90,14 @@ These are already hardcoded in `src/lib/firebase.ts`, but you can override them 
 
 ### 4. Sentry Error Monitoring (OPTIONAL but Recommended)
 
-| Variable Name | Description | Where to Find |
-|---------------|-------------|---------------|
-| `REACT_APP_SENTRY_DSN` | Sentry Data Source Name | Sentry Dashboard → Project Settings |
+| Variable Name | Description | Value |
+|---------------|-------------|-------|
+| `REACT_APP_SENTRY_DSN` | Sentry Data Source Name | `https://d0e82d3a63887285586742a51791418600451015212171240.ingest.de.sentry.io/4510152134164560` |
 | `REACT_APP_SENTRY_ENVIRONMENT` | Environment name (production/preview/development) | Set manually |
 
-**How to Get These Values:**
+**How to Configure:**
 
-See [SENTRY_SETUP.md](./SENTRY_SETUP.md) for detailed Sentry configuration.
+See [SENTRY.md](../SENTRY.md) for detailed Sentry configuration and testing guide.
 
 ---
 
@@ -446,7 +446,7 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID=785567849849
 REACT_APP_FIREBASE_APP_ID=1:785567849849:web:1e8a4e3f2e0b9c8d4f5e6a
 
 # === OPTIONAL: Sentry Error Monitoring ===
-REACT_APP_SENTRY_DSN=YOUR_SENTRY_DSN_HERE
+REACT_APP_SENTRY_DSN=https://d0e82d3a63887285586742a51791418600451015212171240.ingest.de.sentry.io/4510152134164560
 REACT_APP_SENTRY_ENVIRONMENT=production
 ```
 
@@ -456,7 +456,7 @@ REACT_APP_SENTRY_ENVIRONMENT=production
 
 - [Supabase Setup Guide](/workspaces/armoracpo/SUPABASE_SETUP.md)
 - [Firebase VAPID Setup Guide](./FIREBASE_VAPID_SETUP.md)
-- [Sentry Setup Guide](./SENTRY_SETUP.md)
+- [Sentry Setup Guide](../SENTRY.md)
 - [FCM Implementation Report](/workspaces/armoracpo/FCM_IMPLEMENTATION_REPORT.md)
 - [Environment Setup](/workspaces/armoracpo/ENVIRONMENT_SETUP.md)
 
