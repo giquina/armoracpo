@@ -540,8 +540,10 @@ export class IncidentPDFService {
       `${index + 1}`,
       media.type.toUpperCase(),
       media.filename,
-      new Date(media.capturedAt).toLocaleString('en-GB'),
-      `${media.gpsCoordinates.latitude.toFixed(6)}, ${media.gpsCoordinates.longitude.toFixed(6)}`,
+      media.capturedAt ? new Date(media.capturedAt).toLocaleString('en-GB') : 'N/A',
+      media.gpsCoordinates
+        ? `${media.gpsCoordinates.latitude.toFixed(6)}, ${media.gpsCoordinates.longitude.toFixed(6)}`
+        : 'N/A',
       media.description || 'N/A',
     ]);
 

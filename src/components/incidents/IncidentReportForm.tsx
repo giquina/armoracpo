@@ -138,7 +138,7 @@ export const IncidentReportForm: React.FC<IncidentReportFormProps> = ({
         }
       );
     }
-  }, []);
+  }, [coordinates.latitude]);
 
   const handleSaveDraft = useCallback(async () => {
     if (!summary) return; // Don't save empty drafts

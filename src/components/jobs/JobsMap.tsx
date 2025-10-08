@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import { Icon, LatLngExpression } from 'leaflet';
 import { ProtectionAssignment } from '../../lib/supabase';

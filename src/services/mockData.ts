@@ -126,7 +126,7 @@ export const mockPayments: PaymentRecord[] = [
     payment_status: 'pending',
     payment_method: 'stripe',
     stripe_payment_intent_id: 'pi_mock_002',
-    paid_at: null,
+    paid_at: undefined,
     created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
     updated_at: new Date().toISOString(),
   },

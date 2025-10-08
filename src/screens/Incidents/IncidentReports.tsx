@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   IncidentReportSummary,
@@ -23,12 +23,7 @@ const IncidentReports: React.FC = () => {
   const [filters, setFilters] = useState<IncidentReportFilters>({});
   const [showFilters, setShowFilters] = useState(false);
 
-  useEffect(() => {
-    loadReports();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const loadReports = async () => {
+  const loadReports = useCallback(async () => {
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -82,7 +77,11 @@ const IncidentReports: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    loadReports();
+  }, [loadReports]);
 
   // Apply filters and search
   useEffect(() => {
