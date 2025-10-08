@@ -1,0 +1,252 @@
+
+> armoracpo@0.1.0 start
+> react-scripts start
+
+Attempting to bind to HOST environment variable: 0.0.0.0
+If this was unintentional, check that you haven't mistakenly set it in your shell.
+Learn more here: https://cra.link/advanced-config
+
+(node:143130) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:143130) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Failed to compile.
+
+[eslint] 
+src/App.tsx
+  Line 37:1:  Import in body of module; reorder to top  import/first
+
+Search for the keywords to learn more about each error.
+WARNING in [eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+ERROR in [eslint] 
+src/App.tsx
+  Line 37:1:  Import in body of module; reorder to top  import/first
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error and 1 warning
+WARNING in src/components/common/OfflineIndicator.tsx:56:14
+TS2322: Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IconWrapperProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & IconWrapperProps'.
+    54 |         >
+    55 |           <div className="offline-indicator__content">
+  > 56 |             <IconWrapper className="offline-indicator__icon">
+       |              ^^^^^^^^^^^
+    57 |               {isOnline ? <FiCheck /> : <FiWifiOff />}
+    58 |             </IconWrapper>
+    59 |             <div className="offline-indicator__text">
+
+WARNING in src/lib/sentry.ts:23:7
+TS2322: Type 'BrowserTracing' is not assignable to type 'Integration'.
+  Types of property 'setupOnce' are incompatible.
+    Type '(_: (callback: EventProcessor) => void, getCurrentHub: () => Hub) => void' is not assignable to type '() => void'.
+      Target signature provides too few arguments. Expected 2 or more, but got 0.
+    21 |     dsn: sentryDSN,
+    22 |     integrations: [
+  > 23 |       new BrowserTracing(),
+       |       ^^^^^^^^^^^^^^^^^^^^
+    24 |       // Capture user interactions
+    25 |       Sentry.replayIntegration({
+    26 |         maskAllText: true,
+
+WARNING in src/services/authService.ts:32:26
+TS2339: Property 'full_name' does not exist on type 'ProtectionOfficer'.
+    30 |         id: authData.user.id,
+    31 |         email: authData.user.email,
+  > 32 |         name: cpoProfile.full_name,
+       |                          ^^^^^^^^^
+    33 |       });
+    34 |
+    35 |       // Request notification permission
+
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/App.tsx
+  Line 34:1:  Import in body of module; reorder to top  import/first
+
+Search for the keywords to learn more about each error.
+WARNING in [eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+ERROR in [eslint] 
+src/App.tsx
+  Line 34:1:  Import in body of module; reorder to top  import/first
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error and 1 warning
+WARNING in src/components/common/OfflineIndicator.tsx:56:14
+TS2322: Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IconWrapperProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & IconWrapperProps'.
+    54 |         >
+    55 |           <div className="offline-indicator__content">
+  > 56 |             <IconWrapper className="offline-indicator__icon">
+       |              ^^^^^^^^^^^
+    57 |               {isOnline ? <FiCheck /> : <FiWifiOff />}
+    58 |             </IconWrapper>
+    59 |             <div className="offline-indicator__text">
+
+WARNING in src/lib/sentry.ts:23:7
+TS2322: Type 'BrowserTracing' is not assignable to type 'Integration'.
+  Types of property 'setupOnce' are incompatible.
+    Type '(_: (callback: EventProcessor) => void, getCurrentHub: () => Hub) => void' is not assignable to type '() => void'.
+      Target signature provides too few arguments. Expected 2 or more, but got 0.
+    21 |     dsn: sentryDSN,
+    22 |     integrations: [
+  > 23 |       new BrowserTracing(),
+       |       ^^^^^^^^^^^^^^^^^^^^
+    24 |       // Capture user interactions
+    25 |       Sentry.replayIntegration({
+    26 |         maskAllText: true,
+
+WARNING in src/services/authService.ts:32:26
+TS2339: Property 'full_name' does not exist on type 'ProtectionOfficer'.
+    30 |         id: authData.user.id,
+    31 |         email: authData.user.email,
+  > 32 |         name: cpoProfile.full_name,
+       |                          ^^^^^^^^^
+    33 |       });
+    34 |
+    35 |       // Request notification permission
+
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+Compiling...
+WARNING in src/components/common/OfflineIndicator.tsx:56:14
+TS2322: Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IconWrapperProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & IconWrapperProps'.
+    54 |         >
+    55 |           <div className="offline-indicator__content">
+  > 56 |             <IconWrapper className="offline-indicator__icon">
+       |              ^^^^^^^^^^^
+    57 |               {isOnline ? <FiCheck /> : <FiWifiOff />}
+    58 |             </IconWrapper>
+    59 |             <div className="offline-indicator__text">
+
+WARNING in src/lib/sentry.ts:23:7
+TS2322: Type 'BrowserTracing' is not assignable to type 'Integration'.
+  Types of property 'setupOnce' are incompatible.
+    Type '(_: (callback: EventProcessor) => void, getCurrentHub: () => Hub) => void' is not assignable to type '() => void'.
+      Target signature provides too few arguments. Expected 2 or more, but got 0.
+    21 |     dsn: sentryDSN,
+    22 |     integrations: [
+  > 23 |       new BrowserTracing(),
+       |       ^^^^^^^^^^^^^^^^^^^^
+    24 |       // Capture user interactions
+    25 |       Sentry.replayIntegration({
+    26 |         maskAllText: true,
+
+WARNING in src/services/authService.ts:32:26
+TS2339: Property 'full_name' does not exist on type 'ProtectionOfficer'.
+    30 |         id: authData.user.id,
+    31 |         email: authData.user.email,
+  > 32 |         name: cpoProfile.full_name,
+       |                          ^^^^^^^^^
+    33 |       });
+    34 |
+    35 |       // Request notification permission
+
+Compiled with warnings.
+
+[eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/components/common/Logo.tsx
+  Line 67:11:  'fontSize' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/common/OfflineIndicator.tsx
+  Line 10:10:  'justCameOnline' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/services/dobService.ts
+  Line 201:13:  'entries' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+WARNING in src/components/common/OfflineIndicator.tsx:56:14
+TS2322: Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IconWrapperProps'.
+  Property 'children' does not exist on type 'IntrinsicAttributes & IconWrapperProps'.
+    54 |         >
+    55 |           <div className="offline-indicator__content">
+  > 56 |             <IconWrapper className="offline-indicator__icon">
+       |              ^^^^^^^^^^^
+    57 |               {isOnline ? <FiCheck /> : <FiWifiOff />}
+    58 |             </IconWrapper>
+    59 |             <div className="offline-indicator__text">
+
+WARNING in src/lib/sentry.ts:23:7
+TS2322: Type 'BrowserTracing' is not assignable to type 'Integration'.
+  Types of property 'setupOnce' are incompatible.
+    Type '(_: (callback: EventProcessor) => void, getCurrentHub: () => Hub) => void' is not assignable to type '() => void'.
+      Target signature provides too few arguments. Expected 2 or more, but got 0.
+    21 |     dsn: sentryDSN,
+    22 |     integrations: [
+  > 23 |       new BrowserTracing(),
+       |       ^^^^^^^^^^^^^^^^^^^^
+    24 |       // Capture user interactions
+    25 |       Sentry.replayIntegration({
+    26 |         maskAllText: true,
+
+WARNING in src/services/authService.ts:32:26
+TS2339: Property 'full_name' does not exist on type 'ProtectionOfficer'.
+    30 |         id: authData.user.id,
+    31 |         email: authData.user.email,
+  > 32 |         name: cpoProfile.full_name,
+       |                          ^^^^^^^^^
+    33 |       });
+    34 |
+    35 |       // Request notification permission
+

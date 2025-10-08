@@ -6,6 +6,7 @@ import { supabase } from './lib/supabase';
 import { initializeNotifications } from './services/notificationService';
 import { PageTransition } from './components/animations/PageTransition';
 import { LoadingScreen, OfflineIndicator } from './components/common';
+import './styles/global.css';
 
 // Eager load critical screens for initial render
 import Splash from './screens/Splash';
@@ -29,11 +30,6 @@ const IncidentReports = lazy(() => import('./screens/Incidents/IncidentReports')
 const IncidentReportDetail = lazy(() => import('./screens/Incidents/IncidentReportDetail'));
 const NewIncidentReport = lazy(() => import('./screens/Incidents/NewIncidentReport'));
 const DailyOccurrenceBook = lazy(() => import('./screens/DOB/DailyOccurrenceBook'));
-
-// Styles
-import './styles/global.css';
-
-// Lazy load components
 const BottomNav = lazy(() => import('./components/layout/BottomNav'));
 
 // Dev mode bypass flag (set via sessionStorage when using DevPanel)
