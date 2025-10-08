@@ -1,34 +1,37 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { supabase } from './lib/supabase';
 import { initializeNotifications } from './services/notificationService';
 import { PageTransition } from './components/animations/PageTransition';
+import { LoadingScreen } from './components/common/LoadingScreen';
 
-// Screens
+// Eager load critical screens for initial render
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
-import Login from './screens/Auth/Login';
-import Signup from './screens/Auth/Signup';
-import Dashboard from './screens/Dashboard/Dashboard';
-import Jobs from './screens/Jobs/Jobs';
-import AvailableJobs from './screens/Jobs/AvailableJobs';
-import ActiveJob from './screens/Jobs/ActiveJob';
-import JobHistory from './screens/Jobs/JobHistory';
-import Profile from './screens/Profile/Profile';
-import Earnings from './screens/Earnings/Earnings';
-import Compliance from './screens/Compliance/Compliance';
-import Settings from './screens/Settings/Settings';
-import Messages from './screens/Messages/Messages';
-import MessageChat from './screens/Messages/MessageChat';
-import IncidentReports from './screens/Incidents/IncidentReports';
-import IncidentReportDetail from './screens/Incidents/IncidentReportDetail';
-import NewIncidentReport from './screens/Incidents/NewIncidentReport';
-import DailyOccurrenceBook from './screens/DOB/DailyOccurrenceBook';
 
-// Components
-import BottomNav from './components/layout/BottomNav';
+// Lazy load all other screens for code splitting
+const Login = lazy(() => import('./screens/Auth/Login'));
+const Signup = lazy(() => import('./screens/Auth/Signup'));
+const Dashboard = lazy(() => import('./screens/Dashboard/Dashboard'));
+const Jobs = lazy(() => import('./screens/Jobs/Jobs'));
+const AvailableJobs = lazy(() => import('./screens/Jobs/AvailableJobs'));
+const ActiveJob = lazy(() => import('./screens/Jobs/ActiveJob'));
+const JobHistory = lazy(() => import('./screens/Jobs/JobHistory'));
+const Profile = lazy(() => import('./screens/Profile/Profile'));
+const Earnings = lazy(() => import('./screens/Earnings/Earnings'));
+const Compliance = lazy(() => import('./screens/Compliance/Compliance'));
+const Settings = lazy(() => import('./screens/Settings/Settings'));
+const Messages = lazy(() => import('./screens/Messages/Messages'));
+const MessageChat = lazy(() => import('./screens/Messages/MessageChat'));
+const IncidentReports = lazy(() => import('./screens/Incidents/IncidentReports'));
+const IncidentReportDetail = lazy(() => import('./screens/Incidents/IncidentReportDetail'));
+const NewIncidentReport = lazy(() => import('./screens/Incidents/NewIncidentReport'));
+const DailyOccurrenceBook = lazy(() => import('./screens/DOB/DailyOccurrenceBook'));
+
+// Lazy load components
+const BottomNav = lazy(() => import('./components/layout/BottomNav'));
 
 // Styles
 import './styles/global.css';
@@ -90,10 +93,10 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 // Layout wrapper for authenticated pages
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <>
+    <Suspense fallback={<LoadingScreen />}>
       {children}
       <BottomNav />
-    </>
+    </Suspense>
   );
 };
 
