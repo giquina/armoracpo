@@ -1,5 +1,6 @@
 import { supabase, ProtectionOfficer } from '../lib/supabase';
 import { requestNotificationPermission } from '../lib/firebase';
+import { setSentryUser, clearSentryUser } from '../lib/sentry';
 
 export const authService = {
   /**
@@ -23,6 +24,13 @@ export const authService = {
         await supabase.auth.signOut();
         throw new Error('Your account is pending verification. Please contact support.');
       }
+
+      // Set Sentry user context
+      setSentryUser({
+        id: authData.user.id,
+        email: authData.user.email,
+        name: cpoProfile.full_name,
+      });
 
       // Request notification permission
       await requestNotificationPermission(authData.user.id);
@@ -70,6 +78,9 @@ export const authService = {
   async logout() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+
+    // Clear Sentry user context
+    clearSentryUser();
   },
 
   /**
